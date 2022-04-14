@@ -28,6 +28,14 @@ public class NewsEntity {
     @Column(nullable = false)
     private String image;
 
+    @ManyToOne(fetch = FetchType.EAGER,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinColumn(name = "category_id", insertable = false, updatable = false)
+    private CategoryEntity category;
+
     @Column(name = "category_id", nullable = false)
     private Long categoryId;
 
@@ -41,5 +49,14 @@ public class NewsEntity {
     @Column(name="updated_at", columnDefinition = "TIMESTAMP")
     @DateTimeFormat(pattern = "yyyy/MM/dd hh:mm:ss")
     private LocalDateTime updatedAt;
+
+    @PrePersist
+    public void prePersist(){
+        this.createdAt = LocalDateTime.now();
+    }
+    @PreUpdate
+    public void preUpdate(){
+        this.updatedAt = LocalDateTime.now();
+    }
 
 }

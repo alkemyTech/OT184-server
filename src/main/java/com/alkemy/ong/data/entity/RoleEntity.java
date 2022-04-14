@@ -24,11 +24,11 @@ public class RoleEntity {
 
   @Column(name = "created_at")
   @CreationTimestamp
-  private LocalDateTime createdAt;
+  private LocalDateTime createdAt = LocalDateTime.now();
 
   @Column(name = "updated_at")
   @UpdateTimestamp
-  private LocalDateTime updatedAt;
+  private LocalDateTime updatedAt = LocalDateTime.now();
 
   @Column(name = "is_deleted")
   private boolean isDeleted = Boolean.FALSE;

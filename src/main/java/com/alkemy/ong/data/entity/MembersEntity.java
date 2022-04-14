@@ -13,7 +13,7 @@ import java.util.Date;
 @Table(name = "members")
 @SQLDelete(sql = "UPDATE members SET deleted = true WHERE id = ?")
 @Where(clause = "deleted = false")
-public class Members{
+public class MembersEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

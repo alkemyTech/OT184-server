@@ -2,7 +2,6 @@ package com.alkemy.ong.data.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -15,21 +14,32 @@ import java.time.LocalDateTime;
 public class RoleEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private Long  id;
 
   @Column(nullable = false)
   private String name;
 
   private String description;
 
-  @Column(name = "created_at")
+  @Column(name = "created_at", updatable = false)
   @CreationTimestamp
   private LocalDateTime createdAt = LocalDateTime.now();
 
   @Column(name = "updated_at")
-  @UpdateTimestamp
+  @Temporal(TemporalType.TIMESTAMP)
   private LocalDateTime updatedAt = LocalDateTime.now();
 
   @Column(name = "is_deleted")
+  @Temporal(TemporalType.TIMESTAMP)
   private boolean isDeleted = Boolean.FALSE;
+
+  @PrePersist
+  public void onCreate() {
+    createdAt = updatedAt = LocalDateTime.now();
+  }
+
+  @PreUpdate
+  public void onUpdate() {
+    updatedAt = LocalDateTime.now();
+  }
 }

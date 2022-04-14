@@ -23,22 +23,22 @@ public class NewsEntity {
 
     @Column(nullable = false)
     private String name;
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition="TEXT")
     private String content;
     @Column(nullable = false)
     private String image;
 
-    @Column(name = "category_id")
+    @Column(name = "category_id", nullable = false)
     private Long categoryId;
 
     @Column(name="is_deleted")
     private boolean isDeleted = Boolean.FALSE;
 
-    @Column(name="created_at")
+    @Column(name="created_at", columnDefinition = "TIMESTAMP")
     @DateTimeFormat(pattern = "yyyy/MM/dd hh:mm:ss")
     private LocalDateTime createdAt;
 
-    @Column(name="updated_at")
+    @Column(name="updated_at", columnDefinition = "TIMESTAMP")
     @DateTimeFormat(pattern = "yyyy/MM/dd hh:mm:ss")
     private LocalDateTime updatedAt;
 

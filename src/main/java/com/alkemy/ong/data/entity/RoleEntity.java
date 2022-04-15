@@ -26,7 +26,6 @@ public class RoleEntity {
   private LocalDateTime createdAt;
 
   @Column(name = "updated_at", nullable = false)
-  @Temporal(TemporalType.TIMESTAMP)
   private LocalDateTime updatedAt;
 
   @Column(name = "is_deleted", nullable = false)

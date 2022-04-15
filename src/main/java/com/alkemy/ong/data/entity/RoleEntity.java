@@ -23,11 +23,11 @@ public class RoleEntity {
 
   @Column(name = "created_at", updatable = false, nullable = false)
   @CreationTimestamp
-  private LocalDateTime createdAt = LocalDateTime.now();
+  private LocalDateTime createdAt;
 
   @Column(name = "updated_at", nullable = false)
   @Temporal(TemporalType.TIMESTAMP)
-  private LocalDateTime updatedAt = LocalDateTime.now();
+  private LocalDateTime updatedAt;
 
   @Column(name = "is_deleted", nullable = false)
   @Temporal(TemporalType.TIMESTAMP)

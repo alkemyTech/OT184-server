@@ -32,4 +32,8 @@ public class UserEntity {
 
   @ManyToOne
   private RoleEntity role;
+
+  @Column(name = "is_deleted", nullable = false)
+  private boolean isDeleted = Boolean.FALSE;
+
 }

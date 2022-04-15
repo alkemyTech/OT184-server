@@ -30,7 +30,6 @@ public class RoleEntity {
   private LocalDateTime updatedAt;
 
   @Column(name = "is_deleted", nullable = false)
-  @Temporal(TemporalType.TIMESTAMP)
   private boolean isDeleted = Boolean.FALSE;
 
   @PrePersist

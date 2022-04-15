@@ -5,6 +5,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
@@ -36,4 +37,9 @@ public class UserEntity {
   @Column(name = "is_deleted", nullable = false)
   private boolean isDeleted = Boolean.FALSE;
 
+  @Column(name = "created_at", updatable = false, nullable = false)
+  private LocalDateTime createdAt;
+
+  @Column(name = "updated_at", nullable = false)
+  private LocalDateTime updatedAt;
 }

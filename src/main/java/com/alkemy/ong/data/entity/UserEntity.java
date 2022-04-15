@@ -9,6 +9,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "users")
 @SQLDelete(sql = "UPDATE users SET is_deleted = true WHERE id=?")
+@Where(clause = "is_deleted=false")
 public class UserEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

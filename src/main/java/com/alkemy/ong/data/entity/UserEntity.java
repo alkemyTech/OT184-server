@@ -1,10 +1,14 @@
 package com.alkemy.ong.data.entity;
 
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "users")
+@SQLDelete(sql = "UPDATE users SET is_deleted = true WHERE id=?")
 public class UserEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

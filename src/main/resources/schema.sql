@@ -1,6 +1,5 @@
 USE alkemy;
 
-# Roles
 CREATE TABLE roles
 (
     id          INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,

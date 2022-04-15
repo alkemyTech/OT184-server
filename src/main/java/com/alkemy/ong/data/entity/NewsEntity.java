@@ -2,7 +2,9 @@ package com.alkemy.ong.data.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -28,35 +30,27 @@ public class NewsEntity {
     @Column(nullable = false)
     private String image;
 
-    @ManyToOne(fetch = FetchType.EAGER,
+    /*@ManyToOne(fetch = FetchType.EAGER,
             cascade = {
                     CascadeType.PERSIST,
                     CascadeType.MERGE
             })
     @JoinColumn(name = "category_id", insertable = false, updatable = false)
-    private CategoryEntity category;
+    private CategoryEntity category;*/
 
     @Column(name = "category_id", nullable = false)
     private Long categoryId;
 
-    @Column(name="is_deleted")
+    @Column(name="is_deleted", nullable = false)
     private boolean isDeleted = Boolean.FALSE;
 
-    @Column(name="created_at", columnDefinition = "TIMESTAMP")
+    @CreationTimestamp
+    @Column(name="created_at", columnDefinition = "TIMESTAMP", updatable = false, nullable = false)
     @DateTimeFormat(pattern = "yyyy/MM/dd hh:mm:ss")
     private LocalDateTime createdAt;
 
+    @UpdateTimestamp
     @Column(name="updated_at", columnDefinition = "TIMESTAMP")
     @DateTimeFormat(pattern = "yyyy/MM/dd hh:mm:ss")
     private LocalDateTime updatedAt;
-
-    @PrePersist
-    public void prePersist(){
-        this.createdAt = LocalDateTime.now();
-    }
-    @PreUpdate
-    public void preUpdate(){
-        this.updatedAt = LocalDateTime.now();
-    }
-
 }

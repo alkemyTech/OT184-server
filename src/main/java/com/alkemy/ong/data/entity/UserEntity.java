@@ -20,6 +20,8 @@ public class UserEntity {
 
   private String password;
 
+  private String photo;
+
   @ManyToOne
   private RoleEntity role;
 }

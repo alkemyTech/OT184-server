@@ -14,22 +14,22 @@ import java.time.LocalDateTime;
 public class RoleEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long  id;
+  private Long id;
 
   @Column(nullable = false)
   private String name;
 
   private String description;
 
-  @Column(name = "created_at", updatable = false)
+  @Column(name = "created_at", updatable = false, nullable = false)
   @CreationTimestamp
   private LocalDateTime createdAt = LocalDateTime.now();
 
-  @Column(name = "updated_at")
+  @Column(name = "updated_at", nullable = false)
   @Temporal(TemporalType.TIMESTAMP)
   private LocalDateTime updatedAt = LocalDateTime.now();
 
-  @Column(name = "is_deleted")
+  @Column(name = "is_deleted", nullable = false)
   @Temporal(TemporalType.TIMESTAMP)
   private boolean isDeleted = Boolean.FALSE;
 

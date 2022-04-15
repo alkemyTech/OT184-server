@@ -8,9 +8,6 @@ public class NewsServiceImpl implements NewsService {
 
 
     public NewsDTO save(NewsDTO newsDTO) {
-        /*
-        *   Convertir dto a model y pasarlo a data
-        */
         NewsDTO result = null;
         return result;
     }

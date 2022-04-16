@@ -23,7 +23,9 @@ public class DefaultCategoryGateway implements CategoryGateway {
 
     @Override
     public Category findById(Long id) {
-        return null;
+        CategoryEntity categoryEntity = categoryRepository.getById(id);
+        Category category = toModel(categoryEntity);
+        return category;
     }
 
     @Override

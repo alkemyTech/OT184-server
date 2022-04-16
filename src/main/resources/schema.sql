@@ -12,8 +12,8 @@ CREATE TABLE IF NOT EXISTS roles
 
 CREATE TABLE IF NOT EXISTS users
 (
-    id         INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    role_id    INT,
+    id         BIGINT       NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    role_id    BIGINT,
     FOREIGN KEY (role_id) REFERENCES roles (id),
     first_name VARCHAR(255) NOT NULL,
     last_name  VARCHAR(255) NOT NULL,

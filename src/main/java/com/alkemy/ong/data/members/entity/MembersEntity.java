@@ -1,4 +1,4 @@
-package com.alkemy.ong.data.entity;
+package com.alkemy.ong.data.members.entity;
 
 import com.sun.istack.NotNull;
 import lombok.Data;
@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Data
 @Table(name = "members")
 @SQLDelete(sql = "UPDATE members SET is_deleted = true WHERE id = ?")
-@Where(clause = "id_deleted = false")
+@Where(clause = "is_deleted = false")
 public class MembersEntity {
 
     @Id

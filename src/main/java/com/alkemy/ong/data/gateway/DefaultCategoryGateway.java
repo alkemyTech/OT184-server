@@ -5,10 +5,12 @@ import com.alkemy.ong.data.repository.CategoryRepository;
 import com.alkemy.ong.domain.category.Category;
 import com.alkemy.ong.domain.category.CategoryGateway;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class DefaultCategoryGateway implements CategoryGateway {
 
     @Autowired

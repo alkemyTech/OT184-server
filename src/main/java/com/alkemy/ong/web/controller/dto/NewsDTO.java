@@ -1,11 +1,13 @@
 package com.alkemy.ong.web.controller.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 
 
 @Data
+@Builder
 public class NewsDTO {
     private Long id;
     @NotEmpty (message = "The field Name must not be empty")
@@ -16,4 +18,5 @@ public class NewsDTO {
     private String image;
     //private CategoryEntity category;
     private Long categoryId;
+    private String type;
 }

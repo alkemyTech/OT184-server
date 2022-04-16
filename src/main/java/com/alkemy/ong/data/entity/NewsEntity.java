@@ -1,8 +1,6 @@
 package com.alkemy.ong.data.entity;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -18,12 +16,13 @@ import java.time.LocalDateTime;
 @Setter
 @SQLDelete(sql = "UPDATE news set is_deleted = true where id = ?")
 @Where(clause = "is_deleted = false")
+@Builder
+@AllArgsConstructor
 public class NewsEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(nullable = false)
     private String name;
     @Column(nullable = false, columnDefinition="TEXT")
@@ -54,4 +53,10 @@ public class NewsEntity {
     @Column(name="updated_at", columnDefinition = "TIMESTAMP")
     @DateTimeFormat(pattern = "yyyy/MM/dd hh:mm:ss")
     private LocalDateTime updatedAt;
+
+    @Column(nullable = false)
+    private String type;
+
+    public NewsEntity() {
+    }
 }

@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "categories")
-@SQLDelete(sql = "UPDATE categories SET deleted = true WHERE id=?")
-@Where(clause = "deleted = false")
+@SQLDelete(sql = "UPDATE categories SET is_deleted = true WHERE id=?")
+@Where(clause = "is_deleted = false")
 public class CategoryEntity {
 
     @Id
@@ -37,5 +37,6 @@ public class CategoryEntity {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    private Boolean deleted = Boolean.FALSE;
+    @Column(name = "is_deleted")
+    private Boolean isDeleted = Boolean.FALSE;
 }

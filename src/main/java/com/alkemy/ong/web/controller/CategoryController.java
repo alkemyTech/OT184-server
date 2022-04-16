@@ -24,8 +24,6 @@ public class CategoryController {
     public ResponseEntity<List<CategoryBasicDTO>> getAllCategoryBasic(){
 
         List<Category> category = categoryService.findAll();
-
-
         List<CategoryBasicDTO> categoryBasicDTOS = category.stream().map(this::toDTOBasic).collect(Collectors.toList());
         return ResponseEntity.ok().body(categoryBasicDTOS);
     }

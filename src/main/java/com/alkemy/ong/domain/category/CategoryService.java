@@ -12,4 +12,6 @@ public class CategoryService {
     public Category findAll(){
         return categoryGateway.findAll();
     }
+
+    public Category findById(Long id){return categoryGateway.findById(id);}
 }

@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "activities")
 @SQLDelete(sql = "UPDATE activity SET deleted = true WHERE id=?")
-@Where(clause = "deleted=false")
+@Where(clause = "is_deleted=false")
 public class ActivityEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

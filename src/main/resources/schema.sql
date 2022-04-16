@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS members (
    description VARCHAR(255) NULL,
    is_deleted BIT(1) NULL,
    created_at datetime NULL,
-   update_at datetime NULL,
+   updated_at datetime NULL,
    CONSTRAINT pk_members PRIMARY KEY (id)
 );
+

@@ -1,31 +1,31 @@
 USE alkemy;
 
 INSERT INTO activities (name, content, image)
-    VALUE ('activity one', 'do activity one description', 'https://www.somebucket.com/activity_one.jpg');
+    VALUE ('activity one', 'do activity one content', 'https://www.somebucket.com/activity_one.jpg');
 
 INSERT INTO activities (name, content, image)
-    VALUE ('activity two', 'do activity two description', 'https://www.somebucket.com/activity_two.jpg');
+    VALUE ('activity two', 'do activity two content', 'https://www.somebucket.com/activity_two.jpg');
 
 INSERT INTO activities (name, content, image)
-    VALUE ('activity three', 'do activity three description', 'https://www.somebucket.com/activity_three.jpg');
+    VALUE ('activity three', 'do activity three content', 'https://www.somebucket.com/activity_three.jpg');
 
 INSERT INTO activities (name, content, image)
-    VALUE ('activity four', 'do activity four description', 'https://www.somebucket.com/activity_four.jpg');
+    VALUE ('activity four', 'do activity four content', 'https://www.somebucket.com/activity_four.jpg');
 
 INSERT INTO activities (name, content, image)
-    VALUE ('activity five', 'do activity five description', 'https://www.somebucket.com/activity_five.jpg');
+    VALUE ('activity five', 'do activity five content', 'https://www.somebucket.com/activity_five.jpg');
 
 INSERT INTO activities (name, content, image)
-    VALUE ('activity six', 'do activity six description', 'https://www.somebucket.com/activity_six.jpg');
+    VALUE ('activity six', 'do activity six content', 'https://www.somebucket.com/activity_six.jpg');
 
 INSERT INTO activities (name, content, image)
-    VALUE ('activity seven', 'do activity seven description', 'https://www.somebucket.com/activity_seven.jpg');
+    VALUE ('activity seven', 'do activity seven content', 'https://www.somebucket.com/activity_seven.jpg');
 
 INSERT INTO activities (name, content, image)
-    VALUE ('activity eight', 'do activity eight description', 'https://www.somebucket.com/activity_eight.jpg');
+    VALUE ('activity eight', 'do activity eight content', 'https://www.somebucket.com/activity_eight.jpg');
 
 INSERT INTO activities (name, content, image)
-    VALUE ('activity nine', 'do activity nine description', 'https://www.somebucket.com/activity_nine.jpg');
+    VALUE ('activity nine', 'do activity nine content', 'https://www.somebucket.com/activity_nine.jpg');
 
 INSERT INTO activities (name, content, image)
-    VALUE ('activity ten', 'do activity ten description', 'https://www.somebucket.com/activity_ten.jpg');
+    VALUE ('activity ten', 'do activity ten content', 'https://www.somebucket.com/activity_ten.jpg');

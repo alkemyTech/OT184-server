@@ -1,6 +1,6 @@
 USE alkemy;
 
-CREATE TABLE activities
+CREATE TABLE IF NOT EXISTS activities
 (
     id         INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name       VARCHAR(255) NOT NULL,

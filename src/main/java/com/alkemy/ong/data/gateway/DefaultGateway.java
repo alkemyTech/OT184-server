@@ -16,6 +16,12 @@ public class DefaultGateway implements NewsGateway {
     NewsRepository newsRepository;
     @Autowired
     NewsMapper newsMapper;
+
+    /**
+     * Recibe un objeto de tipo model, lo guarda en la db y devuelve el mismo objeto con la id generada.
+     * @param news
+     * @return news
+     */
     @Override
     public News save(News news) {
         NewsEntity newsEntity = newsMapper.modelToEntity(news);

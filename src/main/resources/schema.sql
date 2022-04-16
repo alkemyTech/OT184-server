@@ -2,7 +2,7 @@ USE alkemy;
 
 CREATE TABLE IF NOT EXISTS activities
 (
-    id         INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id         BIGINT       NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name       VARCHAR(255) NOT NULL,
     content    TEXT         NOT NULL,
     image      VARCHAR(255) NOT NULL,

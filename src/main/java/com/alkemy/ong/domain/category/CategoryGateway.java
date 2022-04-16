@@ -1,8 +1,10 @@
 package com.alkemy.ong.domain.category;
 
+import java.util.List;
+
 public interface CategoryGateway {
 
-    Category findAll();
+    List<Category> findAll();
 
     Category findById(Long id);
 

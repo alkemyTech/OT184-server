@@ -1,6 +1,7 @@
 package com.alkemy.ong.data.gateway;
 
 import com.alkemy.ong.data.entity.NewsEntity;
+import com.alkemy.ong.data.mapper.NewsMapper;
 import com.alkemy.ong.data.repository.NewsRepository;
 import com.alkemy.ong.domain.gateway.NewsGateway;
 import com.alkemy.ong.domain.model.News;
@@ -13,14 +14,11 @@ public class DefaultGateway implements NewsGateway {
 
     @Autowired
     NewsRepository newsRepository;
+    @Autowired
+    NewsMapper newsMapper;
     @Override
     public News save(News news) {
-        NewsEntity newsEntity = NewsEntity.builder().name(news.getName())
-                .content(news.getContent())
-                .image(news.getImage())
-                .categoryId(news.getCategoryId())
-                .type("news")
-                .build();
+        NewsEntity newsEntity = newsMapper.modelToEntity(news);
         newsRepository.save(newsEntity);
         return news;
     }

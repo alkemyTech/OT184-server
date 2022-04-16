@@ -21,4 +21,12 @@ public class CategoryMapper {
                 .image(category.getImage())
                 .build();
     }
+
+    public static Category toModel(CategoryDTO categoryDTO){
+        return Category.builder()
+                .name(categoryDTO.getName())
+                .description(categoryDTO.getDescription())
+                .image(categoryDTO.getImage())
+                .build();
+    }
 }

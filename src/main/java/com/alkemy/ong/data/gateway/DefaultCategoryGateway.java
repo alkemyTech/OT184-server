@@ -7,6 +7,7 @@ import com.alkemy.ong.domain.category.CategoryGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DefaultCategoryGateway implements CategoryGateway {
 
@@ -15,7 +16,9 @@ public class DefaultCategoryGateway implements CategoryGateway {
 
     @Override
     public List<Category> findAll() {
-        return null;
+        List<CategoryEntity> entities = categoryRepository.findAll();
+        List<Category> categories = entities.stream().map(this::toModel).collect(Collectors.toList());
+        return categories;
     }
 
     @Override
@@ -26,5 +29,14 @@ public class DefaultCategoryGateway implements CategoryGateway {
     @Override
     public Category save(Category category) {
         return null;
+    }
+
+    private Category toModel(CategoryEntity categoryEntity) {
+        return Category.builder()
+                .name(categoryEntity.getName())
+                .description(categoryEntity.getDescription())
+                .image(categoryEntity.getImage())
+                .build();
+
     }
 }

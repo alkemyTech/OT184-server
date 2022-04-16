@@ -44,6 +44,7 @@ public class MembersEntity {
     @Column(name="is_deleted")
     private Boolean isDeleted = Boolean.FALSE;
 
+    //created_ad
     @Column(name="created_at",  updatable=false)
     @CreationTimestamp
     private LocalDateTime createdAt;

@@ -1,6 +1,6 @@
 USE alkemy;
 
-CREATE TABLE roles
+CREATE TABLE IF NOT EXISTS roles
 (
     id          INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name        VARCHAR(255) NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE roles
     is_deleted  BOOL         NOT NULL DEFAULT FALSE
 );
 
-CREATE TABLE users
+CREATE TABLE IF NOT EXISTS users
 (
     id         INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
     role_id    INT,

@@ -44,13 +44,12 @@ public class MembersEntity {
     @Column(name="is_deleted")
     private Boolean isDeleted = Boolean.FALSE;
 
-    //created_ad
     @Column(name="created_at",  updatable=false)
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @Column(name="update_at")
+    @Column(name="updated_at")
     @UpdateTimestamp
-    private LocalDateTime updateAt;
+    private LocalDateTime updatedAt;
 
 }

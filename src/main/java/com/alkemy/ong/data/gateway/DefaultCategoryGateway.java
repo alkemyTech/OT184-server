@@ -30,7 +30,10 @@ public class DefaultCategoryGateway implements CategoryGateway {
 
     @Override
     public Category save(Category category) {
-        return null;
+        CategoryEntity categoryEntity = toEntity(category);
+        CategoryEntity categorySaved = categoryRepository.save(categoryEntity);
+        Category result = toModel(categorySaved);
+        return result;
     }
 
     private Category toModel(CategoryEntity categoryEntity) {
@@ -41,4 +44,14 @@ public class DefaultCategoryGateway implements CategoryGateway {
                 .build();
 
     }
+
+    private CategoryEntity toEntity(Category category) {
+        return CategoryEntity.builder()
+                .name(category.getName())
+                .description(category.getDescription())
+                .image(category.getImage())
+                .build();
+    }
+
+
 }

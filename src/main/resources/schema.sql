@@ -2,7 +2,7 @@ USE alkemy;
 
 CREATE TABLE IF NOT EXISTS roles
 (
-    id          INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id          BIGINT       NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name        VARCHAR(255) NOT NULL,
     description VARCHAR(255) NULL,
     created_at  DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP(),

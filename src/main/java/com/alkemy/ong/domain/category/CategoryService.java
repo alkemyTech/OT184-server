@@ -12,4 +12,8 @@ public class CategoryService {
     public Category findAll(){
         return categoryGateway.findAll();
     }
+
+    public Category findById(Long id){return categoryGateway.findById(id);}
+
+    public Category save(Category category){return categoryGateway.save(category);}
 }

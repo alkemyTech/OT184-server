@@ -1,7 +1,9 @@
 package com.alkemy.ong.web.controller.mapper;
 import com.alkemy.ong.domain.model.News;
 import com.alkemy.ong.web.controller.dto.NewsDTO;
+import org.springframework.stereotype.Component;
 
+@Component
 public class NewsMapper {
 
     public NewsDTO modelToDTO(News news){

@@ -6,11 +6,9 @@ import com.alkemy.ong.web.dto.CategoryBasicDTO;
 import com.alkemy.ong.web.dto.CategoryDTO;
 import com.alkemy.ong.web.mapper.CategoryMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -32,5 +30,13 @@ public class CategoryController {
         Category category = categoryService.findById(id);
         CategoryDTO categoryDTO = CategoryMapper.toDTO(category);
         return ResponseEntity.ok(categoryDTO);
+    }
+
+    @PostMapping
+    public  ResponseEntity<CategoryDTO> save(@RequestBody CategoryDTO categoryDTO){
+        Category category = CategoryMapper.toModel(categoryDTO);
+        Category categorySaved = categoryService.save(category);
+        CategoryDTO result = CategoryMapper.toDTO(categorySaved);
+        return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 }

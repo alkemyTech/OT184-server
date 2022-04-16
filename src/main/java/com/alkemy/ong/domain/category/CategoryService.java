@@ -3,13 +3,15 @@ package com.alkemy.ong.domain.category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CategoryService {
 
     @Autowired
     private CategoryGateway categoryGateway;
 
-    public Category findAll(){
+    public List<Category> findAll(){
         return categoryGateway.findAll();
     }
 

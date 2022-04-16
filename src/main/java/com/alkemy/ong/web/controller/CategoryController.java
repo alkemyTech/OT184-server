@@ -9,6 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @RestController
 @RequestMapping("/categories")
@@ -18,9 +21,12 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<CategoryBasicDTO> getAllCategoryBasic(){
+    public ResponseEntity<List<CategoryBasicDTO>> getAllCategoryBasic(){
 
-        CategoryBasicDTO categoryBasicDTOS = toDTOBasic(categoryService.findAll());
+        List<Category> category = categoryService.findAll();
+
+
+        List<CategoryBasicDTO> categoryBasicDTOS = category.stream().map(this::toDTOBasic).collect(Collectors.toList());
         return ResponseEntity.ok().body(categoryBasicDTOS);
     }
 
@@ -39,13 +45,13 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
-    public static CategoryBasicDTO toDTOBasic(Category category) {
+    public CategoryBasicDTO toDTOBasic(Category category) {
         return CategoryBasicDTO.builder()
                 .name(category.getName())
                 .build();
     }
 
-    public static CategoryDTO toDTO(Category category) {
+    public CategoryDTO toDTO(Category category) {
         return CategoryDTO.builder()
                 .name(category.getName())
                 .description(category.getDescription())
@@ -53,7 +59,7 @@ public class CategoryController {
                 .build();
     }
 
-    public static Category toModel(CategoryDTO categoryDTO){
+    public Category toModel(CategoryDTO categoryDTO){
         return Category.builder()
                 .name(categoryDTO.getName())
                 .description(categoryDTO.getDescription())

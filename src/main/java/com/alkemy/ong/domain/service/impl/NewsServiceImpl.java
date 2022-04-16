@@ -1,7 +1,6 @@
 package com.alkemy.ong.domain.service.impl;
 
 import com.alkemy.ong.domain.gateway.NewsGateway;
-import com.alkemy.ong.domain.gateway.impl.NewsGatewayImpl;
 import com.alkemy.ong.domain.service.NewsService;
 import com.alkemy.ong.web.controller.dto.NewsDTO;
 import org.springframework.beans.factory.annotation.Autowired;

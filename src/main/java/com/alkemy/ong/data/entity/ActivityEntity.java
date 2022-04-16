@@ -1,6 +1,8 @@
 package com.alkemy.ong.data.entity;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -25,21 +27,13 @@ public class ActivityEntity {
   private String image;
 
   @Column(name = "created_at", updatable = false, nullable = false)
+  @CreationTimestamp
   private LocalDateTime createdAt;
 
   @Column(name = "updated_at", nullable = false)
+  @UpdateTimestamp
   private LocalDateTime updatedAt;
 
   @Column(name = "is_deleted", nullable = false)
   private boolean isDeleted = Boolean.FALSE;
-
-  @PrePersist
-  public void onCreate() {
-    createdAt = updatedAt = LocalDateTime.now();
-  }
-
-  @PreUpdate
-  public void onUpdate() {
-    updatedAt = LocalDateTime.now();
-  }
 }

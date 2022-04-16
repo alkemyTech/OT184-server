@@ -5,4 +5,6 @@ public interface CategoryGateway {
     Category findAll();
 
     Category findById(Long id);
+
+    Category save(Category category);
 }

@@ -1,4 +1,6 @@
-package com.alkemy.ong.domain.category;
+package com.alkemy.ong.domain.gateway;
+
+import com.alkemy.ong.domain.model.Category;
 
 import java.util.List;
 

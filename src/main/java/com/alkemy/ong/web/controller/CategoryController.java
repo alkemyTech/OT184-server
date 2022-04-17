@@ -1,7 +1,7 @@
 package com.alkemy.ong.web.controller;
 
-import com.alkemy.ong.domain.category.Category;
-import com.alkemy.ong.domain.category.CategoryService;
+import com.alkemy.ong.domain.model.Category;
+import com.alkemy.ong.domain.service.CategoryService;
 import com.alkemy.ong.web.dto.CategoryBasicDTO;
 import com.alkemy.ong.web.dto.CategoryDTO;
 import org.springframework.beans.factory.annotation.Autowired;

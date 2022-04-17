@@ -1,5 +1,7 @@
-package com.alkemy.ong.domain.category;
+package com.alkemy.ong.domain.service;
 
+import com.alkemy.ong.domain.gateway.CategoryGateway;
+import com.alkemy.ong.domain.model.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

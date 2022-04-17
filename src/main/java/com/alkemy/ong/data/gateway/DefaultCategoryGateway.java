@@ -2,8 +2,8 @@ package com.alkemy.ong.data.gateway;
 
 import com.alkemy.ong.data.entity.CategoryEntity;
 import com.alkemy.ong.data.repository.CategoryRepository;
-import com.alkemy.ong.domain.category.Category;
-import com.alkemy.ong.domain.category.CategoryGateway;
+import com.alkemy.ong.domain.model.Category;
+import com.alkemy.ong.domain.gateway.CategoryGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

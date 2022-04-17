@@ -1,10 +1,12 @@
 package com.alkemy.ong.web.members.dto;
 
 import com.sun.istack.NotNull;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
-public class MembersDTO {
+@Builder
+public class MemberDTO {
     private Long id;
     @NotNull
     private String name;

@@ -1,15 +1,15 @@
 package com.alkemy.ong.web.members.controller;
 
-import com.alkemy.ong.data.members.service.MembersIEntity;
-import com.alkemy.ong.domain.members.model.MembersModel;
-import com.alkemy.ong.web.members.dto.MembersDTO;
-import com.alkemy.ong.web.members.mapper.MembersMapper;
+import com.alkemy.ong.data.members.service.DefaultGateway;
+import com.alkemy.ong.domain.members.model.Members;
+import com.alkemy.ong.web.members.dto.MemberDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -17,20 +17,29 @@ import java.util.List;
 public class MembersController {
 
 
-    private MembersIEntity membersIEntity;
-    private MembersMapper membersMapper;
+    private final DefaultGateway defaultGateway;
 
     @Autowired
-    public MembersController (MembersIEntity membersIEntity, MembersMapper membersMapper){
-        this.membersMapper = membersMapper;
-        this.membersIEntity = membersIEntity;
+    public MembersController (DefaultGateway defaultGateway){
+        this.defaultGateway = defaultGateway;
     }
 
     @GetMapping
-    public ResponseEntity<List<MembersDTO>> getAll(){
-        List<MembersModel> membersModels = membersIEntity.getAll();
-        List<MembersDTO> membersDTOS = membersMapper.membersModelToDTO(membersModels);
-        return ResponseEntity.ok().body(membersDTOS);
+    public ResponseEntity<List<MemberDTO>> getAll(){
+        List<Members> membersModels = defaultGateway.getAll();
+        List<MemberDTO> memberDTO = new ArrayList<>();
+        membersModels.forEach((Members) -> memberDTO.add(
+                MemberDTO.builder()
+                .id(Members.getId())
+                .name(Members.getName())
+                .facebookUrl(Members.getFacebookUrl())
+                .instagramUrl(Members.getInstagramUrl())
+                .linkedinUrl(Members.getLinkedinUrl())
+                .image(Members.getImage())
+                .description(Members.getDescription())
+                .build()
+        ));
+        return ResponseEntity.ok().body(memberDTO);
     }
 
 

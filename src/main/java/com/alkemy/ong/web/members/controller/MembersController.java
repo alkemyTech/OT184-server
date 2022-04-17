@@ -2,6 +2,7 @@ package com.alkemy.ong.web.members.controller;
 
 import com.alkemy.ong.data.members.service.DefaultGateway;
 import com.alkemy.ong.domain.members.model.Members;
+import com.alkemy.ong.domain.members.service.Gateway;
 import com.alkemy.ong.web.members.dto.MemberDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,16 +18,16 @@ import java.util.List;
 public class MembersController {
 
 
-    private final DefaultGateway defaultGateway;
+    private final Gateway gateway;
 
     @Autowired
-    public MembersController (DefaultGateway defaultGateway){
-        this.defaultGateway = defaultGateway;
+    public MembersController (Gateway gateway){
+        this.gateway = gateway;
     }
 
     @GetMapping
     public ResponseEntity<List<MemberDTO>> getAll(){
-        List<Members> membersModels = defaultGateway.getAll();
+        List<Members> membersModels = gateway.getAll();
         List<MemberDTO> memberDTO = new ArrayList<>();
         membersModels.forEach((Members) -> memberDTO.add(
                 MemberDTO.builder()

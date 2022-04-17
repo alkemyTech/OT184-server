@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,7 +37,7 @@ public class CategoryController {
     }
 
     @PostMapping
-    public  ResponseEntity<CategoryDTO> save(@RequestBody CategoryDTO categoryDTO){
+    public  ResponseEntity<CategoryDTO> save(@Valid @RequestBody CategoryDTO categoryDTO){
         Category category = toModel(categoryDTO);
         Category categorySaved = categoryService.save(category);
         CategoryDTO result = toDTO(categorySaved);

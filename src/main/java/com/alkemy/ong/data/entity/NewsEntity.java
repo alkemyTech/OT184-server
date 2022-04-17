@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 @SQLDelete(sql = "UPDATE news set is_deleted = true where id = ?")
 @Where(clause = "is_deleted = false")
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class NewsEntity {
 
@@ -57,6 +58,4 @@ public class NewsEntity {
     @Column(nullable = false)
     private String type;
 
-    public NewsEntity() {
-    }
 }

@@ -31,6 +31,6 @@ public class testimonialEntity {
     @UpdateTimestamp
     @Column(name = "updatedAt")
     private LocalDateTime updatedAt;
-    @Column(name = "idDeleted")
+    @Column(name = "isDeleted")
     private boolean isDeleted = false;
 }

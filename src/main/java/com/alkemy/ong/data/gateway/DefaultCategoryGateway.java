@@ -5,9 +5,12 @@ import com.alkemy.ong.data.repository.CategoryRepository;
 import com.alkemy.ong.domain.model.Category;
 import com.alkemy.ong.domain.gateway.CategoryGateway;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -25,8 +28,11 @@ public class DefaultCategoryGateway implements CategoryGateway {
 
     @Override
     public Category findById(Long id) {
-        CategoryEntity categoryEntity = categoryRepository.getById(id);
-        Category category = toModel(categoryEntity);
+        Optional<CategoryEntity> categoryEntity = categoryRepository.findById(id);
+        if(!categoryEntity.isPresent()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        Category category = toModel(categoryEntity.get());
         return category;
     }
 

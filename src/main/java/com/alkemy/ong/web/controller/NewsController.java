@@ -26,7 +26,7 @@ public class NewsController {
 
     @PostMapping
     public ResponseEntity<NewsDTO> save(@Valid @RequestBody NewsDTO newsDTO){
-        News returnNews =  newsService.save(newsDTOMapper.DTOToModel(newsDTO));
-        return ResponseEntity.status(HttpStatus.CREATED).body(newsDTOMapper.modelToDTO(returnNews));
+        News returnModel =  newsService.save(newsDTOMapper.DTOToModel(newsDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(newsDTOMapper.modelToDTO(returnModel));
     }
 }

@@ -5,7 +5,7 @@ import com.alkemy.ong.domain.model.News;
 import org.springframework.stereotype.Component;
 
 @Component
-public class NewsMapper {
+public class NewsModelMapper {
 
     public NewsEntity modelToEntity(News news){
         NewsEntity returnEntity = NewsEntity.builder()

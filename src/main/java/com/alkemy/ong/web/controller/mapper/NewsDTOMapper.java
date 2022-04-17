@@ -4,7 +4,7 @@ import com.alkemy.ong.web.controller.dto.NewsDTO;
 import org.springframework.stereotype.Component;
 
 @Component
-public class NewsMapper {
+public class NewsDTOMapper {
 
     public NewsDTO modelToDTO(News news){
         NewsDTO returnDTO = NewsDTO.builder()

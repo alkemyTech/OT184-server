@@ -1,4 +1,4 @@
-package com.alkemy.ong.web.exception;
+package com.alkemy.ong.web.exceptions;
 
 public class ParamNotFound extends RuntimeException {
   public ParamNotFound(String message) {

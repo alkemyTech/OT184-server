@@ -1,7 +1,7 @@
 package com.alkemy.ong.web.controllers;
 
 
-import com.alkemy.ong.web.exception.ParamNotFound;
+import com.alkemy.ong.web.exceptions.ParamNotFound;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.http.HttpHeaders;

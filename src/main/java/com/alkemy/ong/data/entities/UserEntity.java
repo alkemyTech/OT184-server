@@ -1,6 +1,7 @@
 package com.alkemy.ong.data.entity;
 
 
+import com.alkemy.ong.data.entities.RoleEntity;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;

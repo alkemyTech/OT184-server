@@ -2,9 +2,8 @@ package com.alkemy.ong.web.controllers;
 
 import com.alkemy.ong.domain.models.Category;
 import com.alkemy.ong.domain.services.CategoryService;
-import com.alkemy.ong.web.dtos.CategoryBasicDTO;
-import com.alkemy.ong.web.dtos.CategoryDTO;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.Builder;
+import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +18,7 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
-    private CategoryController (CategoryService categoryService){
+    public CategoryController (CategoryService categoryService){
         this.categoryService = categoryService;
     }
 
@@ -44,6 +43,20 @@ public class CategoryController {
         Category categorySaved = categoryService.save(category);
         CategoryDTO result = toDTO(categorySaved);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
+    }
+
+    @Data
+    @Builder
+    private static class CategoryDTO {
+        private String name;
+        private String description;
+        private String image;
+    }
+
+    @Data
+    @Builder
+    private static class CategoryBasicDTO {
+        private String name;
     }
 
     private CategoryBasicDTO toDTOBasic(Category category) {

@@ -20,7 +20,8 @@ public class DefaultGateway implements NewsGateway {
     NewsModelMapper newsModelMapper;
     @Override
     public void delete(Long id) {
-
+        this.findById(id);
+        newsRepository.deleteById(id);
     }
 
     @Override

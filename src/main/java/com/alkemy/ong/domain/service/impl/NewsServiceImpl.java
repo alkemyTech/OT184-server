@@ -13,7 +13,7 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public void delete(Long id) {
-
+        newsGateway.delete(id);
     }
 
     @Override

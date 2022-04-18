@@ -13,18 +13,20 @@ public class ActivityDefaultGateway implements ActivityGateway {
   @Override
   public Activity save(Activity activity) {
 
-    ActivityEntity savedActivityEntity = activityRepository.save(
-        ActivityEntity.builder()
-            .name(activity.getName())
-            .content(activity.getContent())
-            .image(activity.getImage())
-            .build()
-    );
+    ActivityEntity savedActivityEntity = activityRepository.save(activity2ActivityEntity(activity));
 
     return Activity.builder()
         .name(savedActivityEntity.getName())
         .content(savedActivityEntity.getContent())
         .image(savedActivityEntity.getImage())
+        .build();
+  }
+
+  private ActivityEntity activity2ActivityEntity(Activity activity) {
+    return ActivityEntity.builder()
+        .name(activity.getName())
+        .content(activity.getContent())
+        .image(activity.getImage())
         .build();
   }
 }

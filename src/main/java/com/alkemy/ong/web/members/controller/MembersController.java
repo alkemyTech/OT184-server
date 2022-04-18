@@ -30,16 +30,12 @@ public class MembersController {
         List<Members> membersModels = gateway.getAll();
         List<MemberDTO> memberDTO = new ArrayList<>();
         membersModels.forEach((Members) -> memberDTO.add(
-                MemberDTO.builder()
-                .id(Members.getId())
-                .name(Members.getName())
-                .facebookUrl(Members.getFacebookUrl())
-                .instagramUrl(Members.getInstagramUrl())
-                .linkedinUrl(Members.getLinkedinUrl())
-                .image(Members.getImage())
-                .description(Members.getDescription())
-                .build()
-        ));
+                MemberDTO
+                        .builder().id(Members.getId()).name(Members.getName())
+                        .facebookUrl(Members.getFacebookUrl()).instagramUrl(Members.getInstagramUrl())
+                        .linkedinUrl(Members.getLinkedinUrl()).image(Members.getImage())
+                        .description(Members.getDescription()).build()
+                ));
         return ResponseEntity.ok().body(memberDTO);
     }
 

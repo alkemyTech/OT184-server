@@ -1,8 +1,9 @@
 package com.alkemy.ong.web.controller;
 
 
-import com.alkemy.ong.web.dto.ApiErrorDto;
 import com.alkemy.ong.web.exception.ParamNotFound;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,5 +56,16 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
   public ResponseEntity<Object> handleConflict(RuntimeException ex, WebRequest request) {
     String bodyOfResponse = "This should be application specific";
     return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.CONFLICT, request);
+  }
+
+
+  @Data
+  @AllArgsConstructor
+  private static class ApiErrorDto {
+
+    private HttpStatus status;
+    private String message;
+    private List<String> errors;
+
   }
 }

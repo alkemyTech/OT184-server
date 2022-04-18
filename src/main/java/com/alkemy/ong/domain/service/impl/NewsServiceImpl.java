@@ -11,4 +11,8 @@ public class NewsServiceImpl implements NewsService {
     @Autowired
     NewsGateway newsGateway;
 
+    @Override
+    public News getDetails(Long id) {
+        return newsGateway.getDetails(id);
+    }
 }

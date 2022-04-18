@@ -1,6 +1,7 @@
 package com.alkemy.ong.data.gateway;
 
 import com.alkemy.ong.data.entity.NewsEntity;
+import com.alkemy.ong.data.exception.ParamNotFoundException;
 import com.alkemy.ong.data.mapper.NewsModelMapper;
 import com.alkemy.ong.data.repository.NewsRepository;
 import com.alkemy.ong.domain.gateway.NewsGateway;

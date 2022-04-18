@@ -1,6 +1,6 @@
 package com.alkemy.ong.web.controller;
 
-import com.alkemy.ong.domain.model.Activity;
+import com.alkemy.ong.domain.activity.Activity;
 import com.alkemy.ong.domain.activity.ActivityService;
 import com.alkemy.ong.web.dto.ActivityDto;
 import org.springframework.beans.factory.annotation.Autowired;

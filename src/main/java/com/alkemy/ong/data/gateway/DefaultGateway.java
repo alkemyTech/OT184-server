@@ -26,4 +26,9 @@ public class DefaultGateway implements NewsGateway {
         News returnModel = newsModelMapper.entityToModel(optional.get());
         return returnModel;
     }
+
+    @Override
+    public News getDetails(Long id) {
+        return this.findById(id);
+    }
 }

@@ -15,6 +15,10 @@ public class ActivityDefaultGateway implements ActivityGateway {
 
     ActivityEntity savedActivityEntity = activityRepository.save(activity2ActivityEntity(activity));
 
+    return activityEntity2Activity(savedActivityEntity);
+  }
+
+  private Activity activityEntity2Activity(ActivityEntity savedActivityEntity) {
     return Activity.builder()
         .name(savedActivityEntity.getName())
         .content(savedActivityEntity.getContent())

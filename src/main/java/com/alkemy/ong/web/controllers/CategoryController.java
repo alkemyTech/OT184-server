@@ -1,7 +1,7 @@
 package com.alkemy.ong.web.controllers;
 
-import com.alkemy.ong.domain.models.Category;
-import com.alkemy.ong.domain.services.CategoryService;
+import com.alkemy.ong.domain.categories.Category;
+import com.alkemy.ong.domain.categories.CategoryService;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.http.HttpStatus;

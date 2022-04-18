@@ -2,8 +2,8 @@ package com.alkemy.ong.data.gateways;
 
 import com.alkemy.ong.data.entities.CategoryEntity;
 import com.alkemy.ong.data.repositories.CategoryRepository;
-import com.alkemy.ong.domain.models.Category;
-import com.alkemy.ong.domain.gateways.CategoryGateway;
+import com.alkemy.ong.domain.categories.Category;
+import com.alkemy.ong.domain.categories.CategoryGateway;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;

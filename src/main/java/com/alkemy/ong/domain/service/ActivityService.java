@@ -1,7 +1,17 @@
 package com.alkemy.ong.domain.service;
 
+import com.alkemy.ong.domain.gateway.ActivityGateway;
 import com.alkemy.ong.domain.model.Activity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public interface ActivityService {
-  public Activity save(Activity activity);
+@Service
+public class ActivityService {
+
+  @Autowired
+  ActivityGateway activityGateway;
+
+  public Activity save(Activity activity) {
+    return activityGateway.save(activity);
+  }
 }

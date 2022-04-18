@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import java.util.List;
 import static java.util.stream.Collectors.*;
@@ -51,6 +52,7 @@ public class CategoryController {
     @Builder
     private static class CategoryDTO {
         private Long id;
+        @NotEmpty(message = "The field must be a name")
         @Pattern(regexp = "[A-Za-z]*$")
         private String name;
         private String description;

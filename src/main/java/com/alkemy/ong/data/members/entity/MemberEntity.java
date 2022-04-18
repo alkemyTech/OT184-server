@@ -1,9 +1,8 @@
-package com.alkemy.ong.data.entity;
+package com.alkemy.ong.data.members.entity;
 
 import com.sun.istack.NotNull;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -16,10 +15,10 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 @Table(name = "members")
-@SQLDelete(sql = "UPDATE members SET is_deleted = true WHERE id = ?")
-@Where(clause = "id_deleted = false")
-@NoArgsConstructor
-public class MembersEntity {
+@SQLDelete(sql = "UPDATE members SET is_deleted=true WHERE id=?")
+@Where(clause = "is_deleted = false")
+@NoArgsConstructor(force = true)
+public class MemberEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,7 +45,7 @@ public class MembersEntity {
     private String description;
 
     @Column(name="is_deleted")
-    private Boolean isDeleted = Boolean.FALSE;
+    private Boolean isDeleted;
 
     @Column(name="created_at",  updatable=false)
     @CreationTimestamp

@@ -19,12 +19,12 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
-    public CategoryController (CategoryService categoryService){
+    private CategoryController (CategoryService categoryService){
         this.categoryService = categoryService;
     }
 
     @GetMapping
-    public ResponseEntity<List<CategoryBasicDTO>> getAllCategoryBasic(){
+    private ResponseEntity<List<CategoryBasicDTO>> getAllCategoryBasic(){
 
         List<Category> category = categoryService.findAll();
         List<CategoryBasicDTO> categoryBasicDTOS = category.stream().map(this::toDTOBasic).collect(Collectors.toList());
@@ -32,27 +32,27 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CategoryDTO> getCategoryByID(@PathVariable Long id){
+    private ResponseEntity<CategoryDTO> getCategoryByID(@PathVariable Long id){
         Category category = categoryService.findById(id);
         CategoryDTO categoryDTO = toDTO(category);
         return ResponseEntity.ok().body(categoryDTO);
     }
 
     @PostMapping
-    public  ResponseEntity<CategoryDTO> save(@RequestBody CategoryDTO categoryDTO){
+    private  ResponseEntity<CategoryDTO> save(@RequestBody CategoryDTO categoryDTO){
         Category category = toModel(categoryDTO);
         Category categorySaved = categoryService.save(category);
         CategoryDTO result = toDTO(categorySaved);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
-    public CategoryBasicDTO toDTOBasic(Category category) {
+    private CategoryBasicDTO toDTOBasic(Category category) {
         return CategoryBasicDTO.builder()
                 .name(category.getName())
                 .build();
     }
 
-    public CategoryDTO toDTO(Category category) {
+    private CategoryDTO toDTO(Category category) {
         return CategoryDTO.builder()
                 .name(category.getName())
                 .description(category.getDescription())
@@ -60,7 +60,7 @@ public class CategoryController {
                 .build();
     }
 
-    public Category toModel(CategoryDTO categoryDTO){
+    private Category toModel(CategoryDTO categoryDTO){
         return Category.builder()
                 .name(categoryDTO.getName())
                 .description(categoryDTO.getDescription())

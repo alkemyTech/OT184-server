@@ -18,6 +18,6 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public News findById(Long id) {
-        return null;
+        return newsGateway.findById(id);
     }
 }

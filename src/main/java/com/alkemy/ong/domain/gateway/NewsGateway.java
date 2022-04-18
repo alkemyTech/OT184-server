@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface NewsGateway {
 
-    public void delete(Long id);
+    void delete(Long id);
     News findById(Long id);
 
 }

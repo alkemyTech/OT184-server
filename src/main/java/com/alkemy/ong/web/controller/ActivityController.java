@@ -2,7 +2,8 @@ package com.alkemy.ong.web.controller;
 
 import com.alkemy.ong.domain.activity.Activity;
 import com.alkemy.ong.domain.activity.ActivityService;
-import com.alkemy.ong.web.dto.ActivityDto;
+import lombok.Builder;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 
 @RestController
 @RequestMapping("/activities")
@@ -41,4 +43,18 @@ public class ActivityController {
                 .build()
         );
   }
+
+  @Builder
+  @Data
+  public static class ActivityDto {
+    @NotBlank(message = "Name is required")
+    String name;
+
+    @NotBlank(message = "Content is required")
+    String content;
+
+    @NotBlank(message = "Image is required")
+    String image;
+  }
+
 }

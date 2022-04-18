@@ -1,6 +1,6 @@
 package com.alkemy.ong.domain.activity;
 
-import com.alkemy.ong.data.entity.ActivityEntity;
+import com.alkemy.ong.data.entities.ActivityEntity;
 import com.alkemy.ong.data.repository.ActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -35,13 +35,15 @@ public class ActivityController {
 
     return ResponseEntity
         .status(HttpStatus.CREATED)
-        .body(
-            ActivityDto.builder()
-                .name(saveActivity.getName())
-                .content(saveActivity.getContent())
-                .image(saveActivity.getImage())
-                .build()
-        );
+        .body(activity2Dto(saveActivity));
+  }
+
+  private ActivityDto activity2Dto(Activity saveActivity) {
+    return ActivityDto.builder()
+        .name(saveActivity.getName())
+        .content(saveActivity.getContent())
+        .image(saveActivity.getImage())
+        .build();
   }
 
   @Builder

@@ -1,20 +1,25 @@
-package com.alkemy.ong.data.gateway;
+package com.alkemy.ong.data.gateways;
 
-import com.alkemy.ong.data.entity.CategoryEntity;
-import com.alkemy.ong.data.repository.CategoryRepository;
-import com.alkemy.ong.domain.model.Category;
-import com.alkemy.ong.domain.gateway.CategoryGateway;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.alkemy.ong.data.entities.CategoryEntity;
+import com.alkemy.ong.data.repositories.CategoryRepository;
+import com.alkemy.ong.domain.models.Category;
+import com.alkemy.ong.domain.gateways.CategoryGateway;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
 public class DefaultCategoryGateway implements CategoryGateway {
 
-    @Autowired
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
+    
+    public DefaultCategoryGateway(CategoryRepository categoryRepository){
+        this.categoryRepository = categoryRepository;
+    }
 
     @Override
     public List<Category> findAll() {
@@ -25,8 +30,11 @@ public class DefaultCategoryGateway implements CategoryGateway {
 
     @Override
     public Category findById(Long id) {
-        CategoryEntity categoryEntity = categoryRepository.getById(id);
-        Category category = toModel(categoryEntity);
+        Optional<CategoryEntity> categoryEntity = categoryRepository.findById(id);
+        if (categoryEntity.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        Category category = toModel(categoryEntity.get());
         return category;
     }
 
@@ -52,6 +60,7 @@ public class DefaultCategoryGateway implements CategoryGateway {
                 .name(category.getName())
                 .description(category.getDescription())
                 .image(category.getImage())
+                .isDeleted(false)
                 .build();
     }
 

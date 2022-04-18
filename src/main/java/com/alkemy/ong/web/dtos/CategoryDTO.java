@@ -1,4 +1,4 @@
-package com.alkemy.ong.web.dto;
+package com.alkemy.ong.web.dtos;
 
 import lombok.Builder;
 import lombok.Getter;

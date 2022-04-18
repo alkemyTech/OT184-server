@@ -1,9 +1,9 @@
-package com.alkemy.ong.web.controller;
+package com.alkemy.ong.web.controllers;
 
-import com.alkemy.ong.domain.model.Category;
-import com.alkemy.ong.domain.service.CategoryService;
-import com.alkemy.ong.web.dto.CategoryBasicDTO;
-import com.alkemy.ong.web.dto.CategoryDTO;
+import com.alkemy.ong.domain.models.Category;
+import com.alkemy.ong.domain.services.CategoryService;
+import com.alkemy.ong.web.dtos.CategoryBasicDTO;
+import com.alkemy.ong.web.dtos.CategoryDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +17,11 @@ import java.util.stream.Collectors;
 @RequestMapping("/categories")
 public class CategoryController {
 
-    @Autowired
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
+
+    public CategoryController (CategoryService categoryService){
+        this.categoryService = categoryService;
+    }
 
     @GetMapping
     public ResponseEntity<List<CategoryBasicDTO>> getAllCategoryBasic(){
@@ -32,7 +35,7 @@ public class CategoryController {
     public ResponseEntity<CategoryDTO> getCategoryByID(@PathVariable Long id){
         Category category = categoryService.findById(id);
         CategoryDTO categoryDTO = toDTO(category);
-        return ResponseEntity.ok(categoryDTO);
+        return ResponseEntity.ok().body(categoryDTO);
     }
 
     @PostMapping

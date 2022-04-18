@@ -1,4 +1,4 @@
-package com.alkemy.ong.domain.model;
+package com.alkemy.ong.domain.models;
 
 import lombok.Builder;
 import lombok.Getter;

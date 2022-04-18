@@ -1,8 +1,6 @@
-package com.alkemy.ong.data.entity;
+package com.alkemy.ong.data.entities;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -11,9 +9,11 @@ import org.hibernate.annotations.Where;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Table(name = "categories")
 @SQLDelete(sql = "UPDATE categories SET is_deleted = true WHERE id=?")

@@ -1,7 +1,7 @@
 package com.alkemy.ong;
 
 import com.alkemy.ong.domain.activity.ActivityService;
-import com.alkemy.ong.web.dto.ActivityDto;
+import com.alkemy.ong.web.controller.ActivityController;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -36,7 +36,7 @@ public class ActivityControllerTest {
   @Test
   @DisplayName("should return 201 when creating valid activity")
   public void createValidActivity() throws Exception {
-    ActivityDto activityDto = ActivityDto.builder()
+    ActivityController.ActivityDto activityDto = ActivityController.ActivityDto.builder()
         .name("Activity").content("Content").image("https:www.bucket.com/image.jpg")
         .build();
 
@@ -52,7 +52,7 @@ public class ActivityControllerTest {
   @Test
   @DisplayName("should return 400 when creating an invalid activity")
   public void createInvalidActivity() throws Exception {
-    ActivityDto activityDto = ActivityDto.builder()
+    ActivityController.ActivityDto activityDto = ActivityController.ActivityDto.builder()
         .name("Activity").content("").image("https://www.bucket.com/image.jpg")
         .build();
 

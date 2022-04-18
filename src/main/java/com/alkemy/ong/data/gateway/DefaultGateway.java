@@ -8,6 +8,8 @@ import com.alkemy.ong.domain.model.News;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class DefaultGateway implements NewsGateway {
 
@@ -16,15 +18,12 @@ public class DefaultGateway implements NewsGateway {
     @Autowired
     NewsModelMapper newsModelMapper;
 
-    /**
-     * Recibe un objeto de tipo model, lo guarda en la db y devuelve el mismo objeto con la id generada.
-     * @param news
-     * @return news
-     */
-    @Override
-    public News save(News news) {
-        NewsEntity newsEntity = newsModelMapper.modelToEntity(news);
-        News returnModel = newsModelMapper.entityToModel(newsRepository.save(newsEntity));
+    public News findById(Long id) {
+        Optional<NewsEntity> optional = newsRepository.findById(id);
+        if(!optional.isPresent()){
+            throw new ParamNotFoundException("Given ID is not valid");
+        }
+        News returnModel = newsModelMapper.entityToModel(optional.get());
         return returnModel;
     }
 }

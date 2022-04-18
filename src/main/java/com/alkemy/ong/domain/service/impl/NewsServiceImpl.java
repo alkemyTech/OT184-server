@@ -11,8 +11,4 @@ public class NewsServiceImpl implements NewsService {
     @Autowired
     NewsGateway newsGateway;
 
-    public News save(News news) {
-        news.setType("news");
-        return newsGateway.save(news);
-    }
 }

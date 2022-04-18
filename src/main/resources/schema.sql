@@ -61,3 +61,14 @@ CREATE TABLE IF NOT EXISTS categories(
     updated_at TIMESTAMP,
     is_deleted BOOLEAN DEFAULT 0
 );
+
+CREATE TABLE IF NOT EXISTS activities
+(
+    id         BIGINT       NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name       VARCHAR(255) NOT NULL,
+    content    TEXT         NOT NULL,
+    image      VARCHAR(255) NOT NULL,
+    created_at DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+    updated_at DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+    is_deleted BOOL         NOT NULL DEFAULT FALSE
+);

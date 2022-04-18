@@ -7,8 +7,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ActivityDefaultGateway implements ActivityGateway {
+  private final ActivityRepository activityRepository;
+
   @Autowired
-  ActivityRepository activityRepository;
+  public ActivityDefaultGateway(ActivityRepository activityRepository) {
+    this.activityRepository = activityRepository;
+  }
 
   @Override
   public Activity save(Activity activity) {

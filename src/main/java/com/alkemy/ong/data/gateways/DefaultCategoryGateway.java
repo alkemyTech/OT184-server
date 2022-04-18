@@ -10,7 +10,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+import static java.util.stream.Collectors.*;
 
 @Component
 public class DefaultCategoryGateway implements CategoryGateway {
@@ -24,7 +24,7 @@ public class DefaultCategoryGateway implements CategoryGateway {
     @Override
     public List<Category> findAll() {
         List<CategoryEntity> entities = categoryRepository.findAll();
-        List<Category> categories = entities.stream().map(this::toModel).collect(Collectors.toList());
+        List<Category> categories = entities.stream().map(this::toModel).collect(toList());
         return categories;
     }
 

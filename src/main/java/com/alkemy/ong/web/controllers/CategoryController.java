@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import static java.util.stream.Collectors.*;
 
 
 @RestController
@@ -26,7 +26,7 @@ public class CategoryController {
     private ResponseEntity<List<CategoryBasicDTO>> getAllCategoryBasic(){
 
         List<Category> category = categoryService.findAll();
-        List<CategoryBasicDTO> categoryBasicDTOS = category.stream().map(this::toDTOBasic).collect(Collectors.toList());
+        List<CategoryBasicDTO> categoryBasicDTOS = category.stream().map(this::toDTOBasic).collect(toList());
         return ResponseEntity.ok().body(categoryBasicDTOS);
     }
 

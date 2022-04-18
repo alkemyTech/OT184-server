@@ -48,6 +48,7 @@ public class CategoryController {
     @Data
     @Builder
     private static class CategoryDTO {
+        private Long id;
         private String name;
         private String description;
         private String image;
@@ -56,17 +57,20 @@ public class CategoryController {
     @Data
     @Builder
     private static class CategoryBasicDTO {
+        private Long id;
         private String name;
     }
 
     private CategoryBasicDTO toDTOBasic(Category category) {
         return CategoryBasicDTO.builder()
+                .id(category.getId())
                 .name(category.getName())
                 .build();
     }
 
     private CategoryDTO toDTO(Category category) {
         return CategoryDTO.builder()
+                .id(category.getId())
                 .name(category.getName())
                 .description(category.getDescription())
                 .image(category.getImage())

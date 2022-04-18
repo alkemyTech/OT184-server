@@ -48,6 +48,7 @@ public class DefaultCategoryGateway implements CategoryGateway {
 
     private Category toModel(CategoryEntity categoryEntity) {
         return Category.builder()
+                .id(categoryEntity.getId())
                 .name(categoryEntity.getName())
                 .description(categoryEntity.getDescription())
                 .image(categoryEntity.getImage())

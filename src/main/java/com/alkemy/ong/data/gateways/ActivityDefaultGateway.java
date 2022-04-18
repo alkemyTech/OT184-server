@@ -4,14 +4,12 @@ import com.alkemy.ong.data.entities.ActivityEntity;
 import com.alkemy.ong.data.repositories.ActivityRepository;
 import com.alkemy.ong.domain.activity.Activity;
 import com.alkemy.ong.domain.activity.ActivityGateway;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ActivityDefaultGateway implements ActivityGateway {
-  private final ActivityRepository activityRepository;
+  ActivityRepository activityRepository;
 
-  @Autowired
   public ActivityDefaultGateway(ActivityRepository activityRepository) {
     this.activityRepository = activityRepository;
   }

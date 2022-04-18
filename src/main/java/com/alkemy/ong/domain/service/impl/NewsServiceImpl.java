@@ -11,10 +11,9 @@ public class NewsServiceImpl implements NewsService {
     @Autowired
     NewsGateway newsGateway;
 
-
     @Override
     public void delete(Long id) {
-        
+
     }
 
     @Override

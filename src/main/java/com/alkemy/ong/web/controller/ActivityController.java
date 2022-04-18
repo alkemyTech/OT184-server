@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
@@ -19,8 +18,12 @@ import javax.validation.constraints.NotBlank;
 @RequestMapping("/activities")
 public class ActivityController {
 
+  private final ActivityService activityService;
+
   @Autowired
-  ActivityService activityService;
+  public ActivityController(ActivityService activityService) {
+    this.activityService = activityService;
+  }
 
   @PostMapping
   public ResponseEntity<ActivityDto> save(@Valid @RequestBody ActivityDto activityDto) {

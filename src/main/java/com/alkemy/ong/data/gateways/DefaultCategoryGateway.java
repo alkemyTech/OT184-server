@@ -22,7 +22,6 @@ public class DefaultCategoryGateway implements CategoryGateway {
 
     @Override
     public List<Category> findAll() {
-
         return categoryRepository.findAll().stream().map(this::toModel).collect(toList());
     }
 
@@ -32,16 +31,13 @@ public class DefaultCategoryGateway implements CategoryGateway {
         if (categoryEntity.isEmpty()){
             throw new ParamNotFound("ID");
         }
-        Category category = toModel(categoryEntity.get());
-        return category;
+        return toModel(categoryEntity.get());
     }
 
     @Override
     public Category save(Category category) {
         CategoryEntity categoryEntity = toEntity(category);
-        CategoryEntity categorySaved = categoryRepository.save(categoryEntity);
-        Category result = toModel(categorySaved);
-        return result;
+        return toModel(categoryRepository.save(categoryEntity));
     }
 
     private Category toModel(CategoryEntity categoryEntity) {

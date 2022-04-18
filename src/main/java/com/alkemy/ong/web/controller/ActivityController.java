@@ -31,7 +31,7 @@ public class ActivityController {
 
     return ResponseEntity
         .status(HttpStatus.CREATED)
-        .body(activity2Dto(saveActivity));
+        .body(toDto(saveActivity));
   }
 
   private Activity activityDto2Activity(ActivityDto activityDto) {
@@ -43,7 +43,7 @@ public class ActivityController {
         .build();
   }
 
-  private ActivityDto activity2Dto(Activity saveActivity) {
+  private ActivityDto toDto(Activity saveActivity) {
     return ActivityDto.builder()
         .name(saveActivity.getName())
         .content(saveActivity.getContent())

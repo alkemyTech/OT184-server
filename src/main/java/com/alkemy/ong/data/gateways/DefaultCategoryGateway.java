@@ -23,9 +23,8 @@ public class DefaultCategoryGateway implements CategoryGateway {
 
     @Override
     public List<Category> findAll() {
-        List<CategoryEntity> entities = categoryRepository.findAll();
-        List<Category> categories = entities.stream().map(this::toModel).collect(toList());
-        return categories;
+
+        return categoryRepository.findAll().stream().map(this::toModel).collect(toList());
     }
 
     @Override

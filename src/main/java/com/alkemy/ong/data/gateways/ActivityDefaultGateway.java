@@ -18,7 +18,7 @@ public class ActivityDefaultGateway implements ActivityGateway {
 
   @Override
   public Activity save(Activity activity) {
-    ActivityEntity savedActivityEntity = activityRepository.save(activity2ActivityEntity(activity));
+    ActivityEntity savedActivityEntity = activityRepository.save(toEntity(activity));
 
     return toModel(savedActivityEntity);
   }
@@ -31,7 +31,7 @@ public class ActivityDefaultGateway implements ActivityGateway {
         .build();
   }
 
-  private ActivityEntity activity2ActivityEntity(Activity activity) {
+  private ActivityEntity toEntity(Activity activity) {
     return ActivityEntity.builder()
         .name(activity.getName())
         .content(activity.getContent())

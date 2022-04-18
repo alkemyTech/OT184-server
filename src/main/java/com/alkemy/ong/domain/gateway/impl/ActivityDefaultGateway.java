@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ActivityGatewayImpl implements ActivityGateway {
+public class ActivityDefaultGateway implements ActivityGateway {
   @Autowired
   ActivityRepository activityRepository;
 

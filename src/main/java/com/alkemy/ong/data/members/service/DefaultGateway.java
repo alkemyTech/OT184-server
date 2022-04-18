@@ -22,6 +22,19 @@ public class DefaultGateway implements Gateway {
 
 
     @Override
+    public Members save(Members members) {
+    MemberEntity entity = membersRepository.save(
+            MemberEntity
+                .builder().name(members.getName()).facebookUrl(members.getFacebookUrl())
+                .instagramUrl(members.getInstagramUrl()).linkedinUrl(members.getLinkedinUrl())
+                .image(members.getImage()).description(members.getDescription()).isDeleted(false).build());
+
+    return Members.builder().id(entity.getId()).name(entity.getName()).facebookUrl(entity.getFacebookUrl())
+                .instagramUrl(entity.getInstagramUrl()).linkedinUrl(entity.getLinkedinUrl())
+                .image(entity.getImage()).description(entity.getDescription()).build();
+    }
+
+    @Override
     public List<Members> getAll() {
         List<MemberEntity> entity = membersRepository.findAll();
 

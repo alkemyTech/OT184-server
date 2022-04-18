@@ -28,7 +28,7 @@ public class DefaultGateway implements NewsGateway {
     public News findById(Long id) {
         Optional<NewsEntity> optional = newsRepository.findById(id);
         if(!optional.isPresent()){
-            throw new ParamNotFound("Movie id is not valid");
+            throw new ParamNotFound("Given ID is not valid");
         }
         News returnModel = newsModelMapper.entityToModel(optional.get());
         return returnModel;

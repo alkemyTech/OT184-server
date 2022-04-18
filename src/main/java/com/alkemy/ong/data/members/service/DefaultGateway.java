@@ -4,11 +4,13 @@ import com.alkemy.ong.data.members.entity.MemberEntity;
 import com.alkemy.ong.data.members.repository.MembersRepository;
 import com.alkemy.ong.domain.members.model.Members;
 import com.alkemy.ong.domain.members.service.Gateway;
+import com.alkemy.ong.web.members.controller.ParamNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DefaultGateway implements Gateway {
@@ -53,5 +55,15 @@ public class DefaultGateway implements Gateway {
             );
         });
         return model;
+    }
+
+    @Override
+    public void delete(Long id) {
+        Optional<MemberEntity> entity =  membersRepository.findById(id);
+        if(entity.isPresent()){
+            membersRepository.deleteById(id);
+        }else{
+            throw new ParamNotFound("Id miembro no valido");
+        }
     }
 }

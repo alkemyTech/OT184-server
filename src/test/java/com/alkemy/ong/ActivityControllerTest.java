@@ -1,6 +1,6 @@
 package com.alkemy.ong;
 
-import com.alkemy.ong.domain.service.ActivityService;
+import com.alkemy.ong.domain.activity.ActivityService;
 import com.alkemy.ong.web.dto.ActivityDto;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;

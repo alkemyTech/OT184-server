@@ -1,4 +1,4 @@
-package com.alkemy.ong.domain.service;
+package com.alkemy.ong.domain.activity;
 
 import com.alkemy.ong.domain.gateway.ActivityGateway;
 import com.alkemy.ong.domain.model.Activity;

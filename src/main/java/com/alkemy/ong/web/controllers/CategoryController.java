@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Pattern;
 import java.util.List;
 import static java.util.stream.Collectors.*;
 
@@ -38,7 +40,7 @@ public class CategoryController {
     }
 
     @PostMapping
-    private  ResponseEntity<CategoryDTO> save(@RequestBody CategoryDTO categoryDTO){
+    private  ResponseEntity<CategoryDTO> save(@Valid @RequestBody CategoryDTO categoryDTO){
         Category category = toModel(categoryDTO);
         Category categorySaved = categoryService.save(category);
         CategoryDTO result = toDTO(categorySaved);
@@ -49,6 +51,7 @@ public class CategoryController {
     @Builder
     private static class CategoryDTO {
         private Long id;
+        @Pattern(regexp = "[A-Za-z]*$")
         private String name;
         private String description;
         private String image;

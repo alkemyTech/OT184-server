@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface Gateway {
 
+    Members save(Members members);
+
     List<Members> getAll();
 
 }

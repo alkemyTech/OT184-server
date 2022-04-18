@@ -8,6 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Activity {
+  Long id;
   String name;
   String content;
   String image;

@@ -37,6 +37,7 @@ public class ActivityController {
   private Activity toModel(ActivityDto activityDto) {
     return Activity
         .builder()
+        .id(activityDto.getId())
         .name(activityDto.getName())
         .content(activityDto.getContent())
         .image(activityDto.getImage())
@@ -46,6 +47,7 @@ public class ActivityController {
   private ActivityDto toDto(Activity saveActivity) {
     return ActivityDto.builder()
         .name(saveActivity.getName())
+        .id(saveActivity.getId())
         .content(saveActivity.getContent())
         .image(saveActivity.getImage())
         .build();
@@ -54,6 +56,8 @@ public class ActivityController {
   @Builder
   @Data
   public static class ActivityDto {
+    Long id;
+
     @NotBlank(message = "Name is required")
     String name;
 

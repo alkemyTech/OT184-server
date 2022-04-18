@@ -25,6 +25,7 @@ public class ActivityDefaultGateway implements ActivityGateway {
 
   private Activity toModel(ActivityEntity savedActivityEntity) {
     return Activity.builder()
+        .id(savedActivityEntity.getId())
         .name(savedActivityEntity.getName())
         .content(savedActivityEntity.getContent())
         .image(savedActivityEntity.getImage())
@@ -33,6 +34,7 @@ public class ActivityDefaultGateway implements ActivityGateway {
 
   private ActivityEntity toEntity(Activity activity) {
     return ActivityEntity.builder()
+        .id(activity.getId())
         .name(activity.getName())
         .content(activity.getContent())
         .image(activity.getImage())

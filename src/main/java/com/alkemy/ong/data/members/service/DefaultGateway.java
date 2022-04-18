@@ -26,19 +26,17 @@ public class DefaultGateway implements Gateway {
         List<MemberEntity> entity = membersRepository.findAll();
 
         List<Members> model = new ArrayList<>();
-        entity.forEach((MemberEntity) ->{
-            model.add(
-                Members.builder()
-                    .id(MemberEntity.getId())
-                    .name(MemberEntity.getName())
-                    .facebookUrl(MemberEntity.getFacebookUrl())
-                    .instagramUrl(MemberEntity.getInstagramUrl())
-                    .linkedinUrl(MemberEntity.getLinkedinUrl())
-                    .image(MemberEntity.getImage())
-                    .description(MemberEntity.getDescription())
-                    .build()
-            );
-        });
+        entity.forEach((MemberEntity) -> model.add(
+            Members.builder()
+                .id(MemberEntity.getId())
+                .name(MemberEntity.getName())
+                .facebookUrl(MemberEntity.getFacebookUrl())
+                .instagramUrl(MemberEntity.getInstagramUrl())
+                .linkedinUrl(MemberEntity.getLinkedinUrl())
+                .image(MemberEntity.getImage())
+                .description(MemberEntity.getDescription())
+                .build()
+        ));
         return model;
     }
 }

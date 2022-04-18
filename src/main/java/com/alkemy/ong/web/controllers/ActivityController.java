@@ -1,4 +1,4 @@
-package com.alkemy.ong.web.controller;
+package com.alkemy.ong.web.controllers;
 
 import com.alkemy.ong.domain.activity.Activity;
 import com.alkemy.ong.domain.activity.ActivityService;

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/activities")
 public class ActivityController {
@@ -19,7 +21,7 @@ public class ActivityController {
   ActivityService activityService;
 
   @PostMapping
-  public ResponseEntity<ActivityDto> save(@RequestBody ActivityDto activityDto) {
+  public ResponseEntity<ActivityDto> save(@Valid @RequestBody ActivityDto activityDto) {
     Activity saveActivity = activityService.save(
         Activity
             .builder()

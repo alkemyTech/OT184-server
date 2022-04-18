@@ -10,4 +10,5 @@ public interface Gateway {
 
     List<Members> getAll();
 
+    void delete(Long id);
 }

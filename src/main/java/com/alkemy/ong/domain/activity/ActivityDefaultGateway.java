@@ -3,9 +3,9 @@ package com.alkemy.ong.domain.activity;
 import com.alkemy.ong.data.entities.ActivityEntity;
 import com.alkemy.ong.data.repositories.ActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class ActivityDefaultGateway implements ActivityGateway {
   private final ActivityRepository activityRepository;
 

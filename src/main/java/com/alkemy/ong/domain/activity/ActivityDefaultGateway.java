@@ -1,4 +1,4 @@
-package com.alkemy.ong.domain.gateway.impl;
+package com.alkemy.ong.domain.activity;
 
 import com.alkemy.ong.data.entity.ActivityEntity;
 import com.alkemy.ong.data.repository.ActivityRepository;

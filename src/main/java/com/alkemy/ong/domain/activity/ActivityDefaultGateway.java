@@ -16,7 +16,6 @@ public class ActivityDefaultGateway implements ActivityGateway {
 
   @Override
   public Activity save(Activity activity) {
-
     ActivityEntity savedActivityEntity = activityRepository.save(activity2ActivityEntity(activity));
 
     return activityEntity2Activity(savedActivityEntity);

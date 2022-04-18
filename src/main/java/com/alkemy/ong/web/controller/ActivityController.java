@@ -27,14 +27,14 @@ public class ActivityController {
 
   @PostMapping
   public ResponseEntity<ActivityDto> save(@Valid @RequestBody ActivityDto activityDto) {
-    Activity saveActivity = activityService.save(activityDto2Activity(activityDto));
+    Activity saveActivity = activityService.save(toModel(activityDto));
 
     return ResponseEntity
         .status(HttpStatus.CREATED)
         .body(toDto(saveActivity));
   }
 
-  private Activity activityDto2Activity(ActivityDto activityDto) {
+  private Activity toModel(ActivityDto activityDto) {
     return Activity
         .builder()
         .name(activityDto.getName())

@@ -24,14 +24,14 @@ public class NewsController {
 
     @GetMapping("/{id}")
     public ResponseEntity<NewsDTO> getDetails(@PathVariable Long id){
-        NewsDTO returnDTO = this.modelToDTO(newsService.getDetails(id));
+        NewsDTO returnDTO = this.toDTO(newsService.getDetails(id));
         return ResponseEntity.status(HttpStatus.FOUND).body(returnDTO);
     }
 
     @PostMapping
     public ResponseEntity<NewsDTO> save(@Valid @RequestBody NewsDTO newsDTO){
-        News returnModel =  newsService.save(this.DTOToModel(newsDTO));
-        return ResponseEntity.status(HttpStatus.CREATED).body(this.modelToDTO(returnModel));
+        News returnModel =  newsService.save(this.toModel(newsDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.toDTO(returnModel));
     }
 
     @DeleteMapping("/{id}")
@@ -54,7 +54,7 @@ public class NewsController {
         private String type;
     }
 
-    private NewsDTO modelToDTO(News news){
+    private NewsDTO toDTO(News news){
         NewsDTO returnDTO = NewsDTO.builder()
                 .id(news.getId())
                 .name(news.getName())
@@ -66,7 +66,7 @@ public class NewsController {
         return returnDTO;
     }
 
-    private News DTOToModel(NewsDTO newsDTO){
+    private News toModel(NewsDTO newsDTO){
         News returnModel = News.builder()
                 .id(newsDTO.getId())
                 .name(newsDTO.getName())

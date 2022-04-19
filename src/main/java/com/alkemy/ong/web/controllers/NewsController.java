@@ -33,7 +33,7 @@ public class NewsController {
 
     @Data
     @Builder
-    public static class NewsDTO {
+    private static class NewsDTO {
         private Long id;
         @NotEmpty(message = "The field Name must not be empty")
         private String name;

@@ -13,7 +13,10 @@ public class OrganizationMapper {
                 .name(organization.getName())
                 .image(organization.getImage())
                 .phone(organization.getPhone())
-                .build();
+               .facebook(organization.getFacebook())
+               .instagram(organization.getInstagram())
+               .linkedin(organization.getLinkedin())
+               .build();
     }
 
     public Organization DTO2Model(OrganizationPublicDataDTO organizationPublicDataDTO){
@@ -22,6 +25,9 @@ public class OrganizationMapper {
                 .name(organizationPublicDataDTO.getName())
                 .image(organizationPublicDataDTO.getName())
                 .phone(organizationPublicDataDTO.getPhone())
+                .linkedin(organizationPublicDataDTO.getLinkedin())
+                .instagram(organizationPublicDataDTO.getInstagram())
+                .facebook(organizationPublicDataDTO.getFacebook())
                 .build();
     }
 }

@@ -14,4 +14,7 @@ public class OrganizationPublicDataDTO {
     private String image;
     private String address;
     private Integer phone;
+    private String facebook;
+    private String linkedin;
+    private String instagram;
 }

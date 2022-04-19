@@ -13,6 +13,9 @@ public class OrganizationModelMapper {
                 .name(organization.getName())
                 .image(organization.getImage())
                 .phone(organization.getPhone())
+                .facebook(organization.getFacebook())
+                .instagram(organization.getInstagram())
+                .linkedin(organization.getLinkedin())
                 .build();
 
     }
@@ -23,6 +26,9 @@ public class OrganizationModelMapper {
                 .phone(organizationEntity.getPhone())
                 .image(organizationEntity.getImage())
                 .address(organizationEntity.getAddress())
+                .facebook(organizationEntity.getFacebook())
+                .instagram(organizationEntity.getInstagram())
+                .linkedin(organizationEntity.getLinkedin())
                 .build();
     }
 }

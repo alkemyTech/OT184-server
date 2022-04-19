@@ -38,6 +38,9 @@ public class DefaultOrganizationGateway implements OrganizationGateway {
         organizationEntity.setName(organization.getName());
         organizationEntity.setPhone(organization.getPhone());
         organizationEntity.setImage(organization.getImage());
+        organizationEntity.setFacebook(organization.getFacebook());
+        organizationEntity.setInstagram(organization.getInstagram());
+        organizationEntity.setInstagram(organization.getInstagram());
         return organizationModelMapper.entity2Model(organizationRepository.save(organizationEntity));
     }
 

@@ -26,6 +26,7 @@ public class OrganizationController {
         OrganizationPublicDataDTO organizationPublicDataDTO=organizationMapper.model2DTO(organization);
         return ResponseEntity.ok(organizationPublicDataDTO);
     }
+
     @PutMapping("/public/{id}")
     public ResponseEntity<OrganizationPublicDataDTO> upDate(@PathVariable Long id,@RequestBody OrganizationPublicDataDTO dto){
         Organization organization=organizationService.upDate(id,organizationMapper.DTO2Model(dto));

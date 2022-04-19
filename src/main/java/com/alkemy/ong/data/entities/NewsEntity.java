@@ -31,14 +31,13 @@ public class NewsEntity {
     private String content;
     @Column(nullable = false)
     private String image;
-
-    /*@ManyToOne(fetch = FetchType.EAGER,
+    @ManyToOne(fetch = FetchType.EAGER,
             cascade = {
                     CascadeType.PERSIST,
                     CascadeType.MERGE
             })
     @JoinColumn(name = "category_id", insertable = false, updatable = false)
-    private CategoryEntity category;*/
+    private CategoryEntity category;
 
     @Column(name = "category_id", nullable = false)
     private Long categoryId;

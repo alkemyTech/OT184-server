@@ -9,7 +9,7 @@ public class News {
     private String name;
     private String content;
     private String image;
-    //private CategoryEntity category;
+    //private Category category;
     private Long categoryId;
     private String type;
 }

@@ -23,14 +23,14 @@ public class DefaultNewsGateway implements NewsGateway {
     public News findById(Long id) {
         Optional<NewsEntity> optional = newsRepository.findById(id);
         optional.orElseThrow(() -> new ResourceNotFoundException("ID"));
-        News returnModel = this.entityToModel(optional.get());
+        News returnModel = this.toModel(optional.get());
         return returnModel;
     }
 
     @Override
     public News save(News news) {
-        NewsEntity newsEntity = this.modelToEntity(news);
-        News returnModel = this.entityToModel(newsRepository.save(newsEntity));
+        NewsEntity newsEntity = this.toEntity(news);
+        News returnModel = this.toModel(newsRepository.save(newsEntity));
         return returnModel;
     }
 
@@ -45,7 +45,7 @@ public class DefaultNewsGateway implements NewsGateway {
         newsRepository.deleteById(id);
     }
 
-    private NewsEntity modelToEntity(News news){
+    private NewsEntity toEntity(News news){
         NewsEntity returnEntity = NewsEntity.builder()
                 .id(news.getId())
                 .name(news.getName())
@@ -57,7 +57,7 @@ public class DefaultNewsGateway implements NewsGateway {
         return returnEntity;
     }
 
-    private News entityToModel(NewsEntity newsEntity){
+    private News toModel(NewsEntity newsEntity){
         News returnModel = News.builder()
                 .id(newsEntity.getId())
                 .name(newsEntity.getName())

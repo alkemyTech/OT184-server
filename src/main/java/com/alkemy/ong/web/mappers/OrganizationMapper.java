@@ -15,4 +15,5 @@ public class OrganizationMapper {
                 .phone(organization.getPhone())
                 .build();
     }
+
 }

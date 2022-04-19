@@ -32,5 +32,14 @@ public class DefaultOrganizationGateway implements OrganizationGateway {
         return organization;
     }
 
+    public Organization toUpdate(Long id, Organization organization){
+        OrganizationEntity organizationEntity=organizationRepository.findById(id).orElseThrow();
+        organizationEntity.setAddress(organization.getAddress());
+        organizationEntity.setName(organization.getName());
+        organizationEntity.setPhone(organization.getPhone());
+        organizationEntity.setImage(organization.getImage());
+        return organizationModelMapper.entity2Model(organizationEntity);
+    }
+
 
 }

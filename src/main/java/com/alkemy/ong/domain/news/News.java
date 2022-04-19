@@ -1,5 +1,5 @@
 package com.alkemy.ong.domain.news;
-import com.alkemy.ong.domain.category.Category;
+import com.alkemy.ong.domain.categories.Category;
 import lombok.Builder;
 import lombok.Data;
 

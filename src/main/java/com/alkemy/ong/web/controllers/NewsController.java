@@ -19,8 +19,11 @@ import javax.validation.constraints.NotEmpty;
 @RequestMapping("news")
 public class NewsController {
 
+    private final NewsService newsService;
     @Autowired
-    NewsService newsService;
+    public NewsController(NewsService newsService){
+        this.newsService = newsService;
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<NewsDTO> getDetails(@PathVariable Long id){

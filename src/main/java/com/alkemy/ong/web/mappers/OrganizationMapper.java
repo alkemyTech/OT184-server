@@ -16,4 +16,12 @@ public class OrganizationMapper {
                 .build();
     }
 
+    public Organization DTO2Model(OrganizationPublicDataDTO organizationPublicDataDTO){
+        return Organization.builder()
+                .address(organizationPublicDataDTO.getAddress())
+                .name(organizationPublicDataDTO.getName())
+                .image(organizationPublicDataDTO.getName())
+                .phone(organizationPublicDataDTO.getPhone())
+                .build();
+    }
 }

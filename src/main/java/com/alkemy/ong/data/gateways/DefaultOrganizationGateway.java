@@ -38,7 +38,7 @@ public class DefaultOrganizationGateway implements OrganizationGateway {
         organizationEntity.setName(organization.getName());
         organizationEntity.setPhone(organization.getPhone());
         organizationEntity.setImage(organization.getImage());
-        return organizationModelMapper.entity2Model(organizationEntity);
+        return organizationModelMapper.entity2Model(organizationRepository.save(organizationEntity));
     }
 
 

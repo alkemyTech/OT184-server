@@ -1,7 +1,7 @@
 package com.alkemy.ong.data.gateways;
 
 import com.alkemy.ong.data.entities.ActivityEntity;
-import com.alkemy.ong.data.repositories.ActivityRepository;
+import com.alkemy.ong.data.members.repository.ActivityRepository;
 import com.alkemy.ong.domain.activity.Activity;
 import com.alkemy.ong.domain.activity.ActivityGateway;
 import org.springframework.stereotype.Component;

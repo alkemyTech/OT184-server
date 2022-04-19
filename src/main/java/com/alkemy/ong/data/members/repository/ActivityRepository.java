@@ -1,4 +1,4 @@
-package com.alkemy.ong.data.repositories;
+package com.alkemy.ong.data.members.repository;
 
 import com.alkemy.ong.data.entities.ActivityEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

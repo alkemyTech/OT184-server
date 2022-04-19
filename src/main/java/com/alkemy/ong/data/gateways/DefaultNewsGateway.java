@@ -41,6 +41,12 @@ public class DefaultNewsGateway implements NewsGateway {
         return this.findById(id);
     }
 
+    @Override
+    public void delete(Long id) {
+        this.findById(id);
+        newsRepository.deleteById(id);
+    }
+
     private NewsEntity modelToEntity(News news){
         NewsEntity returnEntity = NewsEntity.builder()
                 .id(news.getId())

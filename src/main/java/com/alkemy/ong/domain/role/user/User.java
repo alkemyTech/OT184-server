@@ -1,4 +1,4 @@
-package com.alkemy.ong.domain.user;
+package com.alkemy.ong.domain.role.user;
 
 import com.alkemy.ong.domain.role.Role;
 

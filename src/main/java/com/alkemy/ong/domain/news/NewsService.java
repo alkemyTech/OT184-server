@@ -16,4 +16,7 @@ public class NewsService  {
         news.setType("news");
         return newsGateway.save(news);
     }
+    public void delete(Long id) {
+        newsGateway.delete(id);
+    }
 }

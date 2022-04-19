@@ -34,6 +34,12 @@ public class NewsController {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.modelToDTO(returnModel));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        newsService.delete(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
     @Data
     @Builder
     private static class NewsDTO {

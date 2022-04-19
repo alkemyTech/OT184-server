@@ -27,11 +27,8 @@ public class DefaultCategoryGateway implements CategoryGateway {
 
     @Override
     public Category findById(Long id) {
-        Optional<CategoryEntity> categoryEntity = categoryRepository.findById(id);
-        if (categoryEntity.isEmpty()){
-            throw new ResourceNotFoundException("ID");
-        }
-        return toModel(categoryEntity.get());
+        CategoryEntity categoryEntity = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("ID"));
+        return toModel(categoryEntity);
     }
 
     @Override

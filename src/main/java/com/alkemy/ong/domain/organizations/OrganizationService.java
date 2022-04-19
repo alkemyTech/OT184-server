@@ -13,4 +13,9 @@ public class OrganizationService {
 
         return organizationGateway.findById(id);
     }
+
+    public  Organization upDate(Long id, Organization organization){
+
+        return  organizationGateway.toUpdate(id,organization);
+    }
 }

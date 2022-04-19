@@ -1,5 +1,5 @@
 package com.alkemy.ong.web.controller.mapper;
-import com.alkemy.ong.domain.model.News;
+import com.alkemy.ong.domain.models.News;
 import com.alkemy.ong.web.controller.dto.NewsDTO;
 import org.springframework.stereotype.Component;
 

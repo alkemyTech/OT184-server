@@ -1,5 +1,5 @@
 package com.alkemy.ong.web.controller;
-import com.alkemy.ong.domain.service.NewsService;
+import com.alkemy.ong.domain.services.NewsService;
 import com.alkemy.ong.web.controller.dto.NewsDTO;
 import com.alkemy.ong.web.controller.mapper.NewsDTOMapper;
 import org.springframework.beans.factory.annotation.Autowired;

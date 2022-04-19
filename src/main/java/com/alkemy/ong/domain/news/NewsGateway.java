@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 @Service
 public interface NewsGateway {
 
-    void delete(Long id);
+    News getDetails(Long id);
     News findById(Long id);
+    News save(News news);
+    void delete(Long id);
 
 }

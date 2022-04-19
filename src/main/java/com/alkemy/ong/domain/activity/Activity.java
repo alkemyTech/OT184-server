@@ -1,4 +1,4 @@
-package com.alkemy.ong.domain.model;
+package com.alkemy.ong.domain.activity;
 
 public class Activity {
   String name;

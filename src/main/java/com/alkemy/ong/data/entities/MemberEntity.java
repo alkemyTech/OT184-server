@@ -1,4 +1,4 @@
-package com.alkemy.ong.data.members.entity;
+package com.alkemy.ong.data.entities;
 
 import com.sun.istack.NotNull;
 import lombok.Data;
@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 @Table(name = "members")
 @SQLDelete(sql = "UPDATE members SET is_deleted=true WHERE id=?")
 @Where(clause = "is_deleted = false")
+@AllArgsConstructor
 @NoArgsConstructor(force = true)
 public class MemberEntity {
 
@@ -55,19 +56,4 @@ public class MemberEntity {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public MembersEntity(Long id, String name, String facebookUrl,
-                         String instagramUrl, String linkedinUrl,
-                         String image, String description, Boolean isDeleted,
-                         LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.id = id;
-        this.name = name;
-        this.facebookUrl = facebookUrl;
-        this.instagramUrl = instagramUrl;
-        this.linkedinUrl = linkedinUrl;
-        this.image = image;
-        this.description = description;
-        this.isDeleted = isDeleted;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
 }

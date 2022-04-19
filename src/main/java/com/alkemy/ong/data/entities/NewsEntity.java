@@ -1,4 +1,4 @@
-package com.alkemy.ong.data.entity;
+package com.alkemy.ong.data.entities;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -24,25 +24,26 @@ public class NewsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false)
     private String name;
     @Column(nullable = false, columnDefinition="TEXT")
     private String content;
     @Column(nullable = false)
     private String image;
-
-    /*@ManyToOne(fetch = FetchType.EAGER,
+    @ManyToOne(fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST,
                     CascadeType.MERGE
             })
     @JoinColumn(name = "category_id", insertable = false, updatable = false)
-    private CategoryEntity category;*/
+    private CategoryEntity category;
 
     @Column(name = "category_id", nullable = false)
     private Long categoryId;
 
     @Column(name="is_deleted", nullable = false)
+    @Builder.Default
     private boolean isDeleted = Boolean.FALSE;
 
     @CreationTimestamp

@@ -1,6 +1,6 @@
 package com.alkemy.ong.web.exceptions;
 
-import com.alkemy.ong.domain.exceptions.ParamNotFound;
+import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.http.HttpHeaders;
@@ -17,13 +17,13 @@ import java.util.List;
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(value = {ParamNotFound.class})
+    @ExceptionHandler(value = {ResourceNotFoundException.class})
     protected ResponseEntity<Object> HandleParamNotFound(RuntimeException ex, WebRequest request) {
 
         ApiErrorDTO errorDTO = new ApiErrorDTO(
                 HttpStatus.NOT_FOUND,
                 ex.getMessage(),
-                Arrays.asList("Param Not Found")
+                Arrays.asList("Resource Not Found")
         );
         return handleExceptionInternal(ex, errorDTO, new HttpHeaders(), errorDTO.getStatus(), request);
     }

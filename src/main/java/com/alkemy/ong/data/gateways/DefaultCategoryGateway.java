@@ -4,7 +4,7 @@ import com.alkemy.ong.data.entities.CategoryEntity;
 import com.alkemy.ong.data.repositories.CategoryRepository;
 import com.alkemy.ong.domain.categories.Category;
 import com.alkemy.ong.domain.categories.CategoryGateway;
-import com.alkemy.ong.domain.exceptions.ParamNotFound;
+import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -29,7 +29,7 @@ public class DefaultCategoryGateway implements CategoryGateway {
     public Category findById(Long id) {
         Optional<CategoryEntity> categoryEntity = categoryRepository.findById(id);
         if (categoryEntity.isEmpty()){
-            throw new ParamNotFound("ID");
+            throw new ResourceNotFoundException("ID");
         }
         return toModel(categoryEntity.get());
     }

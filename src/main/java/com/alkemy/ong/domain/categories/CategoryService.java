@@ -10,8 +10,11 @@ import java.util.List;
 @Service
 public class CategoryService {
 
-    @Autowired
-    private CategoryGateway categoryGateway;
+    private final CategoryGateway categoryGateway;
+
+    public CategoryService(CategoryGateway categoryGateway){
+        this.categoryGateway = categoryGateway;
+    }
 
     public List<Category> findAll(){
         return categoryGateway.findAll();

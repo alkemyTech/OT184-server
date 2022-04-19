@@ -1,4 +1,4 @@
-package com.alkemy.ong.data.gateway;
+package com.alkemy.ong.data.gateways;
 
 import com.alkemy.ong.data.entities.NewsEntity;
 import com.alkemy.ong.data.exception.ParamNotFoundException;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-public class DefaultGateway implements NewsGateway {
+public class DefaultNewsGateway implements NewsGateway {
 
     @Autowired
     NewsRepository newsRepository;

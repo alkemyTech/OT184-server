@@ -25,7 +25,7 @@ public class NewsController {
     @GetMapping("/{id}")
     public ResponseEntity<NewsDTO> getDetails(@PathVariable Long id){
         NewsDTO returnDTO = this.toDTO(newsService.getDetails(id));
-        return ResponseEntity.status(HttpStatus.FOUND).body(returnDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(returnDTO);
     }
 
     @PostMapping

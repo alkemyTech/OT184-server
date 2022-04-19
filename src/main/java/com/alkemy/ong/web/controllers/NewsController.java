@@ -38,7 +38,6 @@ public class NewsController {
         private String content;
         @NotEmpty(message = "The field Image must not be empty")
         private String image;
-        private CategoryEntity category;
         private Long categoryId;
         private String type;
     }

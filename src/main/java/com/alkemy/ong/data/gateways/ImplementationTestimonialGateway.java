@@ -1,6 +1,6 @@
 package com.alkemy.ong.data.gateways;
 
-import com.alkemy.ong.data.entity.TestimonialEntity;
+import com.alkemy.ong.data.entities.TestimonialEntity;
 import com.alkemy.ong.data.repository.TestimonialRepository;
 import com.alkemy.ong.domain.testimonials.Testimonial;
 import com.alkemy.ong.domain.testimonials.TestimonialGateway;

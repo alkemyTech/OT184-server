@@ -1,4 +1,4 @@
-package com.alkemy.ong.web;
+package com.alkemy.ong.web.controllers;
 
 import com.alkemy.ong.domain.testimonials.Testimonial;
 import com.alkemy.ong.domain.testimonials.TestimonialService;

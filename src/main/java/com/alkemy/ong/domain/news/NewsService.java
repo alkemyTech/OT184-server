@@ -4,10 +4,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class NewsService  {
-
+    private final NewsGateway newsGateway;
     @Autowired
-    NewsGateway newsGateway;
-
+    public NewsService(NewsGateway newsGateway){
+        this.newsGateway = newsGateway;
+    }
     public News getDetails(Long id) {
         return newsGateway.getDetails(id);
     }

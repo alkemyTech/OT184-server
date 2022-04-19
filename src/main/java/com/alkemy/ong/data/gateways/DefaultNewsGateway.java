@@ -30,6 +30,11 @@ public class DefaultNewsGateway implements NewsGateway {
     }
 
     @Override
+    public News save(News news) {
+        return null;
+    }
+
+    @Override
     public News getDetails(Long id) {
         return this.findById(id);
     }

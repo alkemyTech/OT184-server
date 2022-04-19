@@ -6,11 +6,9 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 
 
@@ -28,6 +26,12 @@ public class NewsController {
     public ResponseEntity<NewsDTO> getDetails(@PathVariable Long id){
         NewsDTO returnDTO = this.modelToDTO(newsService.getDetails(id));
         return ResponseEntity.status(HttpStatus.FOUND).body(returnDTO);
+    }
+
+    @PostMapping
+    public ResponseEntity<NewsDTO> save(@Valid @RequestBody NewsDTO newsDTO){
+        News returnModel =  newsService.save(this.DTOToModel(newsDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.modelToDTO(returnModel));
     }
 
     @Data

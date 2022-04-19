@@ -12,4 +12,8 @@ public class NewsService  {
     public News getDetails(Long id) {
         return newsGateway.getDetails(id);
     }
+    public News save(News news) {
+        news.setType("news");
+        return newsGateway.save(news);
+    }
 }

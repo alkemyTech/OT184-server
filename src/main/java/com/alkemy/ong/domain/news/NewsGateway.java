@@ -7,4 +7,6 @@ public interface NewsGateway {
 
     News getDetails(Long id);
     News findById(Long id);
+
+    News save(News news);
 }

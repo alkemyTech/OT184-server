@@ -22,7 +22,7 @@ public class TestimonialController {
         this.testimonialService = testimonialService;
     }
 
-    @PostMapping("/create")
+    @PostMapping("/")
     public ResponseEntity<TestimonialDTO> save(@RequestBody TestimonialDTO dto) {
         Testimonial testimonial = testimonialService.save(toDomain(dto));
         return new ResponseEntity<>(toDto(testimonial), HttpStatus.CREATED);

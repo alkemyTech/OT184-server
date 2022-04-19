@@ -43,6 +43,7 @@ public class NewsEntity {
     private Long categoryId;
 
     @Column(name="is_deleted", nullable = false)
+    @Builder.Default
     private boolean isDeleted = Boolean.FALSE;
 
     @CreationTimestamp

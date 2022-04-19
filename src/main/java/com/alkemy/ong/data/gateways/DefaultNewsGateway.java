@@ -2,7 +2,7 @@ package com.alkemy.ong.data.gateways;
 
 import com.alkemy.ong.data.entities.NewsEntity;
 import com.alkemy.ong.data.exception.ParamNotFoundException;
-import com.alkemy.ong.data.repository.NewsRepository;
+import com.alkemy.ong.data.repositories.NewsRepository;
 import com.alkemy.ong.domain.gateway.NewsGateway;
 import com.alkemy.ong.domain.model.News;
 import org.springframework.beans.factory.annotation.Autowired;

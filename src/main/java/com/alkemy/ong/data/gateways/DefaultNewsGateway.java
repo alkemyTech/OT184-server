@@ -32,4 +32,28 @@ public class DefaultNewsGateway implements NewsGateway {
     public News getDetails(Long id) {
         return this.findById(id);
     }
+
+    public NewsEntity modelToEntity(News news){
+        NewsEntity returnEntity = NewsEntity.builder()
+                .id(news.getId())
+                .name(news.getName())
+                .content(news.getContent())
+                .image(news.getImage())
+                .categoryId(news.getCategoryId())
+                .type(news.getType())
+                .build();
+        return returnEntity;
+    }
+
+    public News entityToModel(NewsEntity newsEntity){
+        News returnModel = News.builder()
+                .id(newsEntity.getId())
+                .name(newsEntity.getName())
+                .content(newsEntity.getContent())
+                .image(newsEntity.getImage())
+                .categoryId(newsEntity.getCategoryId())
+                .type(newsEntity.getType())
+                .build();
+        return returnModel;
+    }
 }

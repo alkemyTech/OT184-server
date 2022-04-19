@@ -1,8 +1,8 @@
 package com.alkemy.ong.data.gateways;
 
 import com.alkemy.ong.data.entities.NewsEntity;
-import com.alkemy.ong.data.exceptions.ParamNotFoundException;
 import com.alkemy.ong.data.repositories.NewsRepository;
+import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
 import com.alkemy.ong.domain.news.NewsGateway;
 import com.alkemy.ong.domain.news.News;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +22,7 @@ public class DefaultNewsGateway implements NewsGateway {
 
     public News findById(Long id) {
         Optional<NewsEntity> optional = newsRepository.findById(id);
-        if(!optional.isPresent()){
-            throw new ParamNotFoundException("Given ID is not valid");
-        }
+        optional.orElseThrow(() -> new ResourceNotFoundException("ID"));
         News returnModel = this.entityToModel(optional.get());
         return returnModel;
     }

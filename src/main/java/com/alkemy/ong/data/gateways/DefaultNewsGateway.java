@@ -5,7 +5,6 @@ import com.alkemy.ong.data.repositories.NewsRepository;
 import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
 import com.alkemy.ong.domain.news.NewsGateway;
 import com.alkemy.ong.domain.news.News;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;

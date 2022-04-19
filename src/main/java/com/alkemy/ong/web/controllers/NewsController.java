@@ -1,4 +1,5 @@
 package com.alkemy.ong.web.controllers;
+import com.alkemy.ong.data.entities.CategoryEntity;
 import com.alkemy.ong.domain.news.News;
 import com.alkemy.ong.domain.news.NewsService;
 import lombok.Builder;
@@ -29,7 +30,7 @@ public class NewsController {
 
     @Data
     @Builder
-    private class NewsDTO {
+    public static class NewsDTO {
         private Long id;
         @NotEmpty(message = "The field Name must not be empty")
         private String name;
@@ -37,7 +38,7 @@ public class NewsController {
         private String content;
         @NotEmpty(message = "The field Image must not be empty")
         private String image;
-        //private CategoryEntity category;
+        private CategoryEntity category;
         private Long categoryId;
         private String type;
     }

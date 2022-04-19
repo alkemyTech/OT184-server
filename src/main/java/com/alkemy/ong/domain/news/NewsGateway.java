@@ -6,4 +6,5 @@ import org.springframework.stereotype.Service;
 public interface NewsGateway {
 
     News getDetails(Long id);
+    News findById(Long id);
 }

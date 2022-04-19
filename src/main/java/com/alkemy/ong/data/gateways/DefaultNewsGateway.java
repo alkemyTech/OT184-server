@@ -31,7 +31,9 @@ public class DefaultNewsGateway implements NewsGateway {
 
     @Override
     public News save(News news) {
-        return null;
+        NewsEntity newsEntity = this.modelToEntity(news);
+        News returnModel = this.entityToModel(newsRepository.save(newsEntity));
+        return returnModel;
     }
 
     @Override

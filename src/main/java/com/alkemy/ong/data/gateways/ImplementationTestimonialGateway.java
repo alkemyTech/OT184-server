@@ -21,6 +21,22 @@ public class ImplementationTestimonialGateway implements TestimonialGateway {
         return toModel(testimonialRepository.save(entity));
     }
 
+    @Override
+    public Testimonial update(Long id, Testimonial testimonial) {
+        TestimonialEntity entity = testimonialRepository.findById(id).orElseThrow();
+        entity.setName(testimonial.getName());
+        entity.setImage(testimonial.getImage());
+        entity.setContent(testimonial.getContent());
+        return toModel(testimonialRepository.save(entity));
+    }
+
+    @Override
+    public void delete(Long id) {
+        TestimonialEntity entity = testimonialRepository.findById(id).orElseThrow();
+        entity.setDeleted(true);
+        testimonialRepository.save(entity);
+    }
+
     private Testimonial toModel(TestimonialEntity testimonialEntity) {
         return Testimonial.builder()
                 .id(testimonialEntity.getId())

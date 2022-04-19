@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,17 +14,29 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/testimonials")
 public class TestimonialController {
 
-    @Autowired
     private final TestimonialService testimonialService;
 
     public TestimonialController(TestimonialService testimonialService) {
         this.testimonialService = testimonialService;
     }
 
+
     @PostMapping("/create")
     public ResponseEntity<TestimonialDTO> save(@RequestBody TestimonialDTO dto) {
         Testimonial testimonial = testimonialService.save(toDomain(dto));
         return new ResponseEntity<>(toDto(testimonial), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<TestimonialDTO> update(@PathVariable Long id, @RequestBody TestimonialDTO dto) {
+        Testimonial testimonial = testimonialService.update(id, toDomain(dto));
+        return new ResponseEntity<>(toDto(testimonial), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable Long id) {
+        testimonialService.delete(id);
+        return new ResponseEntity(HttpStatus.ACCEPTED);
     }
 
     private Testimonial toDomain(TestimonialDTO dto) {

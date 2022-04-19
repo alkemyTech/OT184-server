@@ -1,4 +1,4 @@
-package com.alkemy.ong.domain.model;
+package com.alkemy.ong.domain.categories;
 
 import java.time.LocalDateTime;
 

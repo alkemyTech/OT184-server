@@ -1,4 +1,4 @@
-package com.alkemy.ong.web;
+package com.alkemy.ong.web.controllers;
 
 import com.alkemy.ong.domain.testimonials.Testimonial;
 import com.alkemy.ong.domain.testimonials.TestimonialService;
@@ -20,8 +20,7 @@ public class TestimonialController {
         this.testimonialService = testimonialService;
     }
 
-
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<TestimonialDTO> save(@RequestBody TestimonialDTO dto) {
         Testimonial testimonial = testimonialService.save(toDomain(dto));
         return new ResponseEntity<>(toDto(testimonial), HttpStatus.CREATED);

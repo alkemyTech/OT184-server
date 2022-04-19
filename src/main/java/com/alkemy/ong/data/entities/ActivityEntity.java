@@ -1,5 +1,6 @@
-package com.alkemy.ong.data.entity;
+package com.alkemy.ong.data.entities;
 
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;

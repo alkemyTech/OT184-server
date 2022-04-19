@@ -1,4 +1,4 @@
-package com.alkemy.ong.data.entity;
+package com.alkemy.ong.data.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "testimonials")
-@Data
 @Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class TestimonialEntity {

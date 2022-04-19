@@ -13,8 +13,12 @@ import java.util.Optional;
 @Component
 public class DefaultNewsGateway implements NewsGateway {
 
+    private final NewsRepository newsRepository;
+
     @Autowired
-    NewsRepository newsRepository;
+    public DefaultNewsGateway(NewsRepository newsRepository){
+        this.newsRepository = newsRepository;
+    }
 
     public News findById(Long id) {
         Optional<NewsEntity> optional = newsRepository.findById(id);

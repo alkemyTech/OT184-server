@@ -2,8 +2,8 @@ package com.alkemy.ong.data.gateways;
 
 import com.alkemy.ong.data.entities.CategoryEntity;
 import com.alkemy.ong.data.repositories.CategoryRepository;
-import com.alkemy.ong.domain.category.Category;
-import com.alkemy.ong.domain.category.CategoryGateway;
+import com.alkemy.ong.domain.categories.Category;
+import com.alkemy.ong.domain.categories.CategoryGateway;
 import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Component;
 

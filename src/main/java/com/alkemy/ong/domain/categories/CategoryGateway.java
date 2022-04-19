@@ -1,4 +1,4 @@
-package com.alkemy.ong.domain.category;
+package com.alkemy.ong.domain.categories;
 
 import java.util.List;
 

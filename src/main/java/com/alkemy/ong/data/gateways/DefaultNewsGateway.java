@@ -2,7 +2,6 @@ package com.alkemy.ong.data.gateways;
 
 import com.alkemy.ong.data.entities.NewsEntity;
 import com.alkemy.ong.data.exception.ParamNotFoundException;
-import com.alkemy.ong.data.mapper.NewsModelMapper;
 import com.alkemy.ong.data.repository.NewsRepository;
 import com.alkemy.ong.domain.gateway.NewsGateway;
 import com.alkemy.ong.domain.model.News;
@@ -16,15 +15,13 @@ public class DefaultNewsGateway implements NewsGateway {
 
     @Autowired
     NewsRepository newsRepository;
-    @Autowired
-    NewsModelMapper newsModelMapper;
 
     public News findById(Long id) {
         Optional<NewsEntity> optional = newsRepository.findById(id);
         if(!optional.isPresent()){
             throw new ParamNotFoundException("Given ID is not valid");
         }
-        News returnModel = newsModelMapper.entityToModel(optional.get());
+        News returnModel = this.entityToModel(optional.get());
         return returnModel;
     }
 

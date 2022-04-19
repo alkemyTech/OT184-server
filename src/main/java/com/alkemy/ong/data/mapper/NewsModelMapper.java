@@ -1,6 +1,6 @@
 package com.alkemy.ong.data.mapper;
 
-import com.alkemy.ong.data.entity.NewsEntity;
+import com.alkemy.ong.data.entities.NewsEntity;
 import com.alkemy.ong.domain.model.News;
 import org.springframework.stereotype.Component;
 

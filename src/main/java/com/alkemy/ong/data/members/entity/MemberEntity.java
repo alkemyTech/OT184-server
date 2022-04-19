@@ -1,7 +1,6 @@
 package com.alkemy.ong.data.members.entity;
 
 import com.sun.istack.NotNull;
-import lombok.Data;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
@@ -12,7 +11,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Data
 @Builder
 @AllArgsConstructor
 @Table(name = "members")

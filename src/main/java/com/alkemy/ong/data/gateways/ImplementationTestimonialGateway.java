@@ -4,11 +4,13 @@ import com.alkemy.ong.data.entities.TestimonialEntity;
 import com.alkemy.ong.data.repositories.TestimonialRepository;
 import com.alkemy.ong.domain.testimonials.Testimonial;
 import com.alkemy.ong.domain.testimonials.TestimonialGateway;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ImplementationTestimonialGateway implements TestimonialGateway {
 
+    @Autowired
     private TestimonialRepository testimonialRepository;
 
     public ImplementationTestimonialGateway(TestimonialRepository testimonialRepository) {

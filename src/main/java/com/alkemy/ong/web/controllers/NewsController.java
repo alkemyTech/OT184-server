@@ -1,5 +1,4 @@
 package com.alkemy.ong.web.controllers;
-import com.alkemy.ong.data.entities.CategoryEntity;
 import com.alkemy.ong.domain.news.News;
 import com.alkemy.ong.domain.news.NewsService;
 import lombok.Builder;

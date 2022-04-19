@@ -1,6 +1,4 @@
-package com.alkemy.ong.domain.services;
-import com.alkemy.ong.domain.gateways.NewsGateway;
-import com.alkemy.ong.domain.models.News;
+package com.alkemy.ong.domain.news;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

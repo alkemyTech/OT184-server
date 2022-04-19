@@ -1,6 +1,6 @@
 package com.alkemy.ong.web.controllers;
-import com.alkemy.ong.domain.models.News;
-import com.alkemy.ong.domain.services.NewsService;
+import com.alkemy.ong.domain.news.News;
+import com.alkemy.ong.domain.news.NewsService;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;

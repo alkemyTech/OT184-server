@@ -1,6 +1,5 @@
-package com.alkemy.ong.domain.gateways;
+package com.alkemy.ong.domain.news;
 
-import com.alkemy.ong.domain.models.News;
 import org.springframework.stereotype.Service;
 
 @Service

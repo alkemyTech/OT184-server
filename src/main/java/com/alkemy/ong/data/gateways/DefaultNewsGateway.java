@@ -3,8 +3,8 @@ package com.alkemy.ong.data.gateways;
 import com.alkemy.ong.data.entities.NewsEntity;
 import com.alkemy.ong.data.exceptions.ParamNotFoundException;
 import com.alkemy.ong.data.repositories.NewsRepository;
-import com.alkemy.ong.domain.gateways.NewsGateway;
-import com.alkemy.ong.domain.models.News;
+import com.alkemy.ong.domain.news.NewsGateway;
+import com.alkemy.ong.domain.news.News;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

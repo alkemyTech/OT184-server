@@ -1,4 +1,5 @@
 package com.alkemy.ong.domain.news;
+import com.alkemy.ong.domain.category.Category;
 import lombok.Builder;
 import lombok.Data;
 
@@ -9,7 +10,7 @@ public class News {
     private String name;
     private String content;
     private String image;
-    //private Category category;
+    private Category category;
     private Long categoryId;
     private String type;
 }

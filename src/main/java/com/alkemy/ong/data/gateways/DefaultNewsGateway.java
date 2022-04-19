@@ -34,7 +34,7 @@ public class DefaultNewsGateway implements NewsGateway {
         return this.findById(id);
     }
 
-    public NewsEntity modelToEntity(News news){
+    private NewsEntity modelToEntity(News news){
         NewsEntity returnEntity = NewsEntity.builder()
                 .id(news.getId())
                 .name(news.getName())
@@ -46,7 +46,7 @@ public class DefaultNewsGateway implements NewsGateway {
         return returnEntity;
     }
 
-    public News entityToModel(NewsEntity newsEntity){
+    private News entityToModel(NewsEntity newsEntity){
         News returnModel = News.builder()
                 .id(newsEntity.getId())
                 .name(newsEntity.getName())

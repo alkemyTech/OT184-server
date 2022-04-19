@@ -45,7 +45,7 @@ public class NewsController {
         private String type;
     }
 
-    public NewsDTO modelToDTO(News news){
+    private NewsDTO modelToDTO(News news){
         NewsDTO returnDTO = NewsDTO.builder()
                 .id(news.getId())
                 .name(news.getName())
@@ -57,7 +57,7 @@ public class NewsController {
         return returnDTO;
     }
 
-    public News DTOToModel(NewsDTO newsDTO){
+    private News DTOToModel(NewsDTO newsDTO){
         News returnModel = News.builder()
                 .id(newsDTO.getId())
                 .name(newsDTO.getName())

@@ -1,7 +1,7 @@
 package com.alkemy.ong.web;
 
-import com.alkemy.ong.domain.Testimonial;
-import com.alkemy.ong.domain.services.TestimonialService;
+import com.alkemy.ong.domain.testimonials.Testimonial;
+import com.alkemy.ong.domain.testimonials.TestimonialService;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,31 +9,28 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin
+@RequestMapping("/testimonials")
 public class TestimonialController {
 
     @Autowired
-    private TestimonialService testimonialService;
+    private final TestimonialService testimonialService;
 
     public TestimonialController(TestimonialService testimonialService) {
         this.testimonialService = testimonialService;
     }
 
-    @PostMapping("/testimonial/create")
+    @PostMapping("/create")
     public ResponseEntity<TestimonialDTO> save(@RequestBody TestimonialDTO dto) {
         Testimonial testimonial = testimonialService.save(toDomain(dto));
-        return new ResponseEntity<>(toDto(testimonial), HttpStatus.OK);
+        return new ResponseEntity<>(toDto(testimonial), HttpStatus.CREATED);
     }
 
     private Testimonial toDomain(TestimonialDTO dto) {
         return Testimonial.builder()
-                .id(null)
+                .id(dto.getId())
                 .name(dto.getName())
                 .image(dto.getImage())
                 .content(dto.getContent())

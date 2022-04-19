@@ -1,4 +1,4 @@
-package com.alkemy.ong.domain;
+package com.alkemy.ong.domain.testimonials;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,17 +1,19 @@
-package com.alkemy.ong.data.implementationgateways;
+package com.alkemy.ong.data.gateways;
 
-import com.alkemy.ong.data.entities.TestimonialEntity;
-import com.alkemy.ong.data.repositories.TestimonialRepository;
-import com.alkemy.ong.domain.Testimonial;
-import com.alkemy.ong.domain.gateways.TestimonialGateway;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.alkemy.ong.data.entity.TestimonialEntity;
+import com.alkemy.ong.data.repository.TestimonialRepository;
+import com.alkemy.ong.domain.testimonials.Testimonial;
+import com.alkemy.ong.domain.testimonials.TestimonialGateway;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ImplementationTestimonialGateway implements TestimonialGateway {
 
-    @Autowired
     private TestimonialRepository testimonialRepository;
+
+    public ImplementationTestimonialGateway(TestimonialRepository testimonialRepository) {
+        this.testimonialRepository = testimonialRepository;
+    }
 
     @Override
     public Testimonial create(Testimonial testimonial) {

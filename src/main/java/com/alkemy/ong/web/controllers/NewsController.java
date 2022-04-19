@@ -1,4 +1,4 @@
-package com.alkemy.ong.web.controller;
+package com.alkemy.ong.web.controllers;
 import com.alkemy.ong.domain.models.News;
 import com.alkemy.ong.domain.services.NewsService;
 import lombok.Builder;

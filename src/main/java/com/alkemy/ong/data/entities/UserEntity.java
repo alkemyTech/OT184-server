@@ -1,4 +1,4 @@
-package com.alkemy.ong.data.entity;
+package com.alkemy.ong.data.entities;
 
 
 import org.hibernate.annotations.CreationTimestamp;

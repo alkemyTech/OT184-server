@@ -1,4 +1,4 @@
-package com.alkemy.ong.domain.activity;
+package com.alkemy.ong.domain.activities;
 
 import lombok.Builder;
 import lombok.Getter;

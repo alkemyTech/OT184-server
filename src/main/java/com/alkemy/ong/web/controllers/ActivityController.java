@@ -1,7 +1,7 @@
 package com.alkemy.ong.web.controllers;
 
-import com.alkemy.ong.domain.activity.Activity;
-import com.alkemy.ong.domain.activity.ActivityService;
+import com.alkemy.ong.domain.activities.Activity;
+import com.alkemy.ong.domain.activities.ActivityService;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;

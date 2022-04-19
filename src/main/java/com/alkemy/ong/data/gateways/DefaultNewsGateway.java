@@ -14,8 +14,6 @@ import java.util.Optional;
 public class DefaultNewsGateway implements NewsGateway {
 
     private final NewsRepository newsRepository;
-
-    @Autowired
     public DefaultNewsGateway(NewsRepository newsRepository){
         this.newsRepository = newsRepository;
     }

@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class NewsService  {
     private final NewsGateway newsGateway;
-    @Autowired
     public NewsService(NewsGateway newsGateway){
         this.newsGateway = newsGateway;
     }

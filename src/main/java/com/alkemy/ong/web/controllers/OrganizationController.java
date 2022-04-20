@@ -29,7 +29,7 @@ public class OrganizationController {
         OrganizationPublicDTO organizationPublicDataDTO=toDTO(organization);
         return ResponseEntity.ok(organizationPublicDataDTO);
     }
-    public OrganizationPublicDTO toDTO(Organization organization){
+    private OrganizationPublicDTO toDTO(Organization organization){
         return OrganizationPublicDTO.builder()
                 .address(organization.getAddress())
                 .name(organization.getName())

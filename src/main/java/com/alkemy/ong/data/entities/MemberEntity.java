@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Builder
+@Data
 @AllArgsConstructor
 @Table(name = "members")
 @SQLDelete(sql = "UPDATE members SET is_deleted=true WHERE id=?")

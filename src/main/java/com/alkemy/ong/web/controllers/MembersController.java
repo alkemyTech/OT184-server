@@ -27,20 +27,8 @@ public class MembersController {
 
     @PostMapping
     public ResponseEntity<MemberDTO> save(@Valid @RequestBody MemberDTO memberDTO){
-         Members members =
-                 gateway.save(
-                     Members
-                         .builder().name(memberDTO.getName())
-                         .facebookUrl(memberDTO.getFacebookUrl()).instagramUrl(memberDTO.getInstagramUrl())
-                         .linkedinUrl(memberDTO.getLinkedinUrl()).image(memberDTO.getImage())
-                         .description(memberDTO.getDescription()).build());
-
-    return ResponseEntity.status(HttpStatus.CREATED).body(
-            MemberDTO
-                    .builder().id(members.getId()).name(members.getName())
-                    .facebookUrl(members.getFacebookUrl()).instagramUrl(members.getInstagramUrl())
-                    .linkedinUrl(members.getLinkedinUrl()).image(members.getImage())
-                    .description(members.getDescription()).build());
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                toMembers(gateway.save(toMemberDTO(memberDTO))));
     }
 
     @GetMapping
@@ -52,7 +40,15 @@ public class MembersController {
                 .collect(toList()));
     }
 
-    public MemberDTO toMembers(Members members){
+    private Members toMemberDTO(MemberDTO memberDTO){
+        return Members
+                .builder().name(memberDTO.getName())
+                .facebookUrl(memberDTO.getFacebookUrl()).instagramUrl(memberDTO.getInstagramUrl())
+                .linkedinUrl(memberDTO.getLinkedinUrl()).image(memberDTO.getImage())
+                .description(memberDTO.getDescription()).build();
+    }
+
+    private MemberDTO toMembers(Members members){
         return MemberDTO.builder()
                 .id(members.getId())
                 .name(members.getName())
@@ -82,7 +78,6 @@ public class MembersController {
         @NotNull
         private String image;
         private String description;
-
     }
 
 

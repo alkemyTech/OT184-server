@@ -37,6 +37,13 @@ public class DefaultCategoryGateway implements CategoryGateway {
         return toModel(categoryRepository.save(categoryEntity));
     }
 
+    @Override
+    public void delete(Long id) {
+        CategoryEntity categoryEntity = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("ID"));
+        categoryEntity.setIsDeleted(true);
+        categoryRepository.save(categoryEntity);
+    }
+
     private Category toModel(CategoryEntity categoryEntity) {
         return Category.builder()
                 .id(categoryEntity.getId())

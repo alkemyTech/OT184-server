@@ -30,7 +30,7 @@ public class DefaultOrganizationGateway implements OrganizationGateway {
 
     @Override
     public Organization toUpdate(Long id, Organization organization){
-        OrganizationEntity organizationEntity=organizationRepository.findById(id).orElseThrow();
+        OrganizationEntity organizationEntity=organizationRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("ID was not found"));
         organizationEntity.setAddress(organization.getAddress());
         organizationEntity.setName(organization.getName());
         organizationEntity.setPhone(organization.getPhone());

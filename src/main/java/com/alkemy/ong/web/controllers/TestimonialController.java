@@ -35,7 +35,7 @@ public class TestimonialController {
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Long id) {
         testimonialService.delete(id);
-        return new ResponseEntity(HttpStatus.ACCEPTED);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     private Testimonial toDomain(TestimonialDTO dto) {

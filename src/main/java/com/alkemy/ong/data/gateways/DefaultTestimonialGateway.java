@@ -2,18 +2,19 @@ package com.alkemy.ong.data.gateways;
 
 import com.alkemy.ong.data.entities.TestimonialEntity;
 import com.alkemy.ong.data.repositories.TestimonialRepository;
+import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
 import com.alkemy.ong.domain.testimonials.Testimonial;
 import com.alkemy.ong.domain.testimonials.TestimonialGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ImplementationTestimonialGateway implements TestimonialGateway {
+public class DefaultTestimonialGateway implements TestimonialGateway {
 
     @Autowired
     private TestimonialRepository testimonialRepository;
 
-    public ImplementationTestimonialGateway(TestimonialRepository testimonialRepository) {
+    public DefaultTestimonialGateway(TestimonialRepository testimonialRepository) {
         this.testimonialRepository = testimonialRepository;
     }
 
@@ -25,7 +26,7 @@ public class ImplementationTestimonialGateway implements TestimonialGateway {
 
     @Override
     public Testimonial update(Long id, Testimonial testimonial) {
-        TestimonialEntity entity = testimonialRepository.findById(id).orElseThrow();
+        TestimonialEntity entity = testimonialRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("ID was not found"));
         entity.setName(testimonial.getName());
         entity.setImage(testimonial.getImage());
         entity.setContent(testimonial.getContent());
@@ -34,7 +35,7 @@ public class ImplementationTestimonialGateway implements TestimonialGateway {
 
     @Override
     public void delete(Long id) {
-        TestimonialEntity entity = testimonialRepository.findById(id).orElseThrow();
+        TestimonialEntity entity = testimonialRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("ID was not found"));
         entity.setDeleted(true);
         testimonialRepository.save(entity);
     }

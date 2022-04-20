@@ -3,15 +3,15 @@ package com.alkemy.ong.domain.users;
 import com.alkemy.ong.domain.roles.Role;
 
 public class User {
-  String firstName;
+    String firstName;
 
-  String lastName;
+    String lastName;
 
-  String email;
+    String email;
 
-  String password;
+    String password;
 
-  String photo;
+    String photo;
 
-  Role role;
+    Role role;
 }

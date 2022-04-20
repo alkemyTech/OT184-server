@@ -1,6 +1,13 @@
 package com.alkemy.ong.data.gateways;
 
 import com.alkemy.ong.data.entities.OrganizationEntity;
+
+import com.alkemy.ong.data.repositories.OrganizationRepository;
+import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
+import com.alkemy.ong.domain.news.News;
+import com.alkemy.ong.domain.organizations.Organization;
+import com.alkemy.ong.domain.organizations.OrganizationGateway;
+
 import com.alkemy.ong.data.repositories.OrganizationRepository;
 import com.alkemy.ong.domain.organizations.Organization;
 import com.alkemy.ong.domain.organizations.OrganizationGateway;
@@ -14,34 +21,25 @@ import java.util.Optional;
 @Component
 public class DefaultOrganizationGateway implements OrganizationGateway {
 
-    @Autowired
-    private OrganizationRepository organizationRepository;
+
+    private final OrganizationRepository organizationRepository;
+
+    public DefaultOrganizationGateway(OrganizationRepository organizationRepository) {
+        this.organizationRepository = organizationRepository;
+    }
 
 
     @Override
-    public Organization findById(Long id){
-        Optional<OrganizationEntity> organizationEntity= organizationRepository.findById(id);
-        if(!organizationEntity.isPresent()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        Organization organization=entity2Model(organizationEntity.get());
-        return organization;
+    public Organization findById(Long id) {
+        Optional<OrganizationEntity> organizationEntity = organizationRepository.findById(id);
+        organizationEntity.orElseThrow(() -> new ResourceNotFoundException("ID"));
+        Organization returnModel = this.toModel(organizationEntity.get());
+        return returnModel;
     }
 
-    @Override
-    public Organization toUpdate(Long id, Organization organization){
-        OrganizationEntity organizationEntity=organizationRepository.findById(id).orElseThrow();
-        organizationEntity.setAddress(organization.getAddress());
-        organizationEntity.setName(organization.getName());
-        organizationEntity.setPhone(organization.getPhone());
-        organizationEntity.setImage(organization.getImage());
-        organizationEntity.setFacebook(organization.getFacebook());
-        organizationEntity.setInstagram(organization.getInstagram());
-        organizationEntity.setInstagram(organization.getInstagram());
-        return entity2Model(organizationRepository.save(organizationEntity));
-    }
 
-    public OrganizationEntity model2Entity(Organization organization){
+
+    private OrganizationEntity toEntity(Organization organization){
         return OrganizationEntity.builder()
                 .address(organization.getAddress())
                 .name(organization.getName())
@@ -54,7 +52,7 @@ public class DefaultOrganizationGateway implements OrganizationGateway {
 
     }
 
-    public Organization entity2Model(OrganizationEntity organizationEntity){
+    private Organization toModel(OrganizationEntity organizationEntity){
         return Organization.builder()
                 .name(organizationEntity.getName())
                 .phone(organizationEntity.getPhone())
@@ -65,6 +63,5 @@ public class DefaultOrganizationGateway implements OrganizationGateway {
                 .linkedin(organizationEntity.getLinkedin())
                 .build();
     }
-
 
 }

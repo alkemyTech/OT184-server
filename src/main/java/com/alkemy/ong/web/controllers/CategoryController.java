@@ -48,6 +48,14 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
+//    @PutMapping("/{id}")
+//    private ResponseEntity<CategoryDTO> update(@PathVariable Long id, @Valid @RequestBody CategoryDTO categoryDTO){
+//        Category category = categoryService.findById(id);
+//        Category categoryUpdated = categoryService.update(category);
+//        return  ResponseEntity.ok().body(toDTO(categoryUpdated));
+//
+//    }
+
     @Data
     @Builder
     private static class CategoryDTO {

@@ -1,27 +1,27 @@
-package com.alkemy.ong.web.members.controller;
+package com.alkemy.ong.web.controllers;
 
 
-import com.alkemy.ong.domain.members.model.Members;
-import com.alkemy.ong.domain.members.service.Gateway;
-import com.alkemy.ong.web.members.dto.MemberDTO;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.alkemy.ong.domain.members.Members;
+import com.alkemy.ong.domain.members.MemberGateway;
+import com.sun.istack.NotNull;
+import lombok.Builder;
+import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("members")
 public class MembersController {
 
+    private final MemberGateway gateway;
 
-    private final Gateway gateway;
-
-    @Autowired
-    public MembersController (Gateway gateway){
+    public MembersController (MemberGateway gateway){
         this.gateway = gateway;
     }
 
@@ -43,23 +43,25 @@ public class MembersController {
                     .description(members.getDescription()).build());
     }
 
-
     @GetMapping
     public ResponseEntity<List<MemberDTO>> getAll(){
-        List<Members> membersModels = gateway.getAll();
-        List<MemberDTO> memberDTO = new ArrayList<>();
-        membersModels.forEach((Members) -> memberDTO.add(
-                MemberDTO.builder()
-                .id(Members.getId())
-                .name(Members.getName())
-                .facebookUrl(Members.getFacebookUrl())
-                .instagramUrl(Members.getInstagramUrl())
-                .linkedinUrl(Members.getLinkedinUrl())
-                .image(Members.getImage())
-                .description(Members.getDescription())
-                .build()
-        ));
-        return ResponseEntity.ok().body(memberDTO);
+        return ResponseEntity.ok().body(
+                gateway.getAll()
+                .stream()
+                .map(e -> toMembers(e))
+                .collect(toList()));
+    }
+
+    public MemberDTO toMembers(Members members){
+        return MemberDTO.builder()
+                .id(members.getId())
+                .name(members.getName())
+                .facebookUrl(members.getFacebookUrl())
+                .instagramUrl(members.getInstagramUrl())
+                .linkedinUrl(members.getLinkedinUrl())
+                .image(members.getImage())
+                .description(members.getDescription())
+                .build();
     }
 
     @DeleteMapping("/{id}")
@@ -67,6 +69,22 @@ public class MembersController {
         gateway.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    @Data
+    @Builder
+    private static class MemberDTO {
+        private Long id;
+        @NotNull
+        private String name;
+        private String facebookUrl;
+        private String instagramUrl;
+        private String linkedinUrl;
+        @NotNull
+        private String image;
+        private String description;
+
+    }
+
 
 
 

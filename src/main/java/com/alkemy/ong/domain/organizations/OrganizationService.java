@@ -6,14 +6,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class OrganizationService {
 
-    @Autowired
-     private  OrganizationGateway organizationGateway;
+
+     private final OrganizationGateway organizationGateway;
+
+    public OrganizationService(OrganizationGateway organizationGateway) {
+        this.organizationGateway = organizationGateway;
+    }
 
     public Organization findById(Long id){
 
         return organizationGateway.findById(id);
     }
-
     public  Organization upDate(Long id, Organization organization){
 
         return  organizationGateway.toUpdate(id,organization);

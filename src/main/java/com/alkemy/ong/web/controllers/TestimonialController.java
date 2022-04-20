@@ -26,6 +26,18 @@ public class TestimonialController {
         return new ResponseEntity<>(toDto(testimonial), HttpStatus.CREATED);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<TestimonialDTO> update(@PathVariable Long id, @RequestBody TestimonialDTO dto) {
+        Testimonial testimonial = testimonialService.update(id, toDomain(dto));
+        return new ResponseEntity<>(toDto(testimonial), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable Long id) {
+        testimonialService.delete(id);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
     private Testimonial toDomain(TestimonialDTO dto) {
         return Testimonial.builder()
                 .id(dto.getId())

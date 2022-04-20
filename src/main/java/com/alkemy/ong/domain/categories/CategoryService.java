@@ -1,8 +1,5 @@
 package com.alkemy.ong.domain.categories;
 
-import com.alkemy.ong.domain.categories.CategoryGateway;
-import com.alkemy.ong.domain.categories.Category;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

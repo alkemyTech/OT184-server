@@ -1,6 +1,7 @@
 package com.alkemy.ong.data.entities;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -11,10 +12,11 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "testimonials")
+@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class testimonialEntity {
+public class TestimonialEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

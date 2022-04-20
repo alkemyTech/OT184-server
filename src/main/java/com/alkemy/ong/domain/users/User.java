@@ -1,4 +1,6 @@
-package com.alkemy.ong.domain.model;
+package com.alkemy.ong.domain.users;
+
+import com.alkemy.ong.domain.roles.Role;
 
 public class User {
   String firstName;

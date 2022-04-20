@@ -1,9 +1,10 @@
 package com.alkemy.ong.data.repositories;
 
-import com.alkemy.ong.data.entities.OrganizationEntity;
+import com.alkemy.ong.data.entities.NewsEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface OrganizationRepository extends JpaRepository<OrganizationEntity,Long> {
+public interface NewsRepository extends JpaRepository<NewsEntity, Long> {
+
 }

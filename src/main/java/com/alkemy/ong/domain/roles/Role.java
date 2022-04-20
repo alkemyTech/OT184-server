@@ -1,4 +1,8 @@
+<<<<<<< HEAD:src/main/java/com/alkemy/ong/domain/categories/Role.java
 package com.alkemy.ong.domain.categories;
+=======
+package com.alkemy.ong.domain.roles;
+>>>>>>> main:src/main/java/com/alkemy/ong/domain/roles/Role.java
 
 import java.time.LocalDateTime;
 

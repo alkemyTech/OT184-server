@@ -1,4 +1,4 @@
-package com.alkemy.ong.data.members.entity;
+package com.alkemy.ong.data.entities;
 
 import com.sun.istack.NotNull;
 import lombok.*;

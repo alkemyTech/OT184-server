@@ -22,4 +22,5 @@ public class TestimonialService {
     public void delete(Long id) {
         testimonialGateway.delete(id);
     }
+
 }

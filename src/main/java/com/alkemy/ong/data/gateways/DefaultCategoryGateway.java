@@ -8,7 +8,7 @@ import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
+
 import static java.util.stream.Collectors.*;
 
 @Component

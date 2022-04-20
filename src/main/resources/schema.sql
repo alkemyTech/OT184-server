@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS news (
    is_deleted BIT(1) NOT NULL,
    created_at timestamp NOT NULL,
    updated_at timestamp NULL,
+   type VARCHAR(255) NOT NULL,
    CONSTRAINT pk_news PRIMARY KEY (id)
 );
 

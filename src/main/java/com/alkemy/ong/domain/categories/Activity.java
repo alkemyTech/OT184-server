@@ -1,9 +1,9 @@
 package com.alkemy.ong.domain.categories;
 
 public class Activity {
-  String name;
+    String name;
 
-  String content;
+    String content;
 
-  String image;
+    String image;
 }

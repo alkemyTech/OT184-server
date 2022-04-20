@@ -1,7 +1,6 @@
 package com.alkemy.ong.data.entities;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -17,6 +16,9 @@ import java.time.LocalDateTime;
 @Setter
 @SQLDelete(sql = "UPDATE news set is_deleted = true where id = ?")
 @Where(clause = "is_deleted = false")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class NewsEntity {
 
     @Id
@@ -29,19 +31,19 @@ public class NewsEntity {
     private String content;
     @Column(nullable = false)
     private String image;
-
-    /*@ManyToOne(fetch = FetchType.EAGER,
+    @ManyToOne(fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST,
                     CascadeType.MERGE
             })
     @JoinColumn(name = "category_id", insertable = false, updatable = false)
-    private CategoryEntity category;*/
+    private CategoryEntity category;
 
     @Column(name = "category_id", nullable = false)
     private Long categoryId;
 
     @Column(name="is_deleted", nullable = false)
+    @Builder.Default
     private boolean isDeleted = Boolean.FALSE;
 
     @CreationTimestamp
@@ -53,4 +55,7 @@ public class NewsEntity {
     @Column(name="updated_at", columnDefinition = "TIMESTAMP")
     @DateTimeFormat(pattern = "yyyy/MM/dd hh:mm:ss")
     private LocalDateTime updatedAt;
+
+    @Column(nullable = false)
+    private String type;
 }

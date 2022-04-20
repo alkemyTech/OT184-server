@@ -1,4 +1,4 @@
-package com.alkemy.ong.domain.categories;
+package com.alkemy.ong.domain.roles;
 
 import java.time.LocalDateTime;
 

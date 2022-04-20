@@ -48,6 +48,12 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
+    @DeleteMapping("/{id}")
+    private ResponseEntity<Void> delete(@PathVariable Long id){
+        Category category = categoryService.findById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
     @Data
     @Builder
     private static class CategoryDTO {

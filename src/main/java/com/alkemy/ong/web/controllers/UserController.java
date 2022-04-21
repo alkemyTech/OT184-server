@@ -1,6 +1,5 @@
 package com.alkemy.ong.web.controllers;
 
-import com.alkemy.ong.domain.roles.Role;
 import com.alkemy.ong.domain.users.User;
 import com.alkemy.ong.domain.users.UserService;
 import lombok.Builder;
@@ -36,7 +35,14 @@ public class UserController {
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .email(user.getEmail())
-                .role(user.getRole())
+                .photo(user.getPhoto())
+                .role(
+                    RoleDto.builder()
+                        .id(user.getRole().getId())
+                        .name(user.getRole().getName())
+                        .description(user.getRole().getDescription())
+                        .build()
+                )
                 .build())
         .collect(Collectors.toList());
   }
@@ -56,7 +62,6 @@ public class UserController {
     String firstName;
     String lastName;
     String email;
-    String password;
     String photo;
     RoleDto role;
   }

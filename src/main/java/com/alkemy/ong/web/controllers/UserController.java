@@ -60,11 +60,11 @@ public class UserController {
   @Builder
   @Data
   public static class UserDto {
-    Long id;
-    String firstName;
-    String lastName;
-    String email;
-    String photo;
-    RoleDto role;
+    private Long id;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String photo;
+    private RoleDto role;
   }
 }

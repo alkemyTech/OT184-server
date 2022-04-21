@@ -28,16 +28,20 @@ public class UserController {
   }
 
   private List<UserDto> toListDto(List<User> users) {
-    return users.stream().map(user ->
-            UserDto.builder()
-                .id(user.getId())
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .email(user.getEmail())
-                .photo(user.getPhoto())
-                .role(roleToDto(user))
-                .build())
+    return users.stream()
+        .map(this::userToDto)
         .collect(Collectors.toList());
+  }
+
+  private UserDto userToDto(User user) {
+    return UserDto.builder()
+        .id(user.getId())
+        .firstName(user.getFirstName())
+        .lastName(user.getLastName())
+        .email(user.getEmail())
+        .photo(user.getPhoto())
+        .role(roleToDto(user))
+        .build();
   }
 
   private RoleDto roleToDto(User user) {

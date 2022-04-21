@@ -4,18 +4,10 @@ import com.alkemy.ong.data.entities.OrganizationEntity;
 
 import com.alkemy.ong.data.repositories.OrganizationRepository;
 import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
-import com.alkemy.ong.domain.news.News;
 import com.alkemy.ong.domain.organizations.Organization;
 import com.alkemy.ong.domain.organizations.OrganizationGateway;
 
-import com.alkemy.ong.data.repositories.OrganizationRepository;
-import com.alkemy.ong.domain.organizations.Organization;
-import com.alkemy.ong.domain.organizations.OrganizationGateway;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.server.ResponseStatusException;
-
 import java.util.Optional;
 
 @Component
@@ -37,6 +29,15 @@ public class DefaultOrganizationGateway implements OrganizationGateway {
         return returnModel;
     }
 
+    @Override
+    public Organization toUpdate(Long id, Organization organization){
+        OrganizationEntity organizationEntity=organizationRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("ID was not found"));
+        organizationEntity.setAddress(organization.getAddress());
+        organizationEntity.setName(organization.getName());
+        organizationEntity.setPhone(organization.getPhone());
+        organizationEntity.setImage(organization.getImage());
+        return toModel(organizationRepository.save(organizationEntity));
+    }
 
 
     private OrganizationEntity toEntity(Organization organization){

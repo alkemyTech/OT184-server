@@ -1,12 +1,11 @@
 package com.alkemy.ong.web.controllers;
 
-import com.alkemy.ong.data.entities.NewsEntity;
 import com.alkemy.ong.domain.news.News;
 import com.alkemy.ong.domain.news.NewsService;
 import com.alkemy.ong.web.controllers.utils.CustomUriBuilder;
+import com.alkemy.ong.web.controllers.utils.PageResponse;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -51,16 +49,15 @@ public class NewsController {
 
 
     @GetMapping
-    public ResponseEntity<List<NewsDTO>> getAllPageable(@Valid @RequestParam("page") int pageNumber){
+    public ResponseEntity<PageResponse<NewsDTO>> getAllPageable(@Valid @RequestParam("page") int pageNumber){
         List<NewsDTO> newsDTOList = newsService.getAllPageable(pageNumber-1)
                 .stream()
                 .map(list -> toDTO(list))
                 .collect(toList());
-
-
-        //customUriBuilder.addLinkHeaderOnPagedResourceRetrieval(uriBuilder, response, page);
-
-        return ResponseEntity.status(HttpStatus.OK).body(newsList);
+        String path = "/news";
+        int size = 10;
+        PageResponse<NewsDTO> pageResponse = new PageResponse<NewsDTO>(newsDTOList,path,pageNumber,size);
+        return ResponseEntity.status(HttpStatus.OK).body(pageResponse);
     }
 
     @Data

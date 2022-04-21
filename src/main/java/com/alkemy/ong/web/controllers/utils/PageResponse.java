@@ -11,11 +11,11 @@ public class PageResponse<T extends Object> {
     private String nextPage;
     private String previousPage;
 
-    public PageResponse(List<T> content, String url, int pageNumber, int size) {
+    public PageResponse(List<T> content, String path, int pageNumber, int size) {
         this.content = content;
-        this.nextPage = (content.size() < size) ? "" : url + "?page=" + (pageNumber + 1);
+        this.nextPage = (content.size() < size) ? "" : path + "?page=" + (pageNumber + 1);
         this.previousPage = (pageNumber <= 1) || (content.size() == 0)
                 ? ""
-                : url + "?page=" + (pageNumber - 1);
+                : path + "?page=" + (pageNumber - 1);
     }
 }

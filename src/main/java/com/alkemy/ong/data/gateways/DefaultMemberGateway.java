@@ -5,14 +5,9 @@ import com.alkemy.ong.data.repositories.MembersRepository;
 import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
 import com.alkemy.ong.domain.members.MemberGateway;
 import com.alkemy.ong.domain.members.Members;
-import com.alkemy.ong.web.controllers.ParamNotFound;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -42,6 +37,26 @@ public class DefaultMemberGateway implements MemberGateway {
     public void delete(Long id) {
         membersRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not found Id"));
         membersRepository.deleteById(id);
+    }
+
+    @Override
+    public Members update(Long id, Members members) {
+        MemberEntity memberEntity = membersRepository
+                .findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Not found id"));
+
+        return toModel(membersRepository.save(setMember(memberEntity, members)));
+    }
+
+    private MemberEntity setMember(MemberEntity memberEntity, Members members){
+        memberEntity.setName(members.getName());
+        memberEntity.setFacebookUrl(members.getFacebookUrl());
+        memberEntity.setInstagramUrl(members.getInstagramUrl());
+        memberEntity.setLinkedinUrl(members.getLinkedinUrl());
+        memberEntity.setImage(members.getImage());
+        memberEntity.setDescription(members.getDescription());
+
+        return memberEntity;
     }
 
     private MemberEntity toEntity (Members members){

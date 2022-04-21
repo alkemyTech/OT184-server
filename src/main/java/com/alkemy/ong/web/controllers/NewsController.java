@@ -53,7 +53,7 @@ public class NewsController {
                                                    UriComponentsBuilder uriBuilder,
                                                    HttpServletResponse response){
         // aca recibo un page de news
-        Page<News> page = newsService.getAllPageable(pageNumber);
+        Page<NewsEntity> page = newsService.getAllPageable(pageNumber);
         page.getContent(); // lista de news, convertir a dto y devolver
         customUriBuilder.addLinkHeaderOnPagedResourceRetrieval(uriBuilder, response, page);
 

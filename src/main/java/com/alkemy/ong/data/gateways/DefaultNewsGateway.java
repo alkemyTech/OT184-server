@@ -45,9 +45,8 @@ public class DefaultNewsGateway implements NewsGateway {
     }
 
     @Override
-    public Page<News> findAll(Pageable pageable) {
-        Page<NewsEntity> pageNewsEntity = newsRepository.findAll(pageable);
-        pageNewsEntity.getContent();
+    public Page<NewsEntity> findAll(Pageable pageable) {
+        return newsRepository.findAll(pageable);
 
     }
 

@@ -31,6 +31,9 @@ public class OrganizationEntity {
     private String email;
     private String welcomeText;
     private String aboutUsText;
+    private String facebook;
+    private String linkedin;
+    private String instagram;
 
     @CreationTimestamp
     @Column(name = "created_at")

@@ -6,6 +6,7 @@ import com.alkemy.ong.data.repositories.OrganizationRepository;
 import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
 import com.alkemy.ong.domain.organizations.Organization;
 import com.alkemy.ong.domain.organizations.OrganizationGateway;
+
 import org.springframework.stereotype.Component;
 import java.util.Optional;
 
@@ -45,6 +46,9 @@ public class DefaultOrganizationGateway implements OrganizationGateway {
                 .name(organization.getName())
                 .image(organization.getImage())
                 .phone(organization.getPhone())
+                .facebook(organization.getFacebook())
+                .instagram(organization.getInstagram())
+                .linkedin(organization.getLinkedin())
                 .build();
 
     }
@@ -55,6 +59,9 @@ public class DefaultOrganizationGateway implements OrganizationGateway {
                 .phone(organizationEntity.getPhone())
                 .image(organizationEntity.getImage())
                 .address(organizationEntity.getAddress())
+                .facebook(organizationEntity.getFacebook())
+                .instagram(organizationEntity.getInstagram())
+                .linkedin(organizationEntity.getLinkedin())
                 .build();
     }
 

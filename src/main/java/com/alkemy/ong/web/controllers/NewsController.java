@@ -52,7 +52,7 @@ public class NewsController {
 
     @GetMapping
     public ResponseEntity<List<NewsDTO>> getAllPageable(@Valid @RequestParam("page") int pageNumber){
-        List<NewsDTO> newsDTOList = newsService.getAllPageable(pageNumber)
+        List<NewsDTO> newsDTOList = newsService.getAllPageable(pageNumber-1)
                 .stream()
                 .map(list -> toDTO(list))
                 .collect(toList());

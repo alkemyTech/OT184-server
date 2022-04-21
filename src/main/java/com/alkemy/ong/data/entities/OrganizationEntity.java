@@ -8,6 +8,8 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -34,6 +36,13 @@ public class OrganizationEntity {
     private String facebook;
     private String linkedin;
     private String instagram;
+
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "organization_slides",
+            joinColumns = @JoinColumn(name = "organization_id"),
+            inverseJoinColumns = @JoinColumn(name = "slides_id"))
+    private List<SlidesEntity> slides = new ArrayList<>();
 
     @CreationTimestamp
     @Column(name = "created_at")

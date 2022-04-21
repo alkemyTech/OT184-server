@@ -4,11 +4,9 @@ import com.alkemy.ong.domain.slide.Slide;
 import com.alkemy.ong.domain.slide.SlideService;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/slide")
@@ -25,6 +23,13 @@ public class SlideController {
         Slide slide = slideService.findById(id);
         SlideDTO slideDTO = toDTO(slide);
         return ResponseEntity.ok().body(slideDTO);
+
+    }
+
+    @DeleteMapping("/{id}")
+    private ResponseEntity<Void> delete(@PathVariable Long id){
+        slideService.delete(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
     }
 

@@ -12,4 +12,9 @@ public class DefaultSlideGateway implements SlideGateway {
     public Slide findById(Long id) {
         return null;
     }
+
+    @Override
+    public void delete(Long id) {
+
+    }
 }

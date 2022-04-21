@@ -11,6 +11,6 @@ public class UserService {
   private final UserGateway userGateway;
   
   public List<User> findAll() {
-    return userGateway.getAll();
+    return userGateway.findAll();
   }
 }

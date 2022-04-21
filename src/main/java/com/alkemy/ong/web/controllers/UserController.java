@@ -2,6 +2,7 @@ package com.alkemy.ong.web.controllers;
 
 import com.alkemy.ong.domain.roles.Role;
 import com.alkemy.ong.domain.users.User;
+import com.alkemy.ong.domain.users.UserService;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.http.ResponseEntity;

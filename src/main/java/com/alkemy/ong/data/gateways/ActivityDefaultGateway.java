@@ -25,7 +25,7 @@ public class ActivityDefaultGateway implements ActivityGateway {
 
   @Override
   public Activity update(Long id, Activity activity) {
-    ActivityEntity foundActivity = activityRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Activity not found"));
+    ActivityEntity foundActivity = activityRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("activity with id " + id));
     refreshValues(foundActivity, activity);
     ActivityEntity savedActivity = activityRepository.save(foundActivity);
     return toModel(savedActivity);

@@ -37,6 +37,15 @@ public class DefaultCategoryGateway implements CategoryGateway {
         return toModel(categoryRepository.save(categoryEntity));
     }
 
+    @Override
+    public Category update(Long id, Category category) {
+        CategoryEntity categoryEntity = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("ID"));
+        categoryEntity.setName(category.getName());
+        categoryEntity.setDescription(category.getDescription());
+        categoryEntity.setImage(category.getImage());
+        return toModel(categoryRepository.save(categoryEntity));
+    }
+
     private Category toModel(CategoryEntity categoryEntity) {
         return Category.builder()
                 .id(categoryEntity.getId())

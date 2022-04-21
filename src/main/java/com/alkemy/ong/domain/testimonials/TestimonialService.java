@@ -2,6 +2,8 @@ package com.alkemy.ong.domain.testimonials;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TestimonialService {
 
@@ -21,6 +23,10 @@ public class TestimonialService {
 
     public void delete(Long id) {
         testimonialGateway.delete(id);
+    }
+
+    public List<Testimonial> listByPage(int i, int size){
+        return testimonialGateway.listByPage(i, size);
     }
 
 }

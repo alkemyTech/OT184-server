@@ -2,6 +2,8 @@ package com.alkemy.ong.web.controllers;
 
 import com.alkemy.ong.domain.testimonials.Testimonial;
 import com.alkemy.ong.domain.testimonials.TestimonialService;
+import com.alkemy.ong.web.exceptions.ArgumentException;
+import com.alkemy.ong.web.utils.PageResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,6 +11,9 @@ import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/testimonials")
@@ -18,6 +23,18 @@ public class TestimonialController {
 
     public TestimonialController(TestimonialService testimonialService) {
         this.testimonialService = testimonialService;
+    }
+
+    @GetMapping
+    public ResponseEntity<PageResponse<TestimonialDTO>> lisAllByPage(@RequestParam(name = "page") Integer page) {
+        if (page < 0)
+            throw new ArgumentException(page).pageNumberError();
+        List<TestimonialDTO> testimonialDTOS = testimonialService.listByPage(page, 10)
+                .stream()
+                .map(p -> toDto(p))
+                .collect(Collectors.toList());
+        PageResponse<TestimonialDTO> pageResponse = new PageResponse<>(testimonialDTOS, "/testimonials", page, 10);
+        return new ResponseEntity<>(pageResponse, HttpStatus.OK);
     }
 
     @PostMapping

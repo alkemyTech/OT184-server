@@ -31,7 +31,7 @@ public class NewsEntity {
     private String content;
     @Column(nullable = false)
     private String image;
-    @ManyToOne(fetch = FetchType.LAZY,
+    @ManyToOne(fetch = FetchType.EAGER,
             cascade = {
                     CascadeType.PERSIST,
                     CascadeType.MERGE

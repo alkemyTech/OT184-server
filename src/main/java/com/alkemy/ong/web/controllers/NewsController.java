@@ -1,8 +1,10 @@
 package com.alkemy.ong.web.controllers;
+import com.alkemy.ong.data.entities.NewsEntity;
 import com.alkemy.ong.domain.news.News;
 import com.alkemy.ong.domain.news.NewsService;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +38,12 @@ public class NewsController {
     public ResponseEntity<Void> delete(@PathVariable Long id){
         newsService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<Page<NewsEntity>> getAll(){
+
+        return ResponseEntity.status(HttpStatus.OK).body(newsService.getAll());
     }
 
     @Data

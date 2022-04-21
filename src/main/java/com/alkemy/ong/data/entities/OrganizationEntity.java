@@ -8,8 +8,8 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.Set;
 
 @Getter
 @Setter
@@ -37,12 +37,8 @@ public class OrganizationEntity {
     private String linkedin;
     private String instagram;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-            name = "organization_slides",
-            joinColumns = @JoinColumn(name = "organization_id"),
-            inverseJoinColumns = @JoinColumn(name = "slides_id"))
-    private List<SlidesEntity> slides = new ArrayList<>();
+    @OneToMany(mappedBy = "organization")
+    private Set<SlidesEntity> slides;
 
     @CreationTimestamp
     @Column(name = "created_at")

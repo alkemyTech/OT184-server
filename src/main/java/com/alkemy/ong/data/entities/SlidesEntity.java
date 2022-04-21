@@ -26,7 +26,8 @@ public class SlidesEntity {
     private String text;
     private Integer order;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name="organization_id", nullable=false)
     private OrganizationEntity organization;
 
 

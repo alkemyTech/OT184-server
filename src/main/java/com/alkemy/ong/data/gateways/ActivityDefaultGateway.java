@@ -4,10 +4,9 @@ import com.alkemy.ong.data.entities.ActivityEntity;
 import com.alkemy.ong.data.repositories.ActivityRepository;
 import com.alkemy.ong.domain.activities.Activity;
 import com.alkemy.ong.domain.activities.ActivityGateway;
-import com.alkemy.ong.web.controllers.ParamNotFound;
+import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
 
 @Component
 public class ActivityDefaultGateway implements ActivityGateway {
@@ -26,12 +25,9 @@ public class ActivityDefaultGateway implements ActivityGateway {
 
   @Override
   public Activity update(Long id, Activity activity) {
-    Optional<ActivityEntity> foundActivity = activityRepository.findById(id);
-    if (foundActivity.isEmpty()) {
-      throw new ParamNotFound("Activity id not valid");
-    }
-    refreshValues(foundActivity.get(), activity);
-    ActivityEntity savedActivity = activityRepository.save(foundActivity.get());
+    ActivityEntity foundActivity = activityRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Activity not found"));
+    refreshValues(foundActivity, activity);
+    ActivityEntity savedActivity = activityRepository.save(foundActivity);
     return toModel(savedActivity);
   }
 

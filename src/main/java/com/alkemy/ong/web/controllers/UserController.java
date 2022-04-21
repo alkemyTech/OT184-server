@@ -29,11 +29,11 @@ public class UserController {
 
   private List<UserDto> toListDto(List<User> users) {
     return users.stream()
-        .map(this::userToDto)
+        .map(this::toDto)
         .collect(Collectors.toList());
   }
 
-  private UserDto userToDto(User user) {
+  private UserDto toDto(User user) {
     return UserDto.builder()
         .id(user.getId())
         .firstName(user.getFirstName())

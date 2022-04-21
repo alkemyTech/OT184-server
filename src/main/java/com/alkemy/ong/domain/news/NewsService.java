@@ -1,12 +1,10 @@
 package com.alkemy.ong.domain.news;
 
-import com.alkemy.ong.data.entities.NewsEntity;
 import com.alkemy.ong.data.repositories.NewsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class NewsService  {
@@ -28,12 +26,8 @@ public class NewsService  {
 
     @Autowired
     NewsRepository newsRepository;
-    public Page<NewsEntity> getAllPageable(int pageNumber) {
+    public List<News> getAllPageable(int pageNumber) {
         final int SIZE = 10;
-        Pageable pageable = PageRequest.of(pageNumber, SIZE);
-        Page<NewsEntity> returnPage = newsGateway.findAll(pageable);
-
-
-        return returnPage;
+        return newsGateway.getListByPage(pageNumber,SIZE);
     }
 }

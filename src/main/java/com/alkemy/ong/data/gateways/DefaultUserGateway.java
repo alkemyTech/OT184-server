@@ -21,15 +21,19 @@ public class DefaultUserGateway implements UserGateway {
   public List<User> list() {
     return userRepository.findAll()
         .stream()
-        .map(userEntity -> User.builder()
-            .id(userEntity.getId())
-            .firstName(userEntity.getFirstName())
-            .lastName(userEntity.getLastName())
-            .email(userEntity.getEmail())
-            .photo(userEntity.getPhoto())
-            .role(roleToModel(userEntity))
-            .build())
+        .map(this::toModel)
         .collect(Collectors.toList());
+  }
+
+  private User toModel(UserEntity userEntity) {
+    return User.builder()
+        .id(userEntity.getId())
+        .firstName(userEntity.getFirstName())
+        .lastName(userEntity.getLastName())
+        .email(userEntity.getEmail())
+        .photo(userEntity.getPhoto())
+        .role(roleToModel(userEntity))
+        .build();
   }
 
   private Role roleToModel(UserEntity userEntity) {

@@ -10,11 +10,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 
 @RestController
@@ -49,15 +51,16 @@ public class NewsController {
 
 
     @GetMapping
-    public ResponseEntity<Page<NewsEntity>> getAllPageable(@Valid @RequestParam("page") int pageNumber,
-                                                   UriComponentsBuilder uriBuilder,
-                                                   HttpServletResponse response){
-        // aca recibo un page de news
-        Page<NewsEntity> page = newsService.getAllPageable(pageNumber);
-        page.getContent(); // lista de news, convertir a dto y devolver
-        customUriBuilder.addLinkHeaderOnPagedResourceRetrieval(uriBuilder, response, page);
+    public ResponseEntity<List<NewsDTO>> getAllPageable(@Valid @RequestParam("page") int pageNumber){
+        List<NewsDTO> newsDTOList = newsService.getAllPageable(pageNumber)
+                .stream()
+                .map(list -> toDTO(list))
+                .collect(toList());
 
-        return ResponseEntity.status(HttpStatus.OK).body(page);
+
+        //customUriBuilder.addLinkHeaderOnPagedResourceRetrieval(uriBuilder, response, page);
+
+        return ResponseEntity.status(HttpStatus.OK).body(newsList);
     }
 
     @Data

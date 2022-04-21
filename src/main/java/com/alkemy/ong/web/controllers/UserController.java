@@ -43,6 +43,14 @@ public class UserController {
 
   @Builder
   @Data
+  public static class RoleDto {
+    private Long id;
+    private String name;
+    private String description;
+  }
+
+  @Builder
+  @Data
   public static class UserDto {
     Long id;
     String firstName;
@@ -50,6 +58,6 @@ public class UserController {
     String email;
     String password;
     String photo;
-    Role role;
+    RoleDto role;
   }
 }

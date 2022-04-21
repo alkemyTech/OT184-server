@@ -66,6 +66,11 @@ public class MembersController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<MemberDTO> update(@PathVariable Long id,@Valid @RequestBody MemberDTO memberDTO){
+        return ResponseEntity.ok().body(toMembers(gateway.update(id, toMemberDTO(memberDTO))));
+    }
+
     @Data
     @Builder
     private static class MemberDTO {

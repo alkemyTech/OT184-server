@@ -11,4 +11,6 @@ public interface MemberGateway {
     List<Members> getAll();
 
     void delete(Long id);
+
+    Members update(Long id, Members members);
 }

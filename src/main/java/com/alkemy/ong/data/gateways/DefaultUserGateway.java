@@ -28,6 +28,7 @@ public class DefaultUserGateway implements UserGateway {
             .role(
                 Role.builder()
                     .id(userEntity.getRole().getId())
+                    .name(userEntity.getRole().getName())
                     .description(userEntity.getRole().getDescription())
                     .build()
             )

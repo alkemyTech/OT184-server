@@ -6,3 +6,6 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     initialization-mode: always
     continue-on-error: true
+  application:
+    pageSize: 10
+

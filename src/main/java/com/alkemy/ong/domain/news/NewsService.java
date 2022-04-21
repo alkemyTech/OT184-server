@@ -1,7 +1,6 @@
 package com.alkemy.ong.domain.news;
 
-import com.alkemy.ong.data.repositories.NewsRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,6 +8,8 @@ import java.util.List;
 @Service
 public class NewsService  {
     private final NewsGateway newsGateway;
+    @Value("${spring.application.pagingSize}")
+    int pageSize;
     public NewsService(NewsGateway newsGateway){
         this.newsGateway = newsGateway;
     }
@@ -22,12 +23,7 @@ public class NewsService  {
     public void delete(Long id) {
         newsGateway.delete(id);
     }
-
-
-    @Autowired
-    NewsRepository newsRepository;
     public List<News> findByPage(int pageNumber) {
-        final int SIZE = 10;
-        return newsGateway.findByPage(pageNumber,SIZE);
+        return newsGateway.findByPage(pageNumber, pageSize);
     }
 }

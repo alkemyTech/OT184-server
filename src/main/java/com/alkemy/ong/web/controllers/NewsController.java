@@ -73,7 +73,7 @@ public class NewsController {
     }
 
     private NewsDTO toDTO(News news){
-        NewsDTO returnDTO = NewsDTO.builder()
+        return NewsDTO.builder()
                 .id(news.getId())
                 .name(news.getName())
                 .content(news.getContent())
@@ -81,11 +81,10 @@ public class NewsController {
                 .categoryId(news.getCategoryId())
                 .type(news.getType())
                 .build();
-        return returnDTO;
     }
 
     private News toModel(NewsDTO newsDTO){
-        News returnModel = News.builder()
+        return News.builder()
                 .id(newsDTO.getId())
                 .name(newsDTO.getName())
                 .content(newsDTO.getContent())
@@ -93,7 +92,6 @@ public class NewsController {
                 .categoryId(newsDTO.getCategoryId())
                 .type(newsDTO.getType())
                 .build();
-        return returnModel;
     }
 }
 

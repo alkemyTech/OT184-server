@@ -52,12 +52,12 @@ public class DefaultNewsGateway implements NewsGateway {
         Pageable pageable = PageRequest.of(pageNumber, size);
         return newsRepository.findAll(pageable)
                 .stream()
-                .map(p -> toModel(p))
+                .map(this::toModel)
                 .collect(toList());
     }
 
     private NewsEntity toEntity(News news){
-        NewsEntity returnEntity = NewsEntity.builder()
+        return NewsEntity.builder()
                 .id(news.getId())
                 .name(news.getName())
                 .content(news.getContent())
@@ -65,11 +65,10 @@ public class DefaultNewsGateway implements NewsGateway {
                 .categoryId(news.getCategoryId())
                 .type(news.getType())
                 .build();
-        return returnEntity;
     }
 
     private News toModel(NewsEntity newsEntity){
-        News returnModel = News.builder()
+        return News.builder()
                 .id(newsEntity.getId())
                 .name(newsEntity.getName())
                 .content(newsEntity.getContent())
@@ -77,6 +76,5 @@ public class DefaultNewsGateway implements NewsGateway {
                 .categoryId(newsEntity.getCategoryId())
                 .type(newsEntity.getType())
                 .build();
-        return returnModel;
     }
 }

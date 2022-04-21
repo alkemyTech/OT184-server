@@ -10,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -23,9 +22,9 @@ public class DefaultNewsGateway implements NewsGateway {
     }
 
     public News findById(Long id) {
-        Optional<NewsEntity> optional = newsRepository.findById(id);
-        optional.orElseThrow(() -> new ResourceNotFoundException("ID"));
-        return this.toModel(optional.get());
+        NewsEntity news = newsRepository.findById(id)
+                .orElseThrow(()->new ResourceNotFoundException("ID"));
+        return toModel(news);
     }
 
     @Override

@@ -25,15 +25,13 @@ public class DefaultNewsGateway implements NewsGateway {
     public News findById(Long id) {
         Optional<NewsEntity> optional = newsRepository.findById(id);
         optional.orElseThrow(() -> new ResourceNotFoundException("ID"));
-        News returnModel = this.toModel(optional.get());
-        return returnModel;
+        return this.toModel(optional.get());
     }
 
     @Override
     public News save(News news) {
         NewsEntity newsEntity = this.toEntity(news);
-        News returnModel = this.toModel(newsRepository.save(newsEntity));
-        return returnModel;
+        return this.toModel(newsRepository.save(newsEntity));
     }
 
     @Override

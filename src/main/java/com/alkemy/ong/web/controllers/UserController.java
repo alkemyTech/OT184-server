@@ -23,7 +23,7 @@ public class UserController {
   }
 
   @GetMapping
-  public ResponseEntity<List<UserDto>> getAll() {
+  public ResponseEntity<List<UserDto>> findAll() {
     return ResponseEntity.ok().body(toListDto(userService.getAll()));
   }
 

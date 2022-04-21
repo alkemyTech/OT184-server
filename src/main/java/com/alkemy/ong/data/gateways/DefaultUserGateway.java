@@ -1,5 +1,7 @@
 package com.alkemy.ong.data.gateways;
 
+import com.alkemy.ong.data.entities.RoleEntity;
+import com.alkemy.ong.data.entities.UserEntity;
 import com.alkemy.ong.data.repositories.UserRepository;
 import com.alkemy.ong.domain.roles.Role;
 import com.alkemy.ong.domain.users.User;
@@ -25,14 +27,17 @@ public class DefaultUserGateway implements UserGateway {
             .lastName(userEntity.getLastName())
             .email(userEntity.getEmail())
             .photo(userEntity.getPhoto())
-            .role(
-                Role.builder()
-                    .id(userEntity.getRole().getId())
-                    .name(userEntity.getRole().getName())
-                    .description(userEntity.getRole().getDescription())
-                    .build()
-            )
+            .role(roleToModel(userEntity))
             .build())
         .collect(Collectors.toList());
+  }
+
+  private Role roleToModel(UserEntity userEntity) {
+    RoleEntity role = userEntity.getRole();
+    return Role.builder()
+        .id(role.getId())
+        .name(role.getName())
+        .description(role.getDescription())
+        .build();
   }
 }

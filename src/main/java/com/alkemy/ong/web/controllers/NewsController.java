@@ -2,7 +2,6 @@ package com.alkemy.ong.web.controllers;
 
 import com.alkemy.ong.domain.news.News;
 import com.alkemy.ong.domain.news.NewsService;
-import com.alkemy.ong.web.controllers.utils.CustomUriBuilder;
 import com.alkemy.ong.web.controllers.utils.PageResponse;
 import lombok.Builder;
 import lombok.Data;
@@ -22,10 +21,9 @@ import static java.util.stream.Collectors.toList;
 public class NewsController {
 
     private final NewsService newsService;
-    private final CustomUriBuilder customUriBuilder;
-    public NewsController(NewsService newsService, CustomUriBuilder customUriBuilder){
+
+    public NewsController(NewsService newsService){
         this.newsService = newsService;
-        this.customUriBuilder = customUriBuilder;
     }
 
     @GetMapping("/{id}")
@@ -52,11 +50,11 @@ public class NewsController {
     public ResponseEntity<PageResponse<NewsDTO>> findByPage(@Valid @RequestParam("page") int pageNumber){
         List<NewsDTO> newsDTOList = newsService.findByPage(pageNumber-1)
                 .stream()
-                .map(list -> toDTO(list))
+                .map(this::toDTO)
                 .collect(toList());
         String path = "/news";
         int size = 10;
-        PageResponse<NewsDTO> pageResponse = new PageResponse<NewsDTO>(newsDTOList,path,pageNumber,size);
+        PageResponse<NewsDTO> pageResponse = new PageResponse<>(newsDTOList,path,pageNumber,size);
         return ResponseEntity.status(HttpStatus.OK).body(pageResponse);
     }
 

@@ -55,15 +55,29 @@ INSERT INTO activities (name, content, image)
     VALUE ('activity ten', 'do activity ten content', 'https://www.somebucket.com/activity_ten.jpg');
 
 INSERT INTO news (name, content, image, category_id, is_deleted, created_at, updated_at, `type`)
-    VALUES('noticia1', 'content1', '/img1.jpg', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'news');
+    VALUES('news 1', 'content 1', '/img1.jpg', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'news');
 INSERT INTO news (name, content, image, category_id, is_deleted, created_at, updated_at, `type`)
-    VALUES('noticia2', 'content2', '/img2.jpg', 2, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'news');
+    VALUES('news 2', 'content 2', '/img2.jpg', 2, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'news');
 INSERT INTO news (name, content, image, category_id, is_deleted, created_at, updated_at, `type`)
-    VALUES('noticia3', 'content3', '/img3.jpg', 3, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'news');
+    VALUES('news 3', 'content 3', '/img3.jpg', 3, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'news');
+INSERT INTO news (name, content, image, category_id, is_deleted, created_at, updated_at, `type`)
+    VALUES('news 4', 'content 4', '/img4.jpg', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'news');
+INSERT INTO news (name, content, image, category_id, is_deleted, created_at, updated_at, `type`)
+    VALUES('news 5', 'content 5', '/img5.jpg', 2, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'news');
+INSERT INTO news (name, content, image, category_id, is_deleted, created_at, updated_at, `type`)
+    VALUES('news 6', 'content 6', '/img6.jpg', 3, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'news');
+INSERT INTO news (name, content, image, category_id, is_deleted, created_at, updated_at, `type`)
+    VALUES('news 7', 'content 7', '/img7.jpg', 3, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'news');
+INSERT INTO news (name, content, image, category_id, is_deleted, created_at, updated_at, `type`)
+    VALUES('news 8', 'content 8', '/img8.jpg', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'news');
+INSERT INTO news (name, content, image, category_id, is_deleted, created_at, updated_at, `type`)
+    VALUES('news 9', 'content 9', '/img9.jpg', 2, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'news');
+INSERT INTO news (name, content, image, category_id, is_deleted, created_at, updated_at, `type`)
+    VALUES('news 10', 'content 10', '/img10.jpg', 3, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'news');
 
 INSERT INTO categories (name, description, image, created_at, updated_at, is_deleted)
-    VALUES('categoria1', 'descripcion1', '/img1.jpg', CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,0);
+    VALUES('category 1', 'description 1', '/img1.jpg', CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,0);
 INSERT INTO categories (name, description, image, created_at, updated_at, is_deleted)
-    VALUES('categoria2', 'descripcion2', '/img2.jpg', CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,0);
+    VALUES('category 2', 'description 2', '/img2.jpg', CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,0);
 INSERT INTO categories (name, description, image, created_at, updated_at, is_deleted)
-    VALUES('categoria3', 'descripcion3', '/img3.jpg', CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,0);
+    VALUES('category 3', 'description 3', '/img3.jpg', CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,0);

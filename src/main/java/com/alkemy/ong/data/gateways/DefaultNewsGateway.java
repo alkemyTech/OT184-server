@@ -3,13 +3,16 @@ package com.alkemy.ong.data.gateways;
 import com.alkemy.ong.data.entities.NewsEntity;
 import com.alkemy.ong.data.repositories.NewsRepository;
 import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
-import com.alkemy.ong.domain.news.NewsGateway;
 import com.alkemy.ong.domain.news.News;
-import org.springframework.data.domain.Page;
+import com.alkemy.ong.domain.news.NewsGateway;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
+
+import static java.util.stream.Collectors.toList;
 
 @Component
 public class DefaultNewsGateway implements NewsGateway {
@@ -45,9 +48,12 @@ public class DefaultNewsGateway implements NewsGateway {
     }
 
     @Override
-    public Page<NewsEntity> findAll(Pageable pageable) {
-        return newsRepository.findAll(pageable);
-
+    public List<News> getListByPage(int pageNumber, int size) {
+        Pageable pageable = PageRequest.of(pageNumber, size);
+        return newsRepository.findAll(pageable)
+                .stream()
+                .map(p -> toModel(p))
+                .collect(toList());
     }
 
     private NewsEntity toEntity(News news){

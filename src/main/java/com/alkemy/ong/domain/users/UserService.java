@@ -11,6 +11,6 @@ public class UserService {
   private final UserGateway userGateway;
   
   public List<User> getAll() {
-    return userGateway.list();
+    return userGateway.getAll();
   }
 }

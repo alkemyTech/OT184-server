@@ -18,7 +18,7 @@ public class DefaultUserGateway implements UserGateway {
   private final UserRepository userRepository;
 
   @Override
-  public List<User> list() {
+  public List<User> getAll() {
     return userRepository.findAll()
         .stream()
         .map(this::toModel)

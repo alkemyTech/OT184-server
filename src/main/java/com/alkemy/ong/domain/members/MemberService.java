@@ -17,13 +17,15 @@ public class MemberService {
 
     public Members save(Members members){
         return memberGateway.save(members);
-    };
+    }
 
     public List<Members> getAll(){
         return memberGateway.getAll();
-    };
+    }
 
     public void delete(Long id){
         memberGateway.delete(id);
-    };
+    }
+
+    public Members update(Long id, Members members){ return memberGateway.update(id, members);}
 }

@@ -49,8 +49,8 @@ public class NewsController {
 
 
     @GetMapping
-    public ResponseEntity<PageResponse<NewsDTO>> getAllPageable(@Valid @RequestParam("page") int pageNumber){
-        List<NewsDTO> newsDTOList = newsService.getAllPageable(pageNumber-1)
+    public ResponseEntity<PageResponse<NewsDTO>> findByPage(@Valid @RequestParam("page") int pageNumber){
+        List<NewsDTO> newsDTOList = newsService.findByPage(pageNumber-1)
                 .stream()
                 .map(list -> toDTO(list))
                 .collect(toList());

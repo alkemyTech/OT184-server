@@ -9,5 +9,5 @@ public interface NewsGateway {
     News findById(Long id);
     News save(News news);
     void delete(Long id);
-    List<News> getListByPage(int pageNumber, int size);
+    List<News> findByPage(int pageNumber, int size);
 }

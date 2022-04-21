@@ -26,8 +26,8 @@ public class NewsService  {
 
     @Autowired
     NewsRepository newsRepository;
-    public List<News> getAllPageable(int pageNumber) {
+    public List<News> findByPage(int pageNumber) {
         final int SIZE = 10;
-        return newsGateway.getListByPage(pageNumber,SIZE);
+        return newsGateway.findByPage(pageNumber,SIZE);
     }
 }

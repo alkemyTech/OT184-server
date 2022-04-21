@@ -48,7 +48,7 @@ public class DefaultNewsGateway implements NewsGateway {
     }
 
     @Override
-    public List<News> getListByPage(int pageNumber, int size) {
+    public List<News> findByPage(int pageNumber, int size) {
         Pageable pageable = PageRequest.of(pageNumber, size);
         return newsRepository.findAll(pageable)
                 .stream()

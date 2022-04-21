@@ -28,8 +28,8 @@ public class OrganizationController {
         return ResponseEntity.ok(organizationPublicDataDTO);
     }
     @PutMapping("/public/{id}")
-    public ResponseEntity<OrganizationPublicDTO> upDate(@PathVariable Long id,@RequestBody OrganizationPublicDTO dto){
-        Organization organization=organizationService.upDate(id,toModel(dto));
+    public ResponseEntity<OrganizationPublicDTO> update(@PathVariable Long id,@RequestBody OrganizationPublicDTO dto){
+        Organization organization=organizationService.update(id,toModel(dto));
 
         return new ResponseEntity<>(toDTO(organization), HttpStatus.OK);
     }

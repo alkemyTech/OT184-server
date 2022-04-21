@@ -39,6 +39,9 @@ public class OrganizationController {
                 .name(organization.getName())
                 .image(organization.getImage())
                 .phone(organization.getPhone())
+                .facebook(organization.getFacebook())
+                .instagram(organization.getInstagram())
+                .linkedin(organization.getLinkedin())
                 .build();
     }
     public Organization toModel(OrganizationPublicDTO organizationPublicDataDTO){

@@ -5,6 +5,8 @@ import com.alkemy.ong.data.repositories.NewsRepository;
 import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
 import com.alkemy.ong.domain.news.NewsGateway;
 import com.alkemy.ong.domain.news.News;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -40,6 +42,13 @@ public class DefaultNewsGateway implements NewsGateway {
     public void delete(Long id) {
         this.findById(id);
         newsRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<News> findAll(Pageable pageable) {
+        Page<NewsEntity> pageNewsEntity = newsRepository.findAll(pageable);
+        pageNewsEntity.getContent();
+
     }
 
     private NewsEntity toEntity(News news){

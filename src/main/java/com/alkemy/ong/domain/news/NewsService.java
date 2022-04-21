@@ -1,5 +1,5 @@
 package com.alkemy.ong.domain.news;
-import com.alkemy.ong.data.entities.NewsEntity;
+
 import com.alkemy.ong.data.repositories.NewsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,10 +27,12 @@ public class NewsService  {
 
     @Autowired
     NewsRepository newsRepository;
-    public Page<NewsEntity> getAll() {
-        Pageable pageable = PageRequest.of(1, 10);
-        Page<NewsEntity> result = newsRepository.findAll(pageable);
+    public Page<News> getAllPageable(int pageNumber) {
+        final int SIZE = 10;
+        Pageable pageable = PageRequest.of(pageNumber, SIZE);
+        Page<News> returnPage = newsGateway.findAll(pageable);
 
-        return result;
+
+        return returnPage;
     }
 }

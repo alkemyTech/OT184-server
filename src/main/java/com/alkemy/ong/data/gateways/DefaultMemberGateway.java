@@ -5,14 +5,9 @@ import com.alkemy.ong.data.repositories.MembersRepository;
 import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
 import com.alkemy.ong.domain.members.MemberGateway;
 import com.alkemy.ong.domain.members.Members;
-import com.alkemy.ong.web.controllers.ParamNotFound;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 

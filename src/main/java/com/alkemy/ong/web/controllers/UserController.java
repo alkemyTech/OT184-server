@@ -24,7 +24,7 @@ public class UserController {
 
   @GetMapping
   public ResponseEntity<List<UserDto>> getAll() {
-    return ResponseEntity.ok().body(toListDto(userService.list()));
+    return ResponseEntity.ok().body(toListDto(userService.getAll()));
   }
 
   private List<UserDto> toListDto(List<User> users) {

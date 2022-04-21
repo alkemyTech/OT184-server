@@ -10,7 +10,7 @@ import java.util.List;
 public class UserService {
   private final UserGateway userGateway;
   
-  public List<User> list() {
+  public List<User> getAll() {
     return userGateway.list();
   }
 }

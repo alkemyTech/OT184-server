@@ -10,7 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @Component
 @RequiredArgsConstructor
@@ -22,7 +23,7 @@ public class DefaultUserGateway implements UserGateway {
     return userRepository.findAll()
         .stream()
         .map(this::toModel)
-        .collect(Collectors.toList());
+        .collect(toList());
   }
 
   private User toModel(UserEntity userEntity) {

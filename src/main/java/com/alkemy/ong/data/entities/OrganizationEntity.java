@@ -9,6 +9,8 @@ import org.hibernate.annotations.Where;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @Entity
@@ -34,6 +36,9 @@ public class OrganizationEntity {
     private String facebook;
     private String linkedin;
     private String instagram;
+
+    @OneToMany(mappedBy = "organization")
+    private Set<SlidesEntity> slides;
 
     @CreationTimestamp
     @Column(name = "created_at")

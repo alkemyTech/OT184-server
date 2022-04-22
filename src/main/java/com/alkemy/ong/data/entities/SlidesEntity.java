@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name = "slides")
-@SQLDelete(sql = "UPDATE organizations SET is_deleted = true WHERE id=?")
+@SQLDelete(sql = "UPDATE slides SET is_deleted = true WHERE id=?")
 @Where(clause = "is_deleted = false")
 @Builder
 @NoArgsConstructor
@@ -24,7 +24,7 @@ public class SlidesEntity {
     @Column(nullable = false)
     private String imageUrl;
     private String text;
-    private Integer order;
+    private Integer slideOrder;
 
     @ManyToOne
     @JoinColumn(name="organization_id", nullable=false)
@@ -32,6 +32,5 @@ public class SlidesEntity {
 
     @Column(name = "is_deleted")
     private Boolean isDeleted = Boolean.FALSE;
-
 
 }

@@ -39,6 +39,26 @@ public class DefaultMemberGateway implements MemberGateway {
         membersRepository.deleteById(id);
     }
 
+    @Override
+    public Members update(Long id, Members members) {
+        MemberEntity memberEntity = membersRepository
+                .findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Not found id"));
+
+        return toModel(membersRepository.save(setMember(memberEntity, members)));
+    }
+
+    private MemberEntity setMember(MemberEntity memberEntity, Members members){
+        memberEntity.setName(members.getName());
+        memberEntity.setFacebookUrl(members.getFacebookUrl());
+        memberEntity.setInstagramUrl(members.getInstagramUrl());
+        memberEntity.setLinkedinUrl(members.getLinkedinUrl());
+        memberEntity.setImage(members.getImage());
+        memberEntity.setDescription(members.getDescription());
+
+        return memberEntity;
+    }
+
     private MemberEntity toEntity (Members members){
         return MemberEntity
                 .builder().name(members.getName()).facebookUrl(members.getFacebookUrl())

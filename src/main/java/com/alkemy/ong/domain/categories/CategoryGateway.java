@@ -9,4 +9,7 @@ public interface CategoryGateway {
     Category findById(Long id);
 
     Category save(Category category);
+
+    void delete(Long id);
+    Category update(Long id, Category category);
 }

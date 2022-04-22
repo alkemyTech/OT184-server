@@ -20,4 +20,7 @@ public class CategoryService {
     public Category findById(Long id){return categoryGateway.findById(id);}
 
     public Category save(Category category){return categoryGateway.save(category);}
+
+    public void delete (Long id){categoryGateway.delete(id);}
+    public Category update(Long id, Category category){return categoryGateway.update(id, category);}
 }

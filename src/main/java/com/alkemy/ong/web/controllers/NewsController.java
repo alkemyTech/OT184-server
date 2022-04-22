@@ -5,6 +5,7 @@ import com.alkemy.ong.domain.news.NewsService;
 import com.alkemy.ong.web.controllers.utils.PageResponse;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,8 @@ import static java.util.stream.Collectors.toList;
 public class NewsController {
 
     private final NewsService newsService;
+    @Value("${spring.application.pageSize}")
+    private int pageSize;
 
     public NewsController(NewsService newsService){
         this.newsService = newsService;
@@ -53,8 +56,7 @@ public class NewsController {
                 .map(this::toDTO)
                 .collect(toList());
         String path = "/news";
-        int size = 10;
-        PageResponse<NewsDTO> pageResponse = new PageResponse<>(newsDTOList,path,pageNumber,size);
+        PageResponse<NewsDTO> pageResponse = new PageResponse<>(newsDTOList,path,pageNumber,pageSize);
         return ResponseEntity.status(HttpStatus.OK).body(pageResponse);
     }
 

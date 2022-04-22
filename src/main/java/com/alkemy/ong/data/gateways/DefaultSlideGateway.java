@@ -28,7 +28,7 @@ public class DefaultSlideGateway implements SlideGateway {
                 .imageUrl(slidesEntity.getImageUrl())
                 .text(slidesEntity.getText())
                 .order(slidesEntity.getOrder())
-                .idOrganization(slidesEntity.getOrganization().getId())
+                .organization(DefaultOrganizationGateway.toModel(slidesEntity.getOrganization()))
                 .build();
     }
 

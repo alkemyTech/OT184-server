@@ -36,7 +36,7 @@ public class SlideController {
         private String imageUrl;
         private String text;
         private Integer order;
-        private Long idOrganization;
+        private OrganizationController.OrganizationPublicDTO organizationPublicDTO;
     }
 
     private SlideDTO toDTO(Slide slide){
@@ -46,7 +46,7 @@ public class SlideController {
                 .imageUrl(slide.getImageUrl())
                 .text(slide.getText())
                 .order(slide.getOrder())
-                .idOrganization(slide.getIdOrganization())
+                .organizationPublicDTO(OrganizationController.toDTO(slide.getOrganization()))
                 .build();
     }
 

@@ -9,3 +9,8 @@ spring:
   application:
     pageSize: 10
 
+amazonProperties:
+  endpointUrl: ${AMAZON_S3_ENDPOINT_URL}
+  publicKey: ${AMAZON_S3_PUBLIC_KEY}
+  secretKey: ${AMAZON_S3_SECRET_KEY}
+  bucketName: ${AMAZON_S3_BUCKET_NAME}

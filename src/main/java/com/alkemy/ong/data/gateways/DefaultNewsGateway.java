@@ -79,13 +79,4 @@ public class DefaultNewsGateway implements NewsGateway {
                 .type(newsEntity.getType())
                 .build();
     }
-    private PageNews pageToModel(Page<NewsEntity> page){
-        return PageNews.builder()
-                .content(page.getContent()
-                        .stream()
-                        .map(this::toModel)
-                        .collect(toList()))
-                .totalPages(page.getTotalPages())
-                .build();
-    }
 }

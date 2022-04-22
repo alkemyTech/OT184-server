@@ -1,5 +1,6 @@
 package com.alkemy.ong.domain.news;
 
+import com.alkemy.ong.domain.utils.PageModel;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

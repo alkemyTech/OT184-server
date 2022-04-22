@@ -2,17 +2,16 @@ package com.alkemy.ong.web.controllers;
 
 import com.alkemy.ong.domain.news.News;
 import com.alkemy.ong.domain.news.NewsService;
+import com.alkemy.ong.domain.utils.PageModel;
 import com.alkemy.ong.web.controllers.utils.PageResponse;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
-import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
@@ -22,9 +21,6 @@ import static java.util.stream.Collectors.toList;
 public class NewsController {
 
     private final NewsService newsService;
-    @Value("${spring.application.pageSize}")
-    private int pageSize;
-
     public NewsController(NewsService newsService){
         this.newsService = newsService;
     }
@@ -49,14 +45,16 @@ public class NewsController {
 
     @GetMapping
     public ResponseEntity<PageResponse<NewsDTO>> findByPage(@Valid @RequestParam("page") int pageNumber) {
-        newsService.findByPage(pageNumber);
+        PageModel<News> page = newsService.findByPage(pageNumber);
         String path = "/news";
-        PageResponse<NewsDTO> pageResponse = new PageResponse<>(pageNewsDTO.getContent()
-                ,path
-                ,pageNumber
-                ,pageSize
-                ,pageNewsDTO.getTotalPages());
-        return ResponseEntity.status(HttpStatus.OK).body(pageResponse);
+        PageResponse response = PageResponse.builder()
+                .content(page.getContent()
+                        .stream()
+                        .map(this::toDTO)
+                        .collect(toList()))
+                .build();
+        response.setResponse(path,pageNumber,page.getTotalPages(),page.isFirst(),page.isLast());
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @Data
@@ -71,13 +69,6 @@ public class NewsController {
         private String image;
         private Long categoryId;
         private String type;
-    }
-
-    @Data
-    @Builder
-    private static class PageNewsDTO {
-        private List<NewsDTO> content;
-        private int totalPages;
     }
 
     private NewsDTO toDTO(News news){
@@ -99,16 +90,6 @@ public class NewsController {
                 .image(newsDTO.getImage())
                 .categoryId(newsDTO.getCategoryId())
                 .type(newsDTO.getType())
-                .build();
-    }
-
-    private PageNewsDTO pageToDTO(PageNews pageNews){
-        return PageNewsDTO.builder()
-                .content(pageNews.getContent()
-                        .stream()
-                        .map(this::toDTO)
-                        .collect(toList()))
-                .totalPages(pageNews.getTotalPages())
                 .build();
     }
 }

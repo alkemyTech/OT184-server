@@ -34,7 +34,7 @@ public class DefaultSlideGateway implements SlideGateway {
                 .id(slidesEntity.getId())
                 .imageUrl(slidesEntity.getImageUrl())
                 .text(slidesEntity.getText())
-                .order(slidesEntity.getOrder())
+                .order(slidesEntity.getSlideOrder())
                 .organization(DefaultOrganizationGateway.toModel(slidesEntity.getOrganization()))
                 .build();
     }

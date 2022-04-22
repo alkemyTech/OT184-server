@@ -28,6 +28,19 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, errorDTO, new HttpHeaders(), errorDTO.getStatus(), request);
     }
 
+    @ExceptionHandler(value
+            = { IllegalArgumentException.class })
+    protected ResponseEntity<Object> handleIllegalArgumentException(
+            RuntimeException ex, WebRequest request) {
+        ApiErrorDTO errorDTO = new ApiErrorDTO(
+                HttpStatus.BAD_REQUEST,
+                ex.getMessage(),
+                Arrays.asList("Bad Request")
+        );
+        return handleExceptionInternal(ex, errorDTO,
+                new HttpHeaders(), errorDTO.getStatus(), request);
+    }
+
     @Data
     @AllArgsConstructor
     public static class ApiErrorDTO {

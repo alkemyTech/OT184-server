@@ -12,7 +12,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import java.util.List;
-import static java.util.stream.Collectors.*;
+
+import static java.util.stream.Collectors.toList;
 
 
 @RestController

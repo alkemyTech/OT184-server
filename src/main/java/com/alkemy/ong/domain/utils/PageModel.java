@@ -10,7 +10,6 @@ import java.util.List;
 public class PageModel<T> {
     private List<T> content;
     private int totalPages;
-    private int pageSize;
     private boolean isFirst;
     private boolean isLast;
 }

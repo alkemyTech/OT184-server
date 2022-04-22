@@ -21,7 +21,7 @@ public class NewsService  {
     public void delete(Long id) {
         newsGateway.delete(id);
     }
-    public PageNews findByPage(int pageNumber) {
+    public PageModel findByPage(int pageNumber) {
         return newsGateway.findByPage(pageNumber, pageSize);
     }
 }

@@ -48,8 +48,6 @@ public class NewsController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-
-
     @GetMapping
     public ResponseEntity<PageResponse<NewsDTO>> findByPage(@Valid @RequestParam("page") int pageNumber){
         PageNewsDTO pageNewsDTO = pageToDTO(newsService.findByPage(pageNumber));

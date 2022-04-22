@@ -1,5 +1,6 @@
 package com.alkemy.ong.web.controllers.utils;
 
+import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
 import lombok.Data;
 
 import java.util.List;
@@ -13,6 +14,9 @@ public class PageResponse<T> {
     private String previousPage;
 
     public PageResponse(List<T> dtoList, String path, int pageNumber, int pageSize, int totalPages) {
+        if(pageNumber > totalPages){
+            throw new ResourceNotFoundException("resource");
+        }
         this.content = dtoList;
         this.nextPage = (content.size() < pageSize) || pageNumber == totalPages
                 ? "" :

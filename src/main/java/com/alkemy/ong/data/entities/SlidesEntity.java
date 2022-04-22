@@ -31,7 +31,7 @@ public class SlidesEntity {
     private OrganizationEntity organization;
 
     @Column(name = "is_deleted")
-    private Boolean isDeleted;
+    private Boolean isDeleted = Boolean.FALSE;
 
 
 }

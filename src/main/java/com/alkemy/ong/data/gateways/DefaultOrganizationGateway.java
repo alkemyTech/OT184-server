@@ -56,7 +56,7 @@ public class DefaultOrganizationGateway implements OrganizationGateway {
 
     }
 
-    private Organization toModel(OrganizationEntity organizationEntity){
+    public static Organization toModel(OrganizationEntity organizationEntity){
         return Organization.builder()
                 .name(organizationEntity.getName())
                 .phone(organizationEntity.getPhone())

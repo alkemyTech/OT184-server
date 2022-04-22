@@ -33,7 +33,7 @@ public class OrganizationController {
 
         return new ResponseEntity<>(toDTO(organization), HttpStatus.OK);
     }
-    private OrganizationPublicDTO toDTO(Organization organization){
+    public static OrganizationPublicDTO toDTO(Organization organization){
         return OrganizationPublicDTO.builder()
                 .address(organization.getAddress())
                 .name(organization.getName())

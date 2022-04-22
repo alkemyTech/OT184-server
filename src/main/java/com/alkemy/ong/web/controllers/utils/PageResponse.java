@@ -17,10 +17,10 @@ public class PageResponse<T> {
             throw new IllegalArgumentException("Incorrect index");
         }
         this.content = content;
-        this.nextPage = (this.content.size() < pageSize) || pageNumber == totalPages
+        this.nextPage = (content.size() < pageSize) || pageNumber == totalPages
                 ? "" :
                 path + "?page=" + (pageNumber + 1);
-        this.previousPage = (pageNumber < 1) || (this.content.size() == 0)
+        this.previousPage = (pageNumber < 1) || (content.size() == 0)
                 ? ""
                 : path + "?page=" + (pageNumber - 1);
 

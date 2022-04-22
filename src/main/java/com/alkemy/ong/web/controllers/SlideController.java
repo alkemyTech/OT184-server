@@ -1,5 +1,6 @@
 package com.alkemy.ong.web.controllers;
 
+import com.alkemy.ong.data.entities.OrganizationEntity;
 import com.alkemy.ong.domain.slide.Slide;
 import com.alkemy.ong.domain.slide.SlideService;
 import lombok.Builder;
@@ -9,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/slide")
+@RequestMapping("/slides")
 public class SlideController {
 
     private final SlideService slideService;
@@ -36,11 +37,23 @@ public class SlideController {
     @Data
     @Builder
     private static class SlideDTO{
+        private Long id;
+        private String imageUrl;
+        private String text;
+        private Integer order;
+        private OrganizationEntity organization;
 
     }
 
     private SlideDTO toDTO(Slide slide){
-        return SlideDTO.builder().build();
+
+        return SlideDTO.builder()
+                .id(slide.getId())
+                .imageUrl(slide.getImageUrl())
+                .text(slide.getText())
+                .order(slide.getOrder())
+                .organization(slide.getOrganization())
+                .build();
     }
 
 }

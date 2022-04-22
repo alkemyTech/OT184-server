@@ -3,8 +3,6 @@ package com.alkemy.ong.domain.news;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class NewsService  {
     private final NewsGateway newsGateway;
@@ -23,7 +21,7 @@ public class NewsService  {
     public void delete(Long id) {
         newsGateway.delete(id);
     }
-    public List<News> findByPage(int pageNumber) {
+    public PageNews findByPage(int pageNumber) {
         return newsGateway.findByPage(pageNumber, pageSize);
     }
 }

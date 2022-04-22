@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 
 @RestController
@@ -49,9 +52,13 @@ public class NewsController {
 
     @GetMapping
     public ResponseEntity<PageResponse<NewsDTO>> findByPage(@Valid @RequestParam("page") int pageNumber){
-        PageNews pageNews = newsService.findByPage(pageNumber);
+        PageNewsDTO pageNewsDTO = pageToDTO(newsService.findByPage(pageNumber));
         String path = "/news";
-        PageResponse<NewsDTO> pageResponse = new PageResponse<>(pageNews,path,pageNumber,pageSize);
+        PageResponse<NewsDTO> pageResponse = new PageResponse<>(pageNewsDTO.getContent()
+                ,path
+                ,pageNumber
+                ,pageSize
+                ,pageNewsDTO.getTotalPages());
         return ResponseEntity.status(HttpStatus.OK).body(pageResponse);
     }
 
@@ -67,6 +74,13 @@ public class NewsController {
         private String image;
         private Long categoryId;
         private String type;
+    }
+
+    @Data
+    @Builder
+    private static class PageNewsDTO {
+        private List<NewsDTO> content;
+        private int totalPages;
     }
 
     private NewsDTO toDTO(News news){
@@ -88,6 +102,16 @@ public class NewsController {
                 .image(newsDTO.getImage())
                 .categoryId(newsDTO.getCategoryId())
                 .type(newsDTO.getType())
+                .build();
+    }
+
+    private PageNewsDTO pageToDTO(PageNews pageNews){
+        return PageNewsDTO.builder()
+                .content(pageNews.getContent()
+                        .stream()
+                        .map(this::toDTO)
+                        .collect(toList()))
+                .totalPages(pageNews.getTotalPages())
                 .build();
     }
 }

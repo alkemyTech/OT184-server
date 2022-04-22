@@ -41,7 +41,14 @@ public class SlideController {
     }
 
     private SlideDTO toDTO(Slide slide){
-        return SlideDTO.builder().build();
+
+        return SlideDTO.builder()
+                .id(slide.getId())
+                .imageUrl(slide.getImageUrl())
+                .text(slide.getText())
+                .order(slide.getOrder())
+                .organization(slide.getOrganization())
+                .build();
     }
 
 }

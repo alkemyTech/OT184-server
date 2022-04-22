@@ -1,7 +1,7 @@
 package com.alkemy.ong.data.entities;
 
 
-import com.alkemy.ong.data.entities.RoleEntity;
+import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Table(name = "users")
 @SQLDelete(sql = "UPDATE users SET is_deleted = true WHERE id=?")
 @Where(clause = "is_deleted=false")
+@Getter
 public class UserEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

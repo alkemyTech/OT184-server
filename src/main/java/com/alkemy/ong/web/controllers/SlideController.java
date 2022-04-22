@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/slide")
+@RequestMapping("/slides")
 public class SlideController {
 
     private final SlideService slideService;

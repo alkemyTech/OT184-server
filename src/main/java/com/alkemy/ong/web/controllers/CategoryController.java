@@ -12,7 +12,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import java.util.List;
-import static java.util.stream.Collectors.*;
+
+import static java.util.stream.Collectors.toList;
 
 
 @RestController
@@ -47,6 +48,11 @@ public class CategoryController {
         CategoryDTO result = toDTO(categorySaved);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
+
+    @DeleteMapping("/{id}")
+    private ResponseEntity<Void> delete(@PathVariable Long id){
+        categoryService.delete(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();}
 
     @PutMapping("/{id}")
     private ResponseEntity<CategoryDTO> update(@PathVariable Long id, @Valid @RequestBody CategoryDTO categoryDTO){

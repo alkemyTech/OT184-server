@@ -1,5 +1,6 @@
 package com.alkemy.ong.data.entities;
 
+import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @Table(name = "roles")
 @SQLDelete(sql = "UPDATE roles SET is_deleted = true WHERE id=?")
 @Where(clause = "is_deleted=false")
+@Getter
 public class RoleEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

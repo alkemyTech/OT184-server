@@ -101,3 +101,15 @@ CREATE TABLE IF NOT EXISTS organizations (
    is_deleted BIT(1) NULL,
    CONSTRAINT pk_organizations PRIMARY KEY (id)
 );
+CREATE TABLE IF NOT EXISTS slides (
+  id BIGINT AUTO_INCREMENT NOT NULL,
+   image_url VARCHAR(255) NOT NULL,
+   text VARCHAR(255) NULL,
+   slide_order INT NULL,
+   organization_id BIGINT NULL,
+   is_deleted BOOLEAN DEFAULT 0,
+   CONSTRAINT pk_slides PRIMARY KEY (id)
+);
+
+ALTER TABLE slides ADD CONSTRAINT FK_SLIDES_ON_ORGANIZATION FOREIGN KEY (organization_id) REFERENCES organizations (id);
+

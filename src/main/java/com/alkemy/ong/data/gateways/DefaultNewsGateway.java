@@ -3,11 +3,14 @@ package com.alkemy.ong.data.gateways;
 import com.alkemy.ong.data.entities.NewsEntity;
 import com.alkemy.ong.data.repositories.NewsRepository;
 import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
-import com.alkemy.ong.domain.news.NewsGateway;
 import com.alkemy.ong.domain.news.News;
+import com.alkemy.ong.domain.news.NewsGateway;
+import com.alkemy.ong.domain.utils.PageModel;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
+import static java.util.stream.Collectors.toList;
 
 @Component
 public class DefaultNewsGateway implements NewsGateway {
@@ -18,17 +21,15 @@ public class DefaultNewsGateway implements NewsGateway {
     }
 
     public News findById(Long id) {
-        Optional<NewsEntity> optional = newsRepository.findById(id);
-        optional.orElseThrow(() -> new ResourceNotFoundException("ID"));
-        News returnModel = this.toModel(optional.get());
-        return returnModel;
+        NewsEntity news = newsRepository.findById(id)
+                .orElseThrow(()->new ResourceNotFoundException("ID"));
+        return toModel(news);
     }
 
     @Override
     public News save(News news) {
         NewsEntity newsEntity = this.toEntity(news);
-        News returnModel = this.toModel(newsRepository.save(newsEntity));
-        return returnModel;
+        return this.toModel(newsRepository.save(newsEntity));
     }
 
     @Override
@@ -42,8 +43,22 @@ public class DefaultNewsGateway implements NewsGateway {
         newsRepository.deleteById(id);
     }
 
+    @Override
+    public PageModel findByPage(int pageNumber, int size) {
+        Page<NewsEntity> page = newsRepository.findAll(PageRequest.of(pageNumber, size));
+        return PageModel.builder()
+                .totalPages(page.getTotalPages())
+                .isLast(page.isLast())
+                .isFirst(page.isFirst())
+                .content(page.getContent()
+                        .stream()
+                        .map(this::toModel)
+                        .collect(toList()))
+                .build();
+    }
+
     private NewsEntity toEntity(News news){
-        NewsEntity returnEntity = NewsEntity.builder()
+        return NewsEntity.builder()
                 .id(news.getId())
                 .name(news.getName())
                 .content(news.getContent())
@@ -51,11 +66,10 @@ public class DefaultNewsGateway implements NewsGateway {
                 .categoryId(news.getCategoryId())
                 .type(news.getType())
                 .build();
-        return returnEntity;
     }
 
     private News toModel(NewsEntity newsEntity){
-        News returnModel = News.builder()
+        return News.builder()
                 .id(newsEntity.getId())
                 .name(newsEntity.getName())
                 .content(newsEntity.getContent())
@@ -63,6 +77,5 @@ public class DefaultNewsGateway implements NewsGateway {
                 .categoryId(newsEntity.getCategoryId())
                 .type(newsEntity.getType())
                 .build();
-        return returnModel;
     }
 }

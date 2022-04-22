@@ -2,6 +2,7 @@ package com.alkemy.ong.web.controllers;
 
 import com.alkemy.ong.domain.news.News;
 import com.alkemy.ong.domain.news.NewsService;
+import com.alkemy.ong.domain.news.PageNews;
 import com.alkemy.ong.web.controllers.utils.PageResponse;
 import lombok.Builder;
 import lombok.Data;
@@ -12,9 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
-import java.util.List;
-
-import static java.util.stream.Collectors.toList;
 
 
 @RestController
@@ -51,12 +49,9 @@ public class NewsController {
 
     @GetMapping
     public ResponseEntity<PageResponse<NewsDTO>> findByPage(@Valid @RequestParam("page") int pageNumber){
-        List<NewsDTO> newsDTOList = newsService.findByPage(pageNumber)
-                .stream()
-                .map(this::toDTO)
-                .collect(toList());
+        PageNews pageNews = newsService.findByPage(pageNumber);
         String path = "/news";
-        PageResponse<NewsDTO> pageResponse = new PageResponse<>(newsDTOList,path,pageNumber,pageSize);
+        PageResponse<NewsDTO> pageResponse = new PageResponse<>(pageNews,path,pageNumber,pageSize);
         return ResponseEntity.status(HttpStatus.OK).body(pageResponse);
     }
 

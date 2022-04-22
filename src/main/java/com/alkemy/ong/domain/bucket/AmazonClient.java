@@ -30,15 +30,15 @@ public class AmazonClient {
   private String endpointUrl;
   @Value("${amazonProperties.bucketName}")
   private String bucketName;
-  @Value("${amazonProperties.accessKey}")
-  private String accessKey;
+  @Value("${amazonProperties.publicKey}")
+  private String publicKey;
   @Value("${amazonProperties.secretKey}")
   private String secretKey;
 
   @PostConstruct
   private void initializeAmazon() {
     AWSCredentials credentials = new BasicAWSCredentials(
-        accessKey,
+        publicKey,
         secretKey
     );
     s3client = AmazonS3ClientBuilder
@@ -71,8 +71,11 @@ public class AmazonClient {
   }
 
   private void uploadFileTos3bucket(String fileName, File file) {
-    s3client.putObject(new PutObjectRequest(bucketName, fileName, file)
-        .withCannedAcl(CannedAccessControlList.PublicRead));
+    s3client
+        .putObject(
+            new PutObjectRequest(bucketName, fileName, file)
+                .withCannedAcl(CannedAccessControlList.PublicRead)
+        );
   }
 
   public String deleteFileFromS3Bucket(String fileUrl) {

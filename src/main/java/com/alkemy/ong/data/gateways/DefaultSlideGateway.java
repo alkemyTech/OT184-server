@@ -24,9 +24,11 @@ public class DefaultSlideGateway implements SlideGateway {
 
     @Override
     public void delete(Long id) {
-
-
+        SlidesEntity slidesEntity = slidesRepository.findById(id).orElseThrow(() -> new RuntimeException("ID"));
+        slidesEntity.setIsDeleted(true);
+        slidesRepository.save(slidesEntity);
     }
+
     public Slide toModel(SlidesEntity slidesEntity){
         return Slide.builder()
                 .id(slidesEntity.getId())

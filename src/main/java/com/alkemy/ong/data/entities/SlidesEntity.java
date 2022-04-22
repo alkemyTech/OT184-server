@@ -30,6 +30,8 @@ public class SlidesEntity {
     @JoinColumn(name="organization_id", nullable=false)
     private OrganizationEntity organization;
 
+    @Column(name = "is_deleted")
+    private Boolean isDeleted;
 
 
 }

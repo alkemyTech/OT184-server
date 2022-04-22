@@ -2,6 +2,9 @@ package com.alkemy.ong.web.controllers;
 
 import com.alkemy.ong.domain.categories.Category;
 import com.alkemy.ong.domain.categories.CategoryService;
+import com.alkemy.ong.domain.news.News;
+import com.alkemy.ong.domain.utils.PageModel;
+import com.alkemy.ong.web.controllers.utils.PageResponse;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
@@ -27,11 +30,18 @@ public class CategoryController {
     }
 
     @GetMapping
-    private ResponseEntity<List<CategoryBasicDTO>> getAllCategoryBasic(){
+    private ResponseEntity<PageResponse<CategoryBasicDTO>> getAllCategoryBasicByPage(@RequestParam("page") int pageNumber){
 
-        List<Category> category = categoryService.findAll();
-        List<CategoryBasicDTO> categoryBasicDTOS = category.stream().map(this::toDTOBasic).collect(toList());
-        return ResponseEntity.ok().body(categoryBasicDTOS);
+        PageModel<Category> page = categoryService.findByPage(pageNumber);
+        String path = "/categories";
+        PageResponse response = PageResponse.builder()
+                .content(page.getContent()
+                        .stream()
+                        .map(this::toDTOBasic)
+                        .collect(toList()))
+                .build();
+        response.setResponse(path,pageNumber,page.getTotalPages(),page.isFirst(),page.isLast());
+        return ResponseEntity.ok().body(response);
     }
 
     @GetMapping("/{id}")

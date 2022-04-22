@@ -8,7 +8,7 @@ import java.util.List;
 @Service
 public class NewsService  {
     private final NewsGateway newsGateway;
-    @Value("${spring.application.pagingSize}")
+    @Value("${spring.application.pageSize}")
     int pageSize;
     public NewsService(NewsGateway newsGateway){
         this.newsGateway = newsGateway;

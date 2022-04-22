@@ -2,7 +2,6 @@ package com.alkemy.ong.web.controllers;
 
 import com.alkemy.ong.domain.news.News;
 import com.alkemy.ong.domain.news.NewsService;
-import com.alkemy.ong.domain.news.PageNews;
 import com.alkemy.ong.web.controllers.utils.PageResponse;
 import lombok.Builder;
 import lombok.Data;

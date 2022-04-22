@@ -5,7 +5,6 @@ import com.alkemy.ong.data.repositories.NewsRepository;
 import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
 import com.alkemy.ong.domain.news.News;
 import com.alkemy.ong.domain.news.NewsGateway;
-import com.alkemy.ong.domain.news.PageNews;
 import com.alkemy.ong.domain.utils.PageModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

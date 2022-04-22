@@ -9,7 +9,8 @@ import java.util.List;
 @Builder
 public class PageModel<T> {
     private List<T> content;
-    private String nextPage;
-    private String previousPage;
     private int totalPages;
+    private int pageSize;
+    private boolean isFirst;
+    private boolean isLast;
 }

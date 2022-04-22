@@ -14,5 +14,5 @@ public class Slide {
     private String imageUrl;
     private String text;
     private Integer order;
-    private OrganizationEntity organization;
+    private Long idOrganization;
 }

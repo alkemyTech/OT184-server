@@ -1,5 +1,6 @@
 package com.alkemy.ong.web.controllers;
 
+import com.alkemy.ong.data.entities.OrganizationEntity;
 import com.alkemy.ong.domain.slide.Slide;
 import com.alkemy.ong.domain.slide.SlideService;
 import lombok.Builder;
@@ -31,6 +32,11 @@ public class SlideController {
     @Data
     @Builder
     private static class SlideDTO{
+        private Long id;
+        private String imageUrl;
+        private String text;
+        private Integer order;
+        private OrganizationEntity organization;
 
     }
 

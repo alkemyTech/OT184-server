@@ -113,3 +113,6 @@ INSERT INTO users (first_name, last_name, email, password, role_id)
 
 INSERT INTO users (first_name, last_name, email, password, role_id)
     VALUE ('jenny', 'sanchez', 'jennysanchez@gmail.com', 'jsanchez', 3);
+
+INSERT INTO users (first_name, last_name, email, password, role_id)
+    VALUE ('daniel', 'cruz', 'danielcruz@gmail.com', 'dcruz', 2);

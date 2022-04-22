@@ -38,6 +38,11 @@ public class DefaultCategoryGateway implements CategoryGateway {
     }
 
     @Override
+    public void delete(Long id) {
+        CategoryEntity categoryEntity = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("ID"));
+        categoryEntity.setIsDeleted(true);
+        categoryRepository.save(categoryEntity);}
+
     public Category update(Long id, Category category) {
         CategoryEntity categoryEntity = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("ID"));
         categoryEntity.setName(category.getName());

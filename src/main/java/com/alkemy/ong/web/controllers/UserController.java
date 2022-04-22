@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("/users")
@@ -30,7 +31,7 @@ public class UserController {
   private List<UserDto> toListDto(List<User> users) {
     return users.stream()
         .map(this::toDto)
-        .collect(Collectors.toList());
+        .collect(toList());
   }
 
   private UserDto toDto(User user) {

@@ -107,6 +107,7 @@ CREATE TABLE IF NOT EXISTS slides (
    text VARCHAR(255) NULL,
    `order` INT NULL,
    organization_id BIGINT NULL,
+   is_deleted BOOLEAN DEFAULT 0,
    CONSTRAINT pk_slides PRIMARY KEY (id)
 );
 

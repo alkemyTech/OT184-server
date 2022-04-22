@@ -49,7 +49,7 @@ public class NewsController {
     }
 
     @GetMapping
-    public ResponseEntity<PageResponse<NewsDTO>> findByPage(@Valid @RequestParam("page") int pageNumber){
+    public ResponseEntity<PageResponse<NewsDTO>> findByPage(@Valid @RequestParam("page") int pageNumber) {
         PageNewsDTO pageNewsDTO = pageToDTO(newsService.findByPage(pageNumber));
         String path = "/news";
         PageResponse<NewsDTO> pageResponse = new PageResponse<>(pageNewsDTO.getContent()

@@ -33,9 +33,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleIllegalArgumentException(
             RuntimeException ex, WebRequest request) {
         ApiErrorDTO errorDTO = new ApiErrorDTO(
-                HttpStatus.NOT_FOUND,
+                HttpStatus.BAD_REQUEST,
                 ex.getMessage(),
-                Arrays.asList("Resource Not Found")
+                Arrays.asList("Bad Request")
         );
         return handleExceptionInternal(ex, errorDTO,
                 new HttpHeaders(), errorDTO.getStatus(), request);

@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ContactService {
-    ContactGateway contactGateway;
+    private final ContactGateway contactGateway;
     public ContactService(ContactGateway contactGateway){
         this.contactGateway = contactGateway;
     }

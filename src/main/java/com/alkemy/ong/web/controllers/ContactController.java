@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.persistence.Column;
 import java.util.List;
 
 @RestController
@@ -29,6 +30,10 @@ public class ContactController {
     @Data
     @Builder
     private class ContactDTO {
-
+        private Long id;
+        private String name;
+        private String phone;
+        private String email;
+        private String message;
     }
 }

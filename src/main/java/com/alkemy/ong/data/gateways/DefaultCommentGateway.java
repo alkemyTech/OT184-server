@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class CommentDefaultGateway implements CommentGateway {
+public class DefaultCommentGateway implements CommentGateway {
   private final CommentRepository commentRepository;
 
   public Comment save(Comment comment) {

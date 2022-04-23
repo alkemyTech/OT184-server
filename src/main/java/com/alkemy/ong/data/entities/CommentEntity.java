@@ -1,5 +1,6 @@
 package com.alkemy.ong.data.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,7 @@ import static javax.persistence.FetchType.*;
 @Builder
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class CommentEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +31,7 @@ public class CommentEntity {
   @JoinColumn(name = "user_id")
   private UserEntity user;
 
-  @Column(name = "user_id")
+  @Column(name = "user_id", updatable = false, insertable = false)
   private Long userId;
 
   @Column(nullable = false)
@@ -39,7 +41,7 @@ public class CommentEntity {
   @JoinColumn(name = "news_id")
   private NewsEntity news;
 
-  @Column(name = "news_id")
+  @Column(name = "news_id", updatable = false, insertable = false)
   private Long newsId;
 
   @Column(name = "created_at", updatable = false, nullable = false)

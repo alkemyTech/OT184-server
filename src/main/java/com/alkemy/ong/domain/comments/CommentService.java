@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CommentService {
   private final CommentGateway commentGateway;
-  public Comment addComment(Long userId, String body, Long newsId) {
-    return commentGateway.addComent(userId, body, newsId);
+  public Comment addComment(Comment comment) {
+    return commentGateway.save(comment);
   }
 }

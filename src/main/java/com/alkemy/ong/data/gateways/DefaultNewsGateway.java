@@ -65,11 +65,9 @@ public class DefaultNewsGateway implements NewsGateway {
     }
 
     private void refreshValues(NewsEntity entity, News news) {
-        entity.builder()
-                .content(news.getContent())
-                .image(news.getImage())
-                .name(news.getName())
-                .build();
+        entity.setName(news.getName());
+        entity.setContent(news.getContent());
+        entity.setImage(news.getImage());
     }
 
     private NewsEntity toEntity(News news){

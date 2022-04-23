@@ -59,7 +59,7 @@ public class NewsController {
 
     @PutMapping("/{id}")
     public ResponseEntity<NewsDTO> update(@PathVariable Long id,@Valid @RequestBody NewsDTO newsDTO){
-        return ResponseEntity.status(HttpStatus.OK).body(toDTO(newsService.update(this.toModel(newsDTO),id)));
+        return ResponseEntity.ok().body(toDTO(newsService.update(this.toModel(newsDTO),id)));
     }
 
     @Data

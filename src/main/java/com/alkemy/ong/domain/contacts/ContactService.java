@@ -8,4 +8,8 @@ public class ContactService {
     public ContactService(ContactGateway contactGateway){
         this.contactGateway = contactGateway;
     }
+
+    public Contact findAll() {
+        return contactGateway.findAll();
+    }
 }

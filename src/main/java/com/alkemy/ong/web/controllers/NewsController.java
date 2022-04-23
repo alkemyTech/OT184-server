@@ -54,7 +54,12 @@ public class NewsController {
                         .collect(toList()))
                 .build();
         response.setResponse(path,pageNumber,page.getTotalPages(),page.isFirst(),page.isLast());
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        return ResponseEntity.ok().body(response);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<NewsDTO> update(@PathVariable Long id,@Valid @RequestBody NewsDTO newsDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(toDTO(newsService.update(this.toModel(newsDTO),id)));
     }
 
     @Data

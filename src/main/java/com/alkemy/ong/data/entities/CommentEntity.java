@@ -11,6 +11,8 @@ import org.hibernate.annotations.Where;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+import static javax.persistence.FetchType.*;
+
 @Entity
 @Table(name = "comments")
 @SQLDelete(sql = "UPDATE comment SET deleted = true WHERE id=?")
@@ -23,16 +25,17 @@ public class CommentEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @ManyToOne
+  @ManyToOne(fetch = LAZY)
   @JoinColumn(name = "user_id")
   private UserEntity user;
 
   @Column(name = "user_id")
   private Long userId;
 
+  @Column(nullable = false)
   private String body;
 
-  @ManyToOne
+  @ManyToOne(fetch = LAZY)
   @JoinColumn(name = "news_id")
   private NewsEntity news;
 

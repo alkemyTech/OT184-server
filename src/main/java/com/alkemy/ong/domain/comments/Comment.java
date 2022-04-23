@@ -12,5 +12,8 @@ import lombok.Setter;
 public class Comment {
   Long id;
   User user;
+  Long userId;
   News news;
+  Long newsId;
+  String body;
 }

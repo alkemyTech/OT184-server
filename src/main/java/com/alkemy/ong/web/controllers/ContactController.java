@@ -24,7 +24,23 @@ public class ContactController {
     }
 
     private ContactDTO toDTO(Contact contact) {
-        return ContactDTO.builder().build();
+        return ContactDTO.builder()
+                .id(contact.getId())
+                .name(contact.getName())
+                .email(contact.getEmail())
+                .phone(contact.getEmail())
+                .message(contact.getMessage())
+                .build();
+    }
+
+    public Contact toModel(ContactDTO contactDTO){
+        return Contact.builder()
+                .id(contactDTO.getId())
+                .name(contactDTO.getName())
+                .email(contactDTO.getEmail())
+                .phone(contactDTO.getPhone())
+                .message(contactDTO.getMessage())
+                .build();
     }
 
     @Data

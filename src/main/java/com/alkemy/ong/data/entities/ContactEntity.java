@@ -14,6 +14,9 @@ import java.time.LocalDateTime;
 @Table(name = "contacts")
 @SQLDelete(sql = "UPDATE contacts SET is_deleted = true WHERE id=?")
 @Where(clause = "is_deleted = false")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ContactEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

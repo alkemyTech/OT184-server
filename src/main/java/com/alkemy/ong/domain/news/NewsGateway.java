@@ -10,4 +10,5 @@ public interface NewsGateway {
     News save(News news);
     void delete(Long id);
     PageModel findByPage(int pageNumber, int size);
+    News update(News news, Long id);
 }

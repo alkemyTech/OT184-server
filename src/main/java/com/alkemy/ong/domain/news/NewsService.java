@@ -25,4 +25,8 @@ public class NewsService  {
     public PageModel findByPage(int pageNumber) {
         return newsGateway.findByPage(pageNumber, pageSize);
     }
+
+    public News update(News news, Long id) {
+        return newsGateway.update(news,id);
+    }
 }

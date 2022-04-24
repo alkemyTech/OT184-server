@@ -8,8 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.persistence.Column;
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @RestController
 public class ContactController {
@@ -20,7 +21,7 @@ public class ContactController {
 
     @GetMapping
     public ResponseEntity<List<ContactDTO>> findAll() {
-        return ResponseEntity.ok().body(toDTO(contactService.findAll()));
+        return ResponseEntity.ok().body(contactService.findAll().stream().map(this::toDTO).collect(toList()));
     }
 
     private ContactDTO toDTO(Contact contact) {

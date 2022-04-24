@@ -1,5 +1,7 @@
 package com.alkemy.ong.domain.contacts;
 
+import java.util.List;
+
 public interface ContactGateway {
-    Contact findAll();
+    List<Contact> findAll();
 }

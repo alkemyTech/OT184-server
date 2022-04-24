@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 @Component
 public class DefaultContactGateway implements ContactGateway {
     private final ContactRepository contactRepository;
@@ -18,8 +20,7 @@ public class DefaultContactGateway implements ContactGateway {
 
     @Override
     public List<Contact> findAll() {
-        contactRepository.findAll();
-        return null;
+        return contactRepository.findAll().stream().map(this::toModel).collect(toList());
     }
 
     public Contact toModel(ContactEntity contactEntity){

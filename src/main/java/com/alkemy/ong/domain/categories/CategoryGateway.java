@@ -1,5 +1,7 @@
 package com.alkemy.ong.domain.categories;
 
+import com.alkemy.ong.domain.utils.PageModel;
+
 import java.util.List;
 
 public interface CategoryGateway {
@@ -12,4 +14,6 @@ public interface CategoryGateway {
 
     void delete(Long id);
     Category update(Long id, Category category);
+
+    PageModel findByPage(int pageNumber, int size);
 }

@@ -16,7 +16,7 @@ import static javax.persistence.FetchType.*;
 
 @Entity
 @Table(name = "comments")
-@SQLDelete(sql = "UPDATE comment SET deleted = true WHERE id=?")
+@SQLDelete(sql = "UPDATE comments SET is_deleted = true WHERE id=?")
 @Where(clause = "is_deleted=false")
 @Builder
 @Getter

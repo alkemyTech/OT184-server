@@ -24,6 +24,69 @@ VALUES (3, 'Jose', 'Gonzalez', 'josegonzalez@mail.com', 'zxcvb');
 INSERT INTO users (role_id, first_name, last_name, email, password)
 VALUES (1, 'Debora', 'Zalazar', 'deborazalar@mail.com', 'asdfgh');
 
+INSERT INTO users (first_name, last_name, email, password, role_id)
+VALUE ('miguel', 'berrio', 'miguelberrio@gmail.com', 'mberrio', 1);
+
+INSERT INTO users (first_name, last_name, email, password, role_id)
+VALUE ('andres', 'puebla', 'andrespuebla@gmail.com', 'apuebla', 1);
+
+INSERT INTO users (first_name, last_name, email, password, role_id)
+VALUE ('cristian', 'fernandez', 'cristianfernandez@gmail.com', 'cfernandez', 1);
+
+INSERT INTO users (first_name, last_name, email, password, role_id)
+VALUE ('francisco', 'romero', 'franciscoromero@gmail.com', 'fromero', 1);
+
+INSERT INTO users (first_name, last_name, email, password, role_id)
+VALUE ('lucas', 'saleme', 'lucassaleme@gmail.com', 'lsaleme', 1);
+
+INSERT INTO users (first_name, last_name, email, password, role_id)
+VALUE ('nicolas', 'pucci', 'nicolaspucci@gmail.com', 'npucci', 1);
+
+INSERT INTO users (first_name, last_name, email, password, role_id)
+VALUE ('lucas', 'paoliello', 'lucaspaoliello@gmail.com', 'lpaoliello', 1);
+
+INSERT INTO users (first_name, last_name, email, password, role_id)
+VALUE ('bill', 'gates', 'billgates@gmail.com', 'bgates', 1);
+
+INSERT INTO users (first_name, last_name, email, password, role_id)
+VALUE ('steve', 'jobs', 'stevejobs@gmail.com', 'sjobs', 1);
+
+INSERT INTO users (first_name, last_name, email, password, role_id)
+VALUE ('torvalds', 'linus', 'torvaldslinus@gmail.com', 'tlinus', 1);
+
+INSERT INTO users (first_name, last_name, email, password, role_id)
+VALUE ('alejandro', 'abondano', 'alejandroabondano@gmail.com', 'aabondano', 2);
+
+INSERT INTO users (first_name, last_name, email, password, role_id)
+VALUE ('brigite', 'polanco', 'brigitepolanco@gmail.com', 'apuebla', 3);
+
+INSERT INTO users (first_name, last_name, email, password, role_id)
+VALUE ('camilo', 'gomez', 'camilogomez@gmail.com', 'cgomez', 4);
+
+INSERT INTO users (first_name, last_name, email, password, role_id)
+VALUE ('daniela', 'guzman', 'danielaguzman@gmail.com', 'dguzman', 2);
+
+INSERT INTO users (first_name, last_name, email, password, role_id)
+VALUE ('estewil', 'quesada', 'estewilquesada@gmail.com', 'equesada', 3);
+
+INSERT INTO users (first_name, last_name, email, password, role_id)
+VALUE ('fabian', 'fino', 'fabianfino@gmail.com', 'ffino', 4);
+
+INSERT INTO users (first_name, last_name, email, password, role_id)
+VALUE ('gabriel', 'nieto', 'gabrielnieto@gmail.com', 'gnieto', 2);
+
+INSERT INTO users (first_name, last_name, email, password, role_id)
+VALUE ('hugo', 'camargo', 'hugocamargo@gmail.com', 'hcamargo', 3);
+
+INSERT INTO users (first_name, last_name, email, password, role_id)
+VALUE ('ivan', 'coral', 'ivancoral@gmail.com', 'icoral', 4);
+
+INSERT INTO users (first_name, last_name, email, password, role_id)
+VALUE ('jenny', 'sanchez', 'jennysanchez@gmail.com', 'jsanchez', 3);
+
+INSERT INTO users (first_name, last_name, email, password, role_id)
+ VALUE ('daniel', 'cruz', 'danielcruz@gmail.com', 'dcruz', 2);
+
 INSERT INTO activities (name, content, image)
     VALUE ('activity one', 'do activity one content', 'https://www.somebucket.com/activity_one.jpg');
 

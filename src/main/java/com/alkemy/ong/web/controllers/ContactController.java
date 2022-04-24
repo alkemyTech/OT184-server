@@ -46,7 +46,7 @@ public class ContactController {
 
     @Data
     @Builder
-    private class ContactDTO {
+    private static class ContactDTO {
         private Long id;
         private String name;
         private String phone;

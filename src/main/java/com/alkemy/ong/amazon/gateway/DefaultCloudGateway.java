@@ -17,7 +17,7 @@ import java.util.UUID;
 @Component
 public class DefaultCloudGateway implements CloudGateway {
 
-    @Value("${AMAZON_S3_BUCKET_NAME}")
+    @Value("${amazonProperties.bucketName}")
     private String BUCKET;
 
     public CloudOutput save(CloudInput cloud) throws IOException {

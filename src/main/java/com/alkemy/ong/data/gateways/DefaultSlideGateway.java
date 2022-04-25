@@ -5,7 +5,12 @@ import com.alkemy.ong.data.repositories.SlidesRepository;
 import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
 import com.alkemy.ong.domain.slide.Slide;
 import com.alkemy.ong.domain.slide.SlideGateway;
+import com.alkemy.ong.domain.users.User;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @Component
 public class DefaultSlideGateway implements SlideGateway {
@@ -27,6 +32,14 @@ public class DefaultSlideGateway implements SlideGateway {
         SlidesEntity slidesEntity = slidesRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("ID"));
         slidesEntity.setIsDeleted(true);
         slidesRepository.save(slidesEntity);
+    }
+
+    @Override
+    public List<Slide> findAll() {
+        return slidesRepository.findAll()
+                .stream()
+                .map(this::toModel)
+                .collect(toList());
     }
 
     public Slide toModel(SlidesEntity slidesEntity){

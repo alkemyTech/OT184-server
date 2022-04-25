@@ -145,9 +145,9 @@ INSERT INTO categories (name, description, image, created_at, updated_at, is_del
 INSERT INTO categories (name, description, image, created_at, updated_at, is_deleted)
     VALUES('category 3', 'description 3', '/img3.jpg', CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,0);
 
-INSERT INTO contacts (name, phone, email, message, is_deleted, deleted_at)
-    VALUES('name 1', '1111111111', 'email1@contact.com', "message 1",0,null);
-INSERT INTO contacts (name, phone, email, message, is_deleted, deleted_at)
-    VALUES('name 2', '2222222222', 'email2@contact.com', "message 2",0,null);
-INSERT INTO contacts (name, phone, email, message, is_deleted, deleted_at)
-    VALUES('name 3', '3333333333', 'email3@contact.com', "message 3",0,null);
+INSERT INTO contacts (name, phone, email, message, is_deleted, created_at,updated_at)
+    VALUES('name 1', '1111111111', 'email1@contact.com', "message 1",0,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+INSERT INTO contacts (name, phone, email, message, is_deleted, created_at,updated_at)
+    VALUES('name 2', '2222222222', 'email2@contact.com', "message 2",0,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+INSERT INTO contacts (name, phone, email, message, is_deleted, created_at,updated_at)
+    VALUES('name 3', '3333333333', 'email3@contact.com', "message 3",0,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);

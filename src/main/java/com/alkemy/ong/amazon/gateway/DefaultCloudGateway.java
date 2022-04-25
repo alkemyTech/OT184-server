@@ -17,7 +17,7 @@ import java.util.UUID;
 @Component
 public class DefaultCloudGateway implements CloudGateway {
 
-    @Value("${AMAZON_S3_BUCKET_NAME}")
+    @Value("${amazonProperties.bucketName}")
     private String BUCKET;
 
     public CloudOutput save(CloudInput cloud) throws IOException {
@@ -31,23 +31,23 @@ public class DefaultCloudGateway implements CloudGateway {
                 new PutObjectRequest(BUCKET, key, cloud.getFile().getInputStream(), objectMetadata)
                         .withCannedAcl(CannedAccessControlList.PublicRead);
 
-        accesAmazon(putObjectRequest).putObject(putObjectRequest);
+        accessAmazon(putObjectRequest).putObject(putObjectRequest);
 
         return toCloudOuput(key, getObjectUrl(key));
     }
 
-    public String getObjectUrl(String key) {
+    private String getObjectUrl(String key) {
         return String.format("https://%s.s3.amazonaws.com/%s", BUCKET, key);
     }
 
-    public CloudOutput toCloudOuput(String key, String url) {
+    private CloudOutput toCloudOuput(String key, String url) {
         return CloudOutput.builder()
                 .key(key)
                 .url(url)
                 .build();
     }
 
-    public AmazonS3 accesAmazon(PutObjectRequest putObjectRequest){
+    private AmazonS3 accessAmazon(PutObjectRequest putObjectRequest){
         return AmazonS3ClientBuilder
                 .standard()
                 .withCredentials(new EnvironmentVariableCredentialsProvider())

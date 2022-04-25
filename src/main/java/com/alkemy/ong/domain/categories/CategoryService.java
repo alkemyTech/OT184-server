@@ -1,5 +1,7 @@
 package com.alkemy.ong.domain.categories;
 
+import com.alkemy.ong.domain.utils.PageModel;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,4 +25,12 @@ public class CategoryService {
 
     public void delete (Long id){categoryGateway.delete(id);}
     public Category update(Long id, Category category){return categoryGateway.update(id, category);}
+
+    @Value("${spring.application.pageSize}")
+    int pageSize;
+
+    public PageModel findByPage(int pageNumber) {
+        return categoryGateway.findByPage(pageNumber, pageSize);
+}
+
 }

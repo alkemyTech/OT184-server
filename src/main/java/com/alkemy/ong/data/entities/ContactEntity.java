@@ -32,7 +32,10 @@ public class ContactEntity {
     @Column(name="is_deleted", nullable = false)
     @Builder.Default
     private boolean isDeleted = Boolean.FALSE;
-    @Column(name="deleted_at", columnDefinition = "TIMESTAMP")
+    @Column(name="created_at", columnDefinition = "TIMESTAMP", nullable = false)
     @DateTimeFormat(pattern = "yyyy/MM/dd hh:mm:ss")
-    private LocalDateTime deletedAt;
+    private LocalDateTime createdAt;
+    @Column(name="updated_at", columnDefinition = "TIMESTAMP", nullable = false)
+    @DateTimeFormat(pattern = "yyyy/MM/dd hh:mm:ss")
+    private LocalDateTime updatedAt;
 }

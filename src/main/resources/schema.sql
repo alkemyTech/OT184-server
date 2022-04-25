@@ -120,6 +120,7 @@ CREATE TABLE contacts (
    email VARCHAR(255) NOT NULL,
    message VARCHAR(255) NOT NULL,
    is_deleted BIT(1) NOT NULL,
-   deleted_at timestamp NULL,
+   created_at timestamp NULL NOT NULL,
+   updated_at timestamp NULL NOT NULL,
    CONSTRAINT pk_contacts PRIMARY KEY (id)
 );

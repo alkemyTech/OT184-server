@@ -36,7 +36,7 @@ public class ContactController {
                 .build();
     }
 
-    public Contact toModel(ContactDTO contactDTO){
+    private Contact toModel(ContactDTO contactDTO){
         return Contact.builder()
                 .id(contactDTO.getId())
                 .name(contactDTO.getName())

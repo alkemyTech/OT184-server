@@ -26,7 +26,7 @@ public class DefaultContactGateway implements ContactGateway {
                 .collect(toList());
     }
 
-    public Contact toModel(ContactEntity contactEntity){
+    private Contact toModel(ContactEntity contactEntity){
         return Contact.builder()
                 .id(contactEntity.getId())
                 .name(contactEntity.getName())
@@ -36,7 +36,7 @@ public class DefaultContactGateway implements ContactGateway {
                 .build();
     }
 
-    public ContactEntity toModel(Contact contact){
+    private ContactEntity toModel(Contact contact){
         return ContactEntity.builder()
                 .id(contact.getId())
                 .name(contact.getName())

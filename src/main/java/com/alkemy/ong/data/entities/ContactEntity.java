@@ -1,7 +1,9 @@
 package com.alkemy.ong.data.entities;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -32,9 +34,11 @@ public class ContactEntity {
     @Column(name="is_deleted", nullable = false)
     @Builder.Default
     private boolean isDeleted = Boolean.FALSE;
+    @CreationTimestamp
     @Column(name="created_at", columnDefinition = "TIMESTAMP", nullable = false)
     @DateTimeFormat(pattern = "yyyy/MM/dd hh:mm:ss")
     private LocalDateTime createdAt;
+    @UpdateTimestamp
     @Column(name="updated_at", columnDefinition = "TIMESTAMP", nullable = false)
     @DateTimeFormat(pattern = "yyyy/MM/dd hh:mm:ss")
     private LocalDateTime updatedAt;

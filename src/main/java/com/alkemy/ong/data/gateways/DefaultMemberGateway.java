@@ -5,10 +5,10 @@ import com.alkemy.ong.data.repositories.MembersRepository;
 import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
 import com.alkemy.ong.domain.members.MemberGateway;
 import com.alkemy.ong.domain.members.Members;
+import com.alkemy.ong.domain.utils.PageModel;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-
 import static java.util.stream.Collectors.toList;
 
 @Component
@@ -26,11 +26,17 @@ public class DefaultMemberGateway implements MemberGateway {
     }
 
     @Override
-    public List<Members> getAll() {
-        return membersRepository.findAll()
+    public PageModel findByPage(int pageNumber, int size) {
+        Page<MemberEntity> page = membersRepository.findAll(PageRequest.of(pageNumber, size));
+        return PageModel.builder()
+                .totalPages(page.getTotalPages())
+                .isLast(page.isLast())
+                .isFirst(page.isFirst())
+                .content(page.getContent()
                         .stream()
-                        .map(e -> toModel(e))
-                        .collect(toList());
+                        .map(this::toModel)
+                        .collect(toList()))
+                .build();
     }
 
     @Override
@@ -45,10 +51,10 @@ public class DefaultMemberGateway implements MemberGateway {
                 .findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Not found id"));
 
-        return toModel(membersRepository.save(setMember(memberEntity, members)));
+        return toModel(membersRepository.save(setEntity(memberEntity, members)));
     }
 
-    private MemberEntity setMember(MemberEntity memberEntity, Members members){
+    private MemberEntity setEntity(MemberEntity memberEntity, Members members){
         memberEntity.setName(members.getName());
         memberEntity.setFacebookUrl(members.getFacebookUrl());
         memberEntity.setInstagramUrl(members.getInstagramUrl());

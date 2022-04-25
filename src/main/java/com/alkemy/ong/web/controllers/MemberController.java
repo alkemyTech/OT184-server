@@ -1,8 +1,9 @@
 package com.alkemy.ong.web.controllers;
 
-
+import com.alkemy.ong.domain.members.MemberService;
 import com.alkemy.ong.domain.members.Members;
-import com.alkemy.ong.domain.members.MemberGateway;
+import com.alkemy.ong.domain.utils.PageModel;
+import com.alkemy.ong.web.controllers.utils.PageResponse;
 import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Data;
@@ -11,38 +12,43 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("members")
-public class MembersController {
+public class MemberController {
 
-    private final MemberGateway gateway;
+    private final MemberService memberService;
 
-    public MembersController (MemberGateway gateway){
-        this.gateway = gateway;
+    public MemberController(MemberService memberService){
+        this.memberService = memberService;
     }
 
     @PostMapping
     public ResponseEntity<MemberDTO> save(@Valid @RequestBody MemberDTO memberDTO){
         return ResponseEntity.status(HttpStatus.CREATED).body(
-                toMembers(
-                        gateway.save(
-                                toMemberDTO(memberDTO))));
+                toMemberDTO(
+                        memberService.save(
+                                toMember(memberDTO))));
     }
 
     @GetMapping
-    public ResponseEntity<List<MemberDTO>> getAll(){
-        return ResponseEntity.ok().body(
-                gateway.getAll()
-                .stream()
-                .map(e -> toMembers(e))
-                .collect(toList()));
+    public ResponseEntity<PageResponse<MemberDTO>> findByPage(@Valid @RequestParam("page") int page){
+        PageModel<Members> pageMember = memberService.findByPage(page);
+        String path = "/members";
+        PageResponse response = PageResponse.builder()
+                .content(pageMember
+                        .getContent()
+                        .stream()
+                        .map(this::toMemberDTO)
+                        .collect(toList()))
+                .build();
+        response.setResponse(path,page,pageMember.getTotalPages(),pageMember.isFirst(),pageMember.isLast());
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    private Members toMemberDTO(MemberDTO memberDTO){
+    private Members toMember(MemberDTO memberDTO){
         return Members
                 .builder().name(memberDTO.getName())
                 .facebookUrl(memberDTO.getFacebookUrl()).instagramUrl(memberDTO.getInstagramUrl())
@@ -50,7 +56,7 @@ public class MembersController {
                 .description(memberDTO.getDescription()).build();
     }
 
-    private MemberDTO toMembers(Members members){
+    private MemberDTO toMemberDTO(Members members){
         return MemberDTO.builder()
                 .id(members.getId())
                 .name(members.getName())
@@ -64,13 +70,13 @@ public class MembersController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
-        gateway.delete(id);
+        memberService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<MemberDTO> update(@PathVariable Long id,@Valid @RequestBody MemberDTO memberDTO){
-        return ResponseEntity.ok().body(toMembers(gateway.update(id, toMemberDTO(memberDTO))));
+        return ResponseEntity.ok().body(toMemberDTO(memberService.update(id, toMember(memberDTO))));
     }
 
     @Data

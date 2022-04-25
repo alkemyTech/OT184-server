@@ -1,7 +1,6 @@
 package com.alkemy.ong.web.controllers;
 
 import com.alkemy.ong.domain.cloud.CloudInput;
-import com.alkemy.ong.domain.cloud.CloudGateway;
 import com.alkemy.ong.domain.cloud.CloudOutput;
 import com.alkemy.ong.domain.cloud.CloudService;
 import lombok.Builder;

@@ -1,13 +1,14 @@
 package com.alkemy.ong.domain.members;
 
-import com.alkemy.ong.domain.categories.Category;
-import com.alkemy.ong.domain.categories.CategoryGateway;
+import com.alkemy.ong.domain.utils.PageModel;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class MemberService {
+
+    @Value("${spring.application.pageSize}")
+    int pageSize;
 
     private final MemberGateway memberGateway;
 
@@ -19,9 +20,7 @@ public class MemberService {
         return memberGateway.save(members);
     }
 
-    public List<Members> getAll(){
-        return memberGateway.getAll();
-    }
+    public PageModel findByPage(int page) { return memberGateway.findByPage(page, pageSize);}
 
     public void delete(Long id){
         memberGateway.delete(id);

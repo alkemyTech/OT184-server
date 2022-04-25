@@ -47,7 +47,7 @@ public class DefaultCloudGateway implements CloudGateway {
                 .build();
     }
 
-    public AmazonS3 accessAmazon(PutObjectRequest putObjectRequest){
+    private AmazonS3 accessAmazon(PutObjectRequest putObjectRequest){
         return AmazonS3ClientBuilder
                 .standard()
                 .withCredentials(new EnvironmentVariableCredentialsProvider())

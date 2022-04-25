@@ -1,5 +1,7 @@
 package com.alkemy.ong.domain.testimonials;
 
+import com.alkemy.ong.domain.utils.PageModel;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,6 +23,13 @@ public class TestimonialService {
 
     public void delete(Long id) {
         testimonialGateway.delete(id);
+    }
+
+    @Value("10")
+    int pageSize;
+
+    public PageModel findByPage(int pageNumber) {
+        return testimonialGateway.findByPage(pageNumber, pageSize);
     }
 
 }

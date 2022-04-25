@@ -5,8 +5,13 @@ import com.alkemy.ong.data.repositories.TestimonialRepository;
 import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
 import com.alkemy.ong.domain.testimonials.Testimonial;
 import com.alkemy.ong.domain.testimonials.TestimonialGateway;
+import com.alkemy.ong.domain.utils.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
+
+import static java.util.stream.Collectors.toList;
 
 @Component
 public class DefaultTestimonialGateway implements TestimonialGateway {
@@ -38,6 +43,20 @@ public class DefaultTestimonialGateway implements TestimonialGateway {
         TestimonialEntity entity = testimonialRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("ID was not found"));
         entity.setDeleted(true);
         testimonialRepository.save(entity);
+    }
+
+    @Override
+    public PageModel findByPage(int pageNumber, int size) {
+        Page<TestimonialEntity> page = testimonialRepository.findAll(PageRequest.of(pageNumber, size));
+        return PageModel.builder()
+                .totalPages(page.getTotalPages())
+                .isLast(page.isLast())
+                .isFirst(page.isFirst())
+                .content(page.getContent()
+                        .stream()
+                        .map(this::toModel)
+                        .collect(toList()))
+                .build();
     }
 
     private Testimonial toModel(TestimonialEntity testimonialEntity) {

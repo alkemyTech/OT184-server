@@ -2,7 +2,6 @@ package com.alkemy.ong.web.controllers;
 
 import com.alkemy.ong.domain.categories.Category;
 import com.alkemy.ong.domain.categories.CategoryService;
-import com.alkemy.ong.domain.news.News;
 import com.alkemy.ong.domain.utils.PageModel;
 import com.alkemy.ong.web.controllers.utils.PageResponse;
 import lombok.Builder;

@@ -28,7 +28,9 @@ public class MembersController {
     @PostMapping
     public ResponseEntity<MemberDTO> save(@Valid @RequestBody MemberDTO memberDTO){
         return ResponseEntity.status(HttpStatus.CREATED).body(
-                toMembers(gateway.save(toMemberDTO(memberDTO))));
+                toMembers(
+                        gateway.save(
+                                toMemberDTO(memberDTO))));
     }
 
     @GetMapping

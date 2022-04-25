@@ -3,6 +3,7 @@ package com.alkemy.ong.data.gateways;
 import com.alkemy.ong.data.entities.RoleEntity;
 import com.alkemy.ong.data.entities.UserEntity;
 import com.alkemy.ong.data.repositories.UserRepository;
+import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
 import com.alkemy.ong.domain.roles.Role;
 import com.alkemy.ong.domain.users.User;
 import com.alkemy.ong.domain.users.UserGateway;
@@ -24,6 +25,12 @@ public class DefaultUserGateway implements UserGateway {
         .stream()
         .map(this::toModel)
         .collect(toList());
+  }
+
+  @Override
+  public void delete(Long id) {
+    userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not found Id"));
+    userRepository.deleteById(id);
   }
 
   private User toModel(UserEntity userEntity) {

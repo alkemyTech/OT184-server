@@ -2,6 +2,8 @@ package com.alkemy.ong.domain.slide;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SlideService {
 
@@ -14,5 +16,7 @@ public class SlideService {
     public Slide findById(Long id){return slideGateway.findById(id);}
 
     public void delete(Long id){slideGateway.delete(id);}
+
+    public List<Slide> findAll() {return slideGateway.findAll();}
 
 }

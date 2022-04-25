@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Table(name = "contacts")
-@SQLDelete(sql = "UPDATE contacts SET is_deleted = true WHERE id=?")
+@SQLDelete(sql = "UPDATE contacts SET is_deleted = true, updated_at = now() WHERE id=?")
 @Where(clause = "is_deleted = false")
 @Builder
 @AllArgsConstructor

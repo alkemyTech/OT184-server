@@ -1,9 +1,6 @@
 package com.alkemy.ong.data.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -15,43 +12,37 @@ import java.time.LocalDateTime;
 import static javax.persistence.FetchType.*;
 
 @Entity
+@Builder
 @Table(name = "comments")
 @SQLDelete(sql = "UPDATE comments SET is_deleted = true WHERE id=?")
 @Where(clause = "is_deleted=false")
-@Builder
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommentEntity {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-  @ManyToOne(fetch = LAZY)
-  @JoinColumn(name = "user_id")
-  private UserEntity user;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "user_id")
+    private UserEntity userId;
 
-  @Column(name = "user_id", updatable = false, insertable = false)
-  private Long userId;
+    @Column(nullable = false)
+    private String body;
 
-  @Column(nullable = false)
-  private String body;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "news_id")
+    private NewsEntity newsId;
 
-  @ManyToOne(fetch = LAZY)
-  @JoinColumn(name = "news_id")
-  private NewsEntity news;
+    @Column(name = "created_at", updatable = false, nullable = false)
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
-  @Column(name = "news_id", updatable = false, insertable = false)
-  private Long newsId;
+    @Column(name = "updated_at", nullable = false)
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
-  @Column(name = "created_at", updatable = false, nullable = false)
-  @CreationTimestamp
-  private LocalDateTime createdAt;
-
-  @Column(name = "updated_at", nullable = false)
-  @UpdateTimestamp
-  private LocalDateTime updatedAt;
-
-  @Column(name = "is_deleted", nullable = false)
-  private boolean isDeleted = Boolean.FALSE;
+    @Column(name = "is_deleted", nullable = false)
+    private boolean isDeleted = Boolean.FALSE;
 }

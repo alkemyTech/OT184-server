@@ -2,7 +2,7 @@ package com.alkemy.ong.domain.comments;
 
 public interface CommentGateway {
 
-  Comment save(Comment comment);
+    Comment create(Comment comment);
 
-  void delete(Long id);
+    void delete(Long id);
 }

@@ -51,8 +51,6 @@ CREATE TABLE IF NOT EXISTS members (
    CONSTRAINT pk_members PRIMARY KEY (id)
 );
 
-
-
 CREATE TABLE IF NOT EXISTS categories(
     id BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     name VARCHAR(255) NOT NULL,
@@ -73,6 +71,7 @@ CREATE TABLE IF NOT EXISTS activities
     updated_at DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP(),
     is_deleted BOOL         NOT NULL DEFAULT FALSE
 );
+
 CREATE TABLE IF NOT EXISTS testimonials
 (
     id         BIGINT AUTO_INCREMENT NOT NULL,
@@ -84,29 +83,51 @@ CREATE TABLE IF NOT EXISTS testimonials
     is_deleted BIT(1)                NULL,
     CONSTRAINT pk_testimonials PRIMARY KEY (id)
 );
-CREATE TABLE IF NOT EXISTS organizations (
-  id BIGINT AUTO_INCREMENT NOT NULL,
-   name VARCHAR(255) NOT NULL,
-   image VARCHAR(255) NULL,
-   address VARCHAR(255) NULL,
-   phone INT NULL,
-   email VARCHAR(255) NULL,
-   welcome_text VARCHAR(255) NULL,
-   about_us_text VARCHAR(255) NULL,
-   facebook VARCHAR(255) NULL,
-   linkedin VARCHAR(255) NULL,
-   instagram VARCHAR(255) NULL,
-   created_at datetime NULL,
-   updated_at datetime NULL,
-   is_deleted BIT(1) NULL,
-   CONSTRAINT pk_organizations PRIMARY KEY (id)
+
+CREATE TABLE IF NOT EXISTS organizations
+(
+    id            BIGINT AUTO_INCREMENT NOT NULL,
+    name          VARCHAR(255)          NOT NULL,
+    image         VARCHAR(255)          NULL,
+    address       VARCHAR(255)          NULL,
+    phone         INT                   NULL,
+    email         VARCHAR(255)          NULL,
+    welcome_text  VARCHAR(255)          NULL,
+    about_us_text VARCHAR(255)          NULL,
+    facebook      VARCHAR(255)          NULL,
+    linkedin      VARCHAR(255)          NULL,
+    instagram     VARCHAR(255)          NULL,
+    created_at    datetime              NULL,
+    updated_at    datetime              NULL,
+    is_deleted    BIT(1)                NULL,
+    CONSTRAINT pk_organizations PRIMARY KEY (id)
 );
+
+
 CREATE TABLE IF NOT EXISTS slides (
   id BIGINT AUTO_INCREMENT NOT NULL,
    image_url VARCHAR(255) NOT NULL,
    text VARCHAR(255) NULL,
    slide_order INT NULL,
    organization_id BIGINT NULL,
+
+CREATE TABLE IF NOT EXISTS comments
+(
+    id         BIGINT AUTO_INCREMENT NOT NULL,
+    user_id    BIGINT                NULL,
+    body       VARCHAR(255)          NOT NULL,
+    news_id    BIGINT                NULL,
+    created_at datetime              NOT NULL,
+    updated_at datetime              NOT NULL,
+    is_deleted BIT(1)                NOT NULL,
+    CONSTRAINT pk_comments PRIMARY KEY (id)
+);
+
+ALTER TABLE comments
+    ADD CONSTRAINT FK_COMMENTS_ON_NEWS FOREIGN KEY (news_id) REFERENCES news (id);
+
+ALTER TABLE comments
+    ADD CONSTRAINT FK_COMMENTS_ON_USER FOREIGN KEY (user_id) REFERENCES users (id);
    is_deleted BOOLEAN DEFAULT 0,
    CONSTRAINT pk_slides PRIMARY KEY (id)
 );

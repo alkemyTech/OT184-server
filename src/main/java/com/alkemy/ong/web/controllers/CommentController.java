@@ -2,7 +2,6 @@ package com.alkemy.ong.web.controllers;
 
 import com.alkemy.ong.domain.comments.Comment;
 import com.alkemy.ong.domain.comments.CommentService;
-import com.alkemy.ong.web.controllers.utils.PageResponse;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
@@ -17,7 +16,7 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 @RestController
-@RequestMapping("/comments")
+@RequestMapping("comments")
 public class CommentController {
 
     private final CommentService commentService;
@@ -27,14 +26,13 @@ public class CommentController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CommentBasicDTO>> listar() {
+    public ResponseEntity<List<CommentBasicDTO>> getAllComments() {
         List<CommentBasicDTO> commentBasicDTOS = commentService.findAll().stream().map(p -> toDtoBasic(p)).collect(toList());
         return new ResponseEntity<>(commentBasicDTOS, HttpStatus.OK);
     }
 
-
     @PostMapping
-    public ResponseEntity<CommentDTO> agregar(@Valid @RequestBody CommentDTO dto) {
+    public ResponseEntity<CommentDTO> create(@Valid @RequestBody CommentDTO dto) {
         Comment comment = commentService.create(toDomain(dto));
         return new ResponseEntity<>(toDto(comment), HttpStatus.CREATED);
     }
@@ -42,7 +40,7 @@ public class CommentController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         commentService.delete(id);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     private Comment toDomain(CommentDTO dto) {
@@ -73,11 +71,11 @@ public class CommentController {
     @Data
     public static class CommentDTO {
         private Long id;
-        @NotNull(message = "El id de usuario es obligatorio")
+        @NotNull(message = "User Id is required")
         private Long userId;
-        @NotEmpty(message = "El comentario es obligatorio")
+        @NotEmpty(message = "Comment is required")
         private String body;
-        @NotNull(message = "El id de novedad es obligatorio")
+        @NotNull(message = "News Id is required")
         private Long newsId;
     }
 

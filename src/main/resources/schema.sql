@@ -113,3 +113,14 @@ CREATE TABLE IF NOT EXISTS slides (
 
 ALTER TABLE slides ADD CONSTRAINT FK_SLIDES_ON_ORGANIZATION FOREIGN KEY (organization_id) REFERENCES organizations (id);
 
+CREATE TABLE contacts (
+  id BIGINT AUTO_INCREMENT NOT NULL,
+   name VARCHAR(255) NOT NULL,
+   phone VARCHAR(255) NOT NULL,
+   email VARCHAR(255) NOT NULL,
+   message VARCHAR(255) NOT NULL,
+   is_deleted BIT(1) NOT NULL,
+   created_at timestamp NULL NOT NULL,
+   updated_at timestamp NULL NOT NULL,
+   CONSTRAINT pk_contacts PRIMARY KEY (id)
+);

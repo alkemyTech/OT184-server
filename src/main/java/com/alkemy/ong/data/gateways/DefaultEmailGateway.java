@@ -10,6 +10,7 @@ import com.sendgrid.helpers.mail.objects.Content;
 import com.sendgrid.helpers.mail.objects.Email;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.IOException;
 
@@ -21,10 +22,13 @@ public class DefaultEmailGateway implements EmailGateway {
         this.sendGrid = sendGrid;
     }
 
+    @Value("${EMAIL_SENDGRID}")
+    private String emailVariable;
+
     private static final Logger log = LoggerFactory.getLogger(DefaultEmailGateway.class);
     public String sendmail(String to, String subject, String body) {
 
-        Email email = new Email();
+        Email email = new Email(emailVariable);
         Mail mail = new Mail(email, subject, new Email(to), new Content("text", body));
 
         Request request = new Request();

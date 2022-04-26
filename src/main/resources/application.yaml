@@ -23,3 +23,7 @@ amazonProperties:
   publicKey: ${AMAZON_S3_PUBLIC_KEY}
   secretKey: ${AMAZON_S3_SECRET_KEY}
   bucketName: ${AMAZON_S3_BUCKET_NAME}
+
+springdoc:
+  swagger-ui:
+    path: /api/docs

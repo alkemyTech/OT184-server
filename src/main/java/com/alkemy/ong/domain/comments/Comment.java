@@ -1,19 +1,17 @@
 package com.alkemy.ong.domain.comments;
 
-import com.alkemy.ong.domain.news.News;
-import com.alkemy.ong.domain.users.User;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
 @Builder
-@Getter
-@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Comment {
-  Long id;
-  User user;
-  Long userId;
-  News news;
-  Long newsId;
-  String body;
+    private Long id;
+    private Long userId;
+    private String body;
+    private Long newsId;
 }

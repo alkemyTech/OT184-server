@@ -36,7 +36,7 @@ public class ContactController {
                 .id(contact.getId())
                 .name(contact.getName())
                 .email(contact.getEmail())
-                .phone(contact.getEmail())
+                .phone(contact.getPhone())
                 .message(contact.getMessage())
                 .build();
     }

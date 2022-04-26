@@ -46,7 +46,7 @@ public class DefaultContactGateway implements ContactGateway {
                 .id(contactEntity.getId())
                 .name(contactEntity.getName())
                 .email(contactEntity.getEmail())
-                .phone(contactEntity.getEmail())
+                .phone(contactEntity.getPhone())
                 .message(contactEntity.getMessage())
                 .build();
     }

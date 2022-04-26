@@ -7,6 +7,7 @@ import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
@@ -35,6 +36,18 @@ public class CommentController {
     public ResponseEntity<CommentDTO> create(@Valid @RequestBody CommentDTO dto) {
         Comment comment = commentService.create(toDomain(dto));
         return new ResponseEntity<>(toDto(comment), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CommentDTO> update(@PathVariable Long id, @Valid @RequestBody CommentDTO commentDTO) {
+        validateID(id, commentDTO.getId());
+        return new ResponseEntity<>(toDto(commentService.update(id, toDomain(commentDTO))), HttpStatus.OK);
+    }
+
+    public void validateID(Long id, Long idDTO) {
+        if (id != idDTO) {
+            throw new RuntimeException("It does not math with RequestBody ID");
+        }
     }
 
     @DeleteMapping("/{id}")

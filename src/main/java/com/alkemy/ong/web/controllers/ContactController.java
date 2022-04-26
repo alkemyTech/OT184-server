@@ -5,10 +5,9 @@ import com.alkemy.ong.domain.contacts.ContactService;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
@@ -25,6 +24,11 @@ public class ContactController {
     @GetMapping
     public ResponseEntity<List<ContactDTO>> findAll() {
         return ResponseEntity.ok().body(contactService.findAll().stream().map(this::toDTO).collect(toList()));
+    }
+
+    @PostMapping()
+    public ResponseEntity<ContactDTO> save(@Valid @RequestBody ContactDTO contactDTO){
+        return ResponseEntity.ok().body(toDTO(contactService.save(toModel(contactDTO))));
     }
 
     private ContactDTO toDTO(Contact contact) {

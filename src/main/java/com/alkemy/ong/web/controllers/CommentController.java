@@ -2,6 +2,7 @@ package com.alkemy.ong.web.controllers;
 
 import com.alkemy.ong.domain.comments.Comment;
 import com.alkemy.ong.domain.comments.CommentService;
+import com.alkemy.ong.web.controllers.utils.PageResponse;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("/comments")
@@ -20,6 +24,12 @@ public class CommentController {
 
     public CommentController(CommentService commentService) {
         this.commentService = commentService;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<CommentBasicDTO>> listar() {
+        List<CommentBasicDTO> commentBasicDTOS = commentService.findAll().stream().map(p -> toDtoBasic(p)).collect(toList());
+        return new ResponseEntity<>(commentBasicDTOS, HttpStatus.OK);
     }
 
 
@@ -53,6 +63,12 @@ public class CommentController {
                 .build();
     }
 
+    private CommentBasicDTO toDtoBasic(Comment comment) {
+        return CommentBasicDTO.builder()
+                .body(comment.getBody())
+                .build();
+    }
+
     @Builder
     @Data
     public static class CommentDTO {
@@ -63,5 +79,11 @@ public class CommentController {
         private String body;
         @NotNull(message = "El id de novedad es obligatorio")
         private Long newsId;
+    }
+
+    @Builder
+    @Data
+    public static class CommentBasicDTO {
+        private String body;
     }
 }

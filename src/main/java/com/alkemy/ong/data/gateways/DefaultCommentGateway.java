@@ -9,9 +9,13 @@ import com.alkemy.ong.data.repositories.UserRepository;
 import com.alkemy.ong.domain.comments.Comment;
 import com.alkemy.ong.domain.comments.CommentGateway;
 import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @Component
 public class DefaultCommentGateway implements CommentGateway {
@@ -31,6 +35,12 @@ public class DefaultCommentGateway implements CommentGateway {
         return toModel(commentRepository.save(commentEntity));
     }
 
+    public List<Comment> findAll() {
+        return commentRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"))
+                .stream()
+                .map(p -> toModel(p))
+                .collect(toList());
+    }
 
     public void delete(Long id) {
         commentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not found Id"));

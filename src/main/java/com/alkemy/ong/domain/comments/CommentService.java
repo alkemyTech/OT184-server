@@ -2,20 +2,26 @@ package com.alkemy.ong.domain.comments;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CommentService {
 
-  private final CommentGateway commentGateway;
+    private final CommentGateway commentGateway;
 
-  public CommentService(CommentGateway commentGateway) {
-    this.commentGateway = commentGateway;
-  }
+    public CommentService(CommentGateway commentGateway) {
+        this.commentGateway = commentGateway;
+    }
 
-  public Comment create(Comment comment) {
-    return commentGateway.create(comment);
-  }
+    public List<Comment> findAll() {
+        return commentGateway.findAll();
+    }
 
-  public void delete(Long id){
-    commentGateway.delete(id);
-  }
+    public Comment create(Comment comment) {
+        return commentGateway.create(comment);
+    }
+
+    public void delete(Long id) {
+        commentGateway.delete(id);
+    }
 }

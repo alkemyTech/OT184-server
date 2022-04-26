@@ -25,11 +25,16 @@ public class DefaultEmailGateway implements EmailGateway {
     @Value("${EMAIL_SENDGRID}")
     private String emailVariable;
 
+    @Value("${SENDGRID_API_KEY}")
+    private String emailApiKey;
+
     private static final Logger log = LoggerFactory.getLogger(DefaultEmailGateway.class);
     public String sendmail(String to, String subject, String body) {
 
         Email email = new Email(emailVariable);
         Mail mail = new Mail(email, subject, new Email(to), new Content("text", body));
+
+        SendGrid sg = new SendGrid(emailApiKey);
 
         Request request = new Request();
 
@@ -38,7 +43,7 @@ public class DefaultEmailGateway implements EmailGateway {
             request.setEndpoint("mail/send");
             request.setBody(mail.build());
 
-            Response response = sendGrid.api(request);
+            Response response = sg.api(request);
 
             log.info("{}", response.getStatusCode());
             log.info("{}", response.getBody());

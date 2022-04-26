@@ -31,6 +31,16 @@ public class DefaultContactGateway implements ContactGateway {
         return toModel(contactRepository.save(toEntity(contact)));
     }
 
+    private ContactEntity toEntity(Contact contact) {
+        return ContactEntity.builder()
+                .id(contact.getId())
+                .name(contact.getName())
+                .email(contact.getEmail())
+                .phone(contact.getPhone())
+                .message(contact.getMessage())
+                .build();
+    }
+
     private Contact toModel(ContactEntity contactEntity){
         return Contact.builder()
                 .id(contactEntity.getId())

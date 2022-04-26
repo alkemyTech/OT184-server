@@ -27,9 +27,7 @@ public class DefaultCommentGateway implements CommentGateway {
     }
 
     public Comment create(Comment comment) {
-        UserEntity user = getUserEntity(comment.getUserId());
-        NewsEntity news = getNewsEntity(comment.getNewsId());
-        CommentEntity commentEntity = toEntity(comment, user, news);
+        CommentEntity commentEntity = toEntity(comment);
         return toModel(commentRepository.save(commentEntity));
     }
 
@@ -42,19 +40,19 @@ public class DefaultCommentGateway implements CommentGateway {
     private UserEntity getUserEntity(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(
-                        () -> new RuntimeException("User with id: " + userId + " not found.")
+                        () -> new ResourceNotFoundException("User with id: " + userId + " not found.")
                 );
     }
 
     private NewsEntity getNewsEntity(Long newsId) {
         return newsRepository.findById(newsId)
                 .orElseThrow(
-                        () -> new RuntimeException("News with id: " + newsId + " not found.")
+                        () -> new ResourceNotFoundException("News with id: " + newsId + " not found.")
                 );
     }
 
 
-    private CommentEntity toEntity(Comment comment, UserEntity user, NewsEntity news) {
+    private CommentEntity toEntity(Comment comment) {
         return CommentEntity.builder()
                 .id(comment.getId())
                 .body(comment.getBody())

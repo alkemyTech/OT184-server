@@ -2,12 +2,13 @@ package com.alkemy.ong.web.controllers;
 
 import com.alkemy.ong.domain.comments.Comment;
 import com.alkemy.ong.domain.comments.CommentService;
+import com.alkemy.ong.domain.exceptions.BadRequestException;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
@@ -44,9 +45,9 @@ public class CommentController {
         return new ResponseEntity<>(toDto(commentService.update(id, toDomain(commentDTO))), HttpStatus.OK);
     }
 
-    public void validateID(Long id, Long idDTO) {
+    private void validateID(Long id, Long idDTO) {
         if (id != idDTO) {
-            throw new RuntimeException("It does not math with RequestBody ID");
+            throw new BadRequestException(HttpStatus.BAD_REQUEST, "It does not match with RequestBody ID");
         }
     }
 

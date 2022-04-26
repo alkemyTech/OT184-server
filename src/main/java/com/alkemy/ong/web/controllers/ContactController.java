@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -50,9 +51,13 @@ public class ContactController {
     @Builder
     private static class ContactDTO {
         private Long id;
+        @NotEmpty(message = "The field Name must not be empty")
         private String name;
+        @NotEmpty(message = "The field Phone must not be empty")
         private String phone;
+        @NotEmpty(message = "The field Email must not be empty")
         private String email;
+        @NotEmpty(message = "The field Message must not be empty")
         private String message;
     }
 }

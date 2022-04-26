@@ -7,6 +7,8 @@ spring:
     initialization-mode: always
     continue-on-error: true
 
+  application:
+    pageSize: 10
 
 loggin:
   level:
@@ -16,8 +18,7 @@ loggin:
           InstanceMetadataServiceResourceFetcher: error
         util:
           EC2MetadataUtils: error
-  application:
-    pageSize: 10
+
 
 amazonProperties:
   endpointUrl: ${AMAZON_S3_ENDPOINT_URL}

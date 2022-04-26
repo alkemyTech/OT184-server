@@ -2,11 +2,13 @@ package com.alkemy.ong.web.controllers;
 
 import com.alkemy.ong.domain.comments.Comment;
 import com.alkemy.ong.domain.comments.CommentService;
+import com.alkemy.ong.domain.exceptions.BadRequestException;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
@@ -35,6 +37,18 @@ public class CommentController {
     public ResponseEntity<CommentDTO> create(@Valid @RequestBody CommentDTO dto) {
         Comment comment = commentService.create(toDomain(dto));
         return new ResponseEntity<>(toDto(comment), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CommentDTO> update(@PathVariable Long id, @Valid @RequestBody CommentDTO commentDTO) {
+        validateID(id, commentDTO.getId());
+        return new ResponseEntity<>(toDto(commentService.update(id, toDomain(commentDTO))), HttpStatus.OK);
+    }
+
+    private void validateID(Long id, Long idDTO) {
+        if (id != idDTO) {
+            throw new BadRequestException(HttpStatus.BAD_REQUEST, "It does not match with RequestBody ID");
+        }
     }
 
     @DeleteMapping("/{id}")

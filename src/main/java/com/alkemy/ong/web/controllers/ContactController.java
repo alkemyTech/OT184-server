@@ -26,7 +26,7 @@ public class ContactController {
         return ResponseEntity.ok().body(contactService.findAll().stream().map(this::toDTO).collect(toList()));
     }
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<ContactDTO> save(@Valid @RequestBody ContactDTO contactDTO){
         return ResponseEntity.ok().body(toDTO(contactService.save(toModel(contactDTO))));
     }

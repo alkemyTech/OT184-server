@@ -46,11 +46,6 @@ public class DefaultCommentGateway implements CommentGateway {
         commentRepository.deleteById(id);
     }
 
-    @Override
-    public List<Comment> findAllByNewsId(Long id) {
-        return commentRepository.findAllByNewsId(String.valueOf(id)).stream().map(this::toModel).collect(toList());
-    }
-
     private UserEntity getUserEntity(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(
@@ -65,6 +60,10 @@ public class DefaultCommentGateway implements CommentGateway {
                 );
     }
 
+    @Override
+    public List<Comment> findAllByNewsId(Long id) {
+        return commentRepository.findAllByNewsId(String.valueOf(id)).stream().map(this::toModel).collect(toList());
+    }
 
     private CommentEntity toEntity(Comment comment) {
         return CommentEntity.builder()

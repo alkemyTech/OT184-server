@@ -8,7 +8,6 @@ spring:
     continue-on-error: true
   application:
     pageSize: 10
-
 loggin:
   level:
     com:

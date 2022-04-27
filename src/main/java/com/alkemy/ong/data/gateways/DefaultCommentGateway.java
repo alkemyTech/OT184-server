@@ -56,7 +56,7 @@ public class DefaultCommentGateway implements CommentGateway {
     private NewsEntity getNewsEntity(Long newsId) {
         return newsRepository.findById(newsId)
                 .orElseThrow(
-                        () -> new ResourceNotFoundException("News with id: " + newsId + " not found.")
+                        () -> new ResourceNotFoundException("News with id: " + newsId)
                 );
     }
 

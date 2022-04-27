@@ -1,4 +1,4 @@
-package com.alkemy.ong.web.controllers.config;
+package com.alkemy.ong.web.config;
 
 import com.sendgrid.SendGrid;
 import org.springframework.beans.factory.annotation.Value;

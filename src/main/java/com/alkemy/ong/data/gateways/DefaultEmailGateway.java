@@ -10,10 +10,13 @@ import com.sendgrid.helpers.mail.objects.Content;
 import com.sendgrid.helpers.mail.objects.Email;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+@Component
 public class DefaultEmailGateway implements EmailGateway {
 
     private final SendGrid sendGrid;
@@ -22,11 +25,11 @@ public class DefaultEmailGateway implements EmailGateway {
         this.sendGrid = sendGrid;
     }
 
-    @Value("${EMAIL_SENDGRID}")
+
+    @Value("${sendgridProperties.email}")
     private String emailVariable;
 
-    @Value("${SENDGRID_API_KEY}")
-    private String emailApiKey;
+
 
     private static final Logger log = LoggerFactory.getLogger(DefaultEmailGateway.class);
     public String sendmail(String to, String subject, String body) {
@@ -34,7 +37,7 @@ public class DefaultEmailGateway implements EmailGateway {
         Email email = new Email(emailVariable);
         Mail mail = new Mail(email, subject, new Email(to), new Content("text", body));
 
-        SendGrid sg = new SendGrid(emailApiKey);
+//        SendGrid sg = new SendGrid(emailApiKey);
 
         Request request = new Request();
 
@@ -43,7 +46,7 @@ public class DefaultEmailGateway implements EmailGateway {
             request.setEndpoint("mail/send");
             request.setBody(mail.build());
 
-            Response response = sg.api(request);
+            Response response = sendGrid.api(request);
 
             log.info("{}", response.getStatusCode());
             log.info("{}", response.getBody());

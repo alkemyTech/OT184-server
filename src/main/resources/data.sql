@@ -165,3 +165,6 @@ INSERT INTO slides (image_url, text, slide_order, organization_id, is_deleted)
     VALUES ('www.jpg.com/worldslides', 'Otras slides', 2, 1, 0);
 INSERT INTO slides (image_url, text, slide_order, organization_id, is_deleted)
     VALUES ('www.jpg.com/worldslides', 'Mas slides', 1, 2, 0);
+
+INSERT INTO users (first_name, last_name, email, password, photo, is_deleted,created_at,updated_at)
+    VALUES('first_name', 'last_name', 'email@email.com', 'password', '/photo.jpg',0,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);

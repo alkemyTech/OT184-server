@@ -1,5 +1,6 @@
 package com.alkemy.ong.web.exceptions;
 
+import com.alkemy.ong.domain.exceptions.CommunicationException;
 import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -45,6 +46,16 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 new HttpHeaders(), errorDTO.getStatus(), request);
     }
 
+    @ExceptionHandler(value = {CommunicationException.class})
+    protected ResponseEntity<Object> HandleCommunicationException(RuntimeException ex, WebRequest request) {
+        ApiErrorDTO errorDTO = new ApiErrorDTO(
+                HttpStatus.INTERNAL_SERVER_ERROR,
+                ex.getMessage(),
+                Arrays.asList("Error trying this activity")
+        );
+        return handleExceptionInternal(ex, errorDTO, new HttpHeaders(), errorDTO.getStatus(), request);
+    }
+
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex,
@@ -62,7 +73,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         ApiErrorDTO apiError = new ApiErrorDTO(HttpStatus.BAD_REQUEST,ex.getLocalizedMessage(),errors);
         return handleExceptionInternal(ex,apiError,headers,apiError.getStatus(),request);
     }
-
 
     @Data
     @AllArgsConstructor

@@ -66,10 +66,17 @@ public class DefaultCommentGateway implements CommentGateway {
     private NewsEntity getNewsEntity(Long newsId) {
         return newsRepository.findById(newsId)
                 .orElseThrow(
-                        () -> new BadRequestException(HttpStatus.BAD_REQUEST, "News with id: " + newsId + " not found.")
+          () -> new ResourceNotFoundException("News with id: " + newsId)
                 );
     }
 
+    @Override
+    public List<Comment> findAllByNewsId(Long id) {
+        return commentRepository.findAllByNewsId(this.getNewsEntity(id))
+                .stream()
+                .map(this::toModel)
+                .collect(toList());
+    }
 
     private CommentEntity toEntity(Comment comment) {
         return CommentEntity.builder()

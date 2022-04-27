@@ -1,6 +1,7 @@
 package com.alkemy.ong.data.sendgrid;
 
 import com.alkemy.ong.domain.email.EmailGateway;
+import com.alkemy.ong.domain.exceptions.CommunicationException;
 import com.sendgrid.Method;
 import com.sendgrid.Request;
 import com.sendgrid.Response;
@@ -50,9 +51,8 @@ public class DefaultEmailGateway implements EmailGateway {
 
         } catch (IOException ex) {
             log.error("Error trying to send email");
+            throw new CommunicationException("send mail");
         }
-
-        return null;
     }
 
 }

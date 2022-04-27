@@ -8,8 +8,10 @@ import com.alkemy.ong.data.repositories.NewsRepository;
 import com.alkemy.ong.data.repositories.UserRepository;
 import com.alkemy.ong.domain.comments.Comment;
 import com.alkemy.ong.domain.comments.CommentGateway;
+import com.alkemy.ong.domain.exceptions.BadRequestException;
 import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -46,17 +48,25 @@ public class DefaultCommentGateway implements CommentGateway {
         commentRepository.deleteById(id);
     }
 
+    public Comment update(Long id, Comment comment) {
+        CommentEntity commentEntity = commentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not found Id"));
+        commentEntity.setBody(comment.getBody());
+        commentEntity.setUserId(getUserEntity(comment.getUserId()));
+        commentEntity.setNewsId(getNewsEntity(comment.getNewsId()));
+        return toModel(commentRepository.save(commentEntity));
+    }
+
     private UserEntity getUserEntity(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(
-                        () -> new ResourceNotFoundException("User with id: " + userId + " not found.")
+                        () -> new BadRequestException(HttpStatus.BAD_REQUEST, "User with id: " + userId + " not found.")
                 );
     }
 
     private NewsEntity getNewsEntity(Long newsId) {
         return newsRepository.findById(newsId)
                 .orElseThrow(
-                        () -> new ResourceNotFoundException("News with id: " + newsId)
+          () -> new ResourceNotFoundException("News with id: " + newsId)
                 );
     }
 

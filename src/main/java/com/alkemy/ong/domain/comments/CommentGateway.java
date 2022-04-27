@@ -11,4 +11,6 @@ public interface CommentGateway {
     Comment update(Long id, Comment comment);
 
     void delete(Long id);
+
+    List<Comment> findAllByNewsId(Long id);
 }

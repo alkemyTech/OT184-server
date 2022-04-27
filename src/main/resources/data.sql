@@ -151,3 +151,6 @@ INSERT INTO contacts (name, phone, email, message, is_deleted, created_at,update
     VALUES('name 2', '2222222222', 'email2@contact.com', "message 2",0,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 INSERT INTO contacts (name, phone, email, message, is_deleted, created_at,updated_at)
     VALUES('name 3', '3333333333', 'email3@contact.com', "message 3",0,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+
+INSERT INTO users (first_name, last_name, email, password, photo, is_deleted,created_at,updated_at)
+    VALUES('first_name', 'last_name', 'email@email.com', 'password', '/photo.jpg',0,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);

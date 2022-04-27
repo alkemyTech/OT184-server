@@ -145,3 +145,18 @@ CREATE TABLE contacts (
    updated_at timestamp NULL NOT NULL,
    CONSTRAINT pk_contacts PRIMARY KEY (id)
 );
+
+CREATE TABLE comments (
+  id BIGINT AUTO_INCREMENT NOT NULL,
+   user_id BIGINT NOT NULL,
+   body VARCHAR(255) NOT NULL,
+   news_id BIGINT NOT NULL,
+   created_at datetime NOT NULL,
+   updated_at datetime NOT NULL,
+   is_deleted BIT(1) NOT NULL,
+   CONSTRAINT pk_comments PRIMARY KEY (id)
+);
+
+ALTER TABLE comments ADD CONSTRAINT FK_COMMENTS_ON_NEWS FOREIGN KEY (news_id) REFERENCES news (id);
+
+ALTER TABLE comments ADD CONSTRAINT FK_COMMENTS_ON_USER FOREIGN KEY (user_id) REFERENCES users (id);

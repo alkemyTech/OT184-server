@@ -1,4 +1,4 @@
-package com.alkemy.ong.data.gateways;
+package com.alkemy.ong.data.sendgrid;
 
 import com.alkemy.ong.domain.email.EmailGateway;
 import com.sendgrid.Method;
@@ -10,7 +10,6 @@ import com.sendgrid.helpers.mail.objects.Content;
 import com.sendgrid.helpers.mail.objects.Email;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -25,19 +24,14 @@ public class DefaultEmailGateway implements EmailGateway {
         this.sendGrid = sendGrid;
     }
 
-
     @Value("${sendgridProperties.email}")
-    private String emailVariable;
-
-
+    private String senderMail;
 
     private static final Logger log = LoggerFactory.getLogger(DefaultEmailGateway.class);
     public String sendmail(String to, String subject, String body) {
 
-        Email email = new Email(emailVariable);
+        Email email = new Email(senderMail);
         Mail mail = new Mail(email, subject, new Email(to), new Content("text", body));
-
-//        SendGrid sg = new SendGrid(emailApiKey);
 
         Request request = new Request();
 

@@ -1,4 +1,4 @@
-package com.alkemy.ong.data.sendgrid;
+package com.alkemy.ong.sendgrid;
 
 import com.alkemy.ong.domain.email.EmailGateway;
 import com.alkemy.ong.domain.exceptions.CommunicationException;

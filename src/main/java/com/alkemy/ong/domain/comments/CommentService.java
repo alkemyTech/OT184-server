@@ -24,4 +24,8 @@ public class CommentService {
     public void delete(Long id) {
         commentGateway.delete(id);
     }
+
+    public List<Comment> findAllByNewsId(Long id) {
+        return commentGateway.findAllByNewsId(id);
+    }
 }

@@ -13,7 +13,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -45,6 +44,11 @@ public class DefaultCommentGateway implements CommentGateway {
     public void delete(Long id) {
         commentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not found Id"));
         commentRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Comment> findAllByNewsId(Long id) {
+        return commentRepository.findAllByNewsId(String.valueOf(id)).stream().map(this::toModel).collect(toList());
     }
 
     private UserEntity getUserEntity(Long userId) {

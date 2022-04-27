@@ -2,12 +2,16 @@ package com.alkemy.ong.data.gateways;
 
 import com.alkemy.ong.data.entities.OrganizationEntity;
 
+import com.alkemy.ong.data.entities.SlidesEntity;
 import com.alkemy.ong.data.repositories.OrganizationRepository;
+import com.alkemy.ong.data.repositories.SlidesRepository;
 import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
 import com.alkemy.ong.domain.organizations.Organization;
 import com.alkemy.ong.domain.organizations.OrganizationGateway;
 
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
@@ -17,9 +21,11 @@ public class DefaultOrganizationGateway implements OrganizationGateway {
 
 
     private final OrganizationRepository organizationRepository;
+    private final SlidesRepository slidesRepository;
 
-    public DefaultOrganizationGateway(OrganizationRepository organizationRepository) {
+    public DefaultOrganizationGateway(OrganizationRepository organizationRepository, SlidesRepository slidesRepository) {
         this.organizationRepository = organizationRepository;
+        this.slidesRepository = slidesRepository;
     }
 
 
@@ -27,8 +33,22 @@ public class DefaultOrganizationGateway implements OrganizationGateway {
     public Organization findById(Long id) {
         Optional<OrganizationEntity> organizationEntity = organizationRepository.findById(id);
         organizationEntity.orElseThrow(() -> new ResourceNotFoundException("ID"));
-        Organization returnModel = this.toModelComplete(organizationEntity.get());
-        return returnModel;
+        List<SlidesEntity> slidesEntity = slidesRepository.orderBySlide(id);
+        OrganizationEntity organizationEntityNew = organizationEntity.get();
+        return Organization.builder()
+                .name(organizationEntityNew.getName())
+                .phone(organizationEntityNew.getPhone())
+                .image(organizationEntityNew.getImage())
+                .address(organizationEntityNew.getAddress())
+                .facebook(organizationEntityNew.getFacebook())
+                .instagram(organizationEntityNew.getInstagram())
+                .linkedin(organizationEntityNew.getLinkedin())
+                .slides((slidesEntity)
+                        .stream()
+                        .map(slide -> DefaultSlideGateway.toModelBasic(slide))
+                        .collect(toList()))
+                .build();
+
     }
 
     @Override
@@ -67,22 +87,6 @@ public class DefaultOrganizationGateway implements OrganizationGateway {
                 .facebook(organizationEntity.getFacebook())
                 .instagram(organizationEntity.getInstagram())
                 .linkedin(organizationEntity.getLinkedin())
-                .build();
-    }
-
-    public Organization toModelComplete(OrganizationEntity organizationEntity){
-        return Organization.builder()
-                .name(organizationEntity.getName())
-                .phone(organizationEntity.getPhone())
-                .image(organizationEntity.getImage())
-                .address(organizationEntity.getAddress())
-                .facebook(organizationEntity.getFacebook())
-                .instagram(organizationEntity.getInstagram())
-                .linkedin(organizationEntity.getLinkedin())
-                .slides(organizationEntity.getSlides()
-                        .stream()
-                        .map(slide -> DefaultSlideGateway.toModelBasic(slide))
-                        .collect(toList()))
                 .build();
     }
 

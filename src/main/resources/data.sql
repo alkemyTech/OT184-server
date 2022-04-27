@@ -158,6 +158,8 @@ INSERT INTO organizations (name, image, address, phone, email, welcome_text, abo
     VALUES ('Coca', 'coca.jpg', 'USA',21322310, 'coca@jejemail', 'Hola', 'Gaseosa', 'fb/coca', 'ln/coca', 'insta/coca', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0);
 
 INSERT INTO slides (image_url, text, slide_order, organization_id, is_deleted)
+    VALUES ('www.jpg.com/worldslides', 'Tercera entrega slides', 3, 1, 0);
+INSERT INTO slides (image_url, text, slide_order, organization_id, is_deleted)
     VALUES ('www.jpg.com/worldslides', 'Muchas slides', 1, 1, 0);
 INSERT INTO slides (image_url, text, slide_order, organization_id, is_deleted)
     VALUES ('www.jpg.com/worldslides', 'Otras slides', 2, 1, 0);

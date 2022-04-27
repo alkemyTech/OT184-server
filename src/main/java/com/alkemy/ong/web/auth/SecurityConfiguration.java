@@ -13,7 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
+import static org.springframework.http.HttpMethod.*;
 
 @Configuration
 @EnableWebSecurity
@@ -49,11 +49,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity httpSecurity) throws Exception {
     httpSecurity.csrf().disable()
-        .authorizeRequests().antMatchers("/auth/*").permitAll()
-        .anyRequest().authenticated()
-        .and().exceptionHandling()
-        .and().sessionManagement()
-        .sessionCreationPolicy(STATELESS);
+        .authorizeRequests()
+        .antMatchers(POST, "/**").hasRole("ADMIN")
+        .antMatchers(PUT, "/**").hasRole("ADMIN")
+        .antMatchers(DELETE, "/**").hasRole("ADMIN");
 
     httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
   }

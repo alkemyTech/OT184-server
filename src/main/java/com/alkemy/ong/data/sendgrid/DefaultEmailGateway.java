@@ -47,7 +47,7 @@ public class DefaultEmailGateway implements EmailGateway {
             log.info("{}", response.getBody());
             log.info("{}", response.getHeaders());
 
-            return null;
+            return subject;
 
         } catch (IOException ex) {
             log.error("Error trying to send email");

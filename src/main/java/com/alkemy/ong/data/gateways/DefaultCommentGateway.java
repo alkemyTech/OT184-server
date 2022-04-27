@@ -62,7 +62,10 @@ public class DefaultCommentGateway implements CommentGateway {
 
     @Override
     public List<Comment> findAllByNewsId(Long id) {
-        return commentRepository.findAllByNewsId(String.valueOf(id)).stream().map(this::toModel).collect(toList());
+        return commentRepository.findAllByNewsId(this.getNewsEntity(id))
+                .stream()
+                .map(this::toModel)
+                .collect(toList());
     }
 
     private CommentEntity toEntity(Comment comment) {

@@ -2,8 +2,14 @@ package com.alkemy.ong.web.controllers;
 
 import com.alkemy.ong.domain.categories.Category;
 import com.alkemy.ong.domain.categories.CategoryService;
+import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
 import com.alkemy.ong.domain.utils.PageModel;
 import com.alkemy.ong.web.controllers.utils.PageResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
@@ -28,6 +34,23 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
+    @Operation(summary = "Get all category names",
+            description = "Get all category names separated by pages of 10")
+    @ApiResponses(
+            value = {
+                @ApiResponse(
+                        responseCode = "200",
+                        description = "Categories found",
+                        content = @Content(
+                                mediaType = "JSON Value",
+                                schema = @Schema(implementation = CategoryBasicDTO.class)
+                        )
+                ),
+                @ApiResponse(
+                        responseCode = "400",
+                        description = "Bad Request")
+            }
+    )
     @GetMapping
     private ResponseEntity<PageResponse<CategoryBasicDTO>> getAllCategoryBasicByPage(@RequestParam("page") int pageNumber){
 
@@ -43,6 +66,27 @@ public class CategoryController {
         return ResponseEntity.ok().body(response);
     }
 
+    @Operation(summary = "Get category by ID",
+            description = "Get category by ID with all details")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Success, category found",
+                            content = @Content(
+                                    mediaType = "JSON Value",
+                                    schema = @Schema(implementation = CategoryDTO.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "Category not found",
+                            content = @Content(
+                                    mediaType = "JSON Value",
+                                    schema = @Schema(implementation = ResourceNotFoundException.class)
+                            ))
+            }
+    )
     @GetMapping("/{id}")
     private ResponseEntity<CategoryDTO> getCategoryByID(@PathVariable Long id){
         Category category = categoryService.findById(id);
@@ -50,6 +94,19 @@ public class CategoryController {
         return ResponseEntity.ok().body(categoryDTO);
     }
 
+    @Operation(summary = "Create category",
+            description = "Create category with all details")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            responseCode = "201",
+                            description = "Category created"
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Bad request"
+                    )}
+    )
     @PostMapping
     private  ResponseEntity<CategoryDTO> save(@Valid @RequestBody CategoryDTO categoryDTO){
         Category category = toModel(categoryDTO);
@@ -58,11 +115,45 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
+    @Operation(summary = "Delete category by ID",
+            description = "Soft delete by ID of the specific category")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            responseCode = "204",
+                            description = "No content, category deleted"
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "Category not found",
+                            content = @Content(
+                                    mediaType = "JSON Value",
+                                    schema = @Schema(implementation = ResourceNotFoundException.class)
+                            ))
+            }
+    )
     @DeleteMapping("/{id}")
     private ResponseEntity<Void> delete(@PathVariable Long id){
         categoryService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();}
 
+    @Operation(summary = "Update category by ID",
+            description = "Update all details of the specific category ")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Success, category updated"
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "Category not found",
+                            content = @Content(
+                                    mediaType = "JSON Value",
+                                    schema = @Schema(implementation = ResourceNotFoundException.class)
+                            ))
+            }
+    )
     @PutMapping("/{id}")
     private ResponseEntity<CategoryDTO> update(@PathVariable Long id, @Valid @RequestBody CategoryDTO categoryDTO){
         Category categoryUpdated = categoryService.update(id, toModel(categoryDTO));
@@ -73,18 +164,26 @@ public class CategoryController {
     @Data
     @Builder
     private static class CategoryDTO {
+        @Schema(example = "1", description = "ID of the category")
         private Long id;
+        @Schema(example = "Health", description = "Name of the category (Without numbers)")
         @NotEmpty(message = "The field must be a name")
         @Pattern(regexp = "[A-Za-z]*$")
         private String name;
+        @Schema(example = "Health is responsible for keeping the population healthy", description = "Brief description of the category")
         private String description;
+        @Schema(example = "/health", description = "URL of the category image")
         private String image;
     }
 
     @Data
     @Builder
     private static class CategoryBasicDTO {
+        @Schema(example = "1", description = "ID of the category")
         private Long id;
+        @Schema(example = "Health", description = "Name of the category (Without numbers)")
+        @NotEmpty(message = "The field must be a name")
+        @Pattern(regexp = "[A-Za-z]*$")
         private String name;
     }
 

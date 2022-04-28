@@ -27,7 +27,7 @@ public class DefaultOrganizationGateway implements OrganizationGateway {
         this.organizationRepository = organizationRepository;
         this.slidesRepository = slidesRepository;
     }
-    
+
     @Override
     public Organization findById(Long id) {
         Optional<OrganizationEntity> organizationEntity = organizationRepository.findById(id);

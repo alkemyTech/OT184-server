@@ -152,5 +152,19 @@ INSERT INTO contacts (name, phone, email, message, is_deleted, created_at,update
 INSERT INTO contacts (name, phone, email, message, is_deleted, created_at,updated_at)
     VALUES('name 3', '3333333333', 'email3@contact.com', "message 3",0,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 
+INSERT INTO organizations (name, image, address, phone, email, welcome_text, about_us_text, facebook, linkedin, instagram, created_at, updated_at, is_deleted)
+    VALUES ('Alkemy', 'alkemy.jpg', 'Argentina',35122310, 'alkemy@jejemail', 'Hola', 'Job ready', 'fb/alkemy', 'ln/alkemy', 'insta/alkemy', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0);
+INSERT INTO organizations (name, image, address, phone, email, welcome_text, about_us_text, facebook, linkedin, instagram, created_at, updated_at, is_deleted)
+    VALUES ('Coca', 'coca.jpg', 'USA',21322310, 'coca@jejemail', 'Hola', 'Gaseosa', 'fb/coca', 'ln/coca', 'insta/coca', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0);
+
+INSERT INTO slides (image_url, text, slide_order, organization_id, is_deleted)
+    VALUES ('www.jpg.com/worldslides', 'Tercera entrega slides', 3, 1, 0);
+INSERT INTO slides (image_url, text, slide_order, organization_id, is_deleted)
+    VALUES ('www.jpg.com/worldslides', 'Muchas slides', 1, 1, 0);
+INSERT INTO slides (image_url, text, slide_order, organization_id, is_deleted)
+    VALUES ('www.jpg.com/worldslides', 'Otras slides', 2, 1, 0);
+INSERT INTO slides (image_url, text, slide_order, organization_id, is_deleted)
+    VALUES ('www.jpg.com/worldslides', 'Mas slides', 1, 2, 0);
+
 INSERT INTO users (first_name, last_name, email, password, photo, is_deleted,created_at,updated_at)
     VALUES('first_name', 'last_name', 'email@email.com', 'password', '/photo.jpg',0,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);

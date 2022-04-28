@@ -52,5 +52,16 @@ public class DefaultSlideGateway implements SlideGateway {
                 .build();
     }
 
+    public static Slide toModelBasic(SlidesEntity slidesEntity){
+        return Slide.builder()
+                .id(slidesEntity.getId())
+                .imageUrl(slidesEntity.getImageUrl())
+                .text(slidesEntity.getText())
+                .order(slidesEntity.getSlideOrder())
+                .build();
+    }
+
+
+
 
 }

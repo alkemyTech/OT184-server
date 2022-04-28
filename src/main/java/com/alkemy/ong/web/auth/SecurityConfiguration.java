@@ -85,7 +85,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
       String username = null;
 
       if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-        jwt = authorizationHeader.substring(7);
+        jwt = authorizationHeader.substring("Bearer ".length());
         username = extractUsername(jwt);
       }
 

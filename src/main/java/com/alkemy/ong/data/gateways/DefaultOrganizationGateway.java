@@ -27,13 +27,12 @@ public class DefaultOrganizationGateway implements OrganizationGateway {
         this.organizationRepository = organizationRepository;
         this.slidesRepository = slidesRepository;
     }
-
-
+    
     @Override
     public Organization findById(Long id) {
         Optional<OrganizationEntity> organizationEntity = organizationRepository.findById(id);
         organizationEntity.orElseThrow(() -> new ResourceNotFoundException("ID"));
-        List<SlidesEntity> slidesEntity = slidesRepository.orderBySlide(id);
+        List<SlidesEntity> slidesEntity = slidesRepository.findByOrganizationOrderBySlideOrderAsc(organizationEntity.get());
         OrganizationEntity organizationEntityNew = organizationEntity.get();
         return Organization.builder()
                 .name(organizationEntityNew.getName())

@@ -5,7 +5,6 @@ import com.alkemy.ong.data.repositories.SlidesRepository;
 import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
 import com.alkemy.ong.domain.slide.Slide;
 import com.alkemy.ong.domain.slide.SlideGateway;
-import com.alkemy.ong.domain.users.User;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

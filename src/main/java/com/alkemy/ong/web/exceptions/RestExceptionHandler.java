@@ -6,6 +6,7 @@ import lombok.Data;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -19,7 +20,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {ResourceNotFoundException.class})
     protected ResponseEntity<Object> HandleParamNotFound(RuntimeException ex, WebRequest request) {
-
         ApiErrorDTO errorDTO = new ApiErrorDTO(
                 HttpStatus.NOT_FOUND,
                 ex.getMessage(),
@@ -28,14 +28,23 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, errorDTO, new HttpHeaders(), errorDTO.getStatus(), request);
     }
 
-    @ExceptionHandler(value
-            = { IllegalArgumentException.class })
-    protected ResponseEntity<Object> handleIllegalArgumentException(
-            RuntimeException ex, WebRequest request) {
+    @ExceptionHandler(value = { IllegalArgumentException.class })
+    protected ResponseEntity<Object> handleIllegalArgumentException(RuntimeException ex, WebRequest request) {
         ApiErrorDTO errorDTO = new ApiErrorDTO(
                 HttpStatus.BAD_REQUEST,
                 ex.getMessage(),
                 Arrays.asList("Bad Request")
+        );
+        return handleExceptionInternal(ex, errorDTO,
+                new HttpHeaders(), errorDTO.getStatus(), request);
+    }
+
+    @ExceptionHandler(value = { BadCredentialsException.class })
+    protected ResponseEntity<Object> badCredentialsException(RuntimeException ex, WebRequest request) {
+        ApiErrorDTO errorDTO = new ApiErrorDTO(
+                HttpStatus.BAD_REQUEST,
+                ex.getMessage(),
+                Arrays.asList("Incorrecto email or password")
         );
         return handleExceptionInternal(ex, errorDTO,
                 new HttpHeaders(), errorDTO.getStatus(), request);

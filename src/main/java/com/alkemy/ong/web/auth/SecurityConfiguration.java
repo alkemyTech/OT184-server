@@ -1,5 +1,7 @@
 package com.alkemy.ong.web.auth;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +26,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.function.Function;
 
 import static org.springframework.http.HttpMethod.*;
 
@@ -77,15 +81,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
       String authorizationHeader = request.getHeader("Autorization");
 
-      String jwt;
-      String username;
+      String jwt = null;
+      String username = null;
 
       if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
         jwt = authorizationHeader.substring(7);
-        username = extractUsrename(jwt);
+        username = extractUsername(jwt);
       }
 
-      if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+      if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
         UserDetails userDetails = userDetailsCustomService.loadUserByUsername(username);
 
         if (validateToken(jwt, userDetail)) {
@@ -101,8 +105,30 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
       chain.doFilter(request, response);
     }
 
-    private String extractUsrename(String jwt) {
-      return extractClaims
+    public boolean validateToken(String token, UserDetails userDetail) {
+      String username = extractUsername(token);
+      return username.equals(userDetail.getUsername()) && !isTokenExpired(token);
+    }
+
+    private boolean isTokenExpired(String token) {
+      return extractExpiration(token).before(new Date());
+    }
+
+    private String extractUsername(String token) {
+      return extractClaims(token, Claims::getSubject);
+    }
+
+    private Date extractExpiration(String token) {
+      return extractClaims(token, Claims::getExpiration);
+    }
+
+    private <T> T extractClaims(String token, Function<Claims, T> claimsResolver) {
+      Claims claims = extractAllClaims(token);
+      return claimsResolver.apply(claims);
+    }
+
+    private Claims extractAllClaims(String token) {
+      return Jwts.parser().setSigningKey(createEnvironment().getProperty("SECRET")).parseClaimsJws(token).getBody();
     }
   }
 }

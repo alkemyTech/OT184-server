@@ -7,6 +7,7 @@ import com.alkemy.ong.domain.utils.PageModel;
 import com.alkemy.ong.web.controllers.utils.PageResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -48,7 +49,15 @@ public class CategoryController {
                 ),
                 @ApiResponse(
                         responseCode = "400",
-                        description = "Bad Request")
+                        description = "Bad Request",
+                        content = @Content(
+                                examples = @ExampleObject(
+                                        name = "400",
+                                        summary = "Client Error 400",
+                                        description = "Bad Request, site not correct",
+                                        value = ("Bad request, URL not exist")
+                                )
+                        ))
             }
     )
     @GetMapping
@@ -83,7 +92,13 @@ public class CategoryController {
                             description = "Category not found",
                             content = @Content(
                                     mediaType = "JSON Value",
-                                    schema = @Schema(implementation = ResourceNotFoundException.class)
+                                    schema = @Schema(implementation = ResourceNotFoundException.class),
+                                    examples = @ExampleObject(
+                                            name = "404",
+                                            summary = "Client Error 404",
+                                            description = "Bad Request, ID is not found",
+                                            value = ("Error, ID is not found.")
+                                    )
                             ))
             }
     )
@@ -104,8 +119,15 @@ public class CategoryController {
                     ),
                     @ApiResponse(
                             responseCode = "400",
-                            description = "Bad request"
-                    )}
+                            description = "Bad request",
+                            content = @Content(
+                            examples = @ExampleObject(
+                                    name = "400",
+                                    summary = "Client Error 400",
+                                    description = "The request of the save category is no correct",
+                                    value = ("Bad request, category not saved")
+                            )
+                    ))}
     )
     @PostMapping
     private  ResponseEntity<CategoryDTO> save(@Valid @RequestBody CategoryDTO categoryDTO){
@@ -128,7 +150,13 @@ public class CategoryController {
                             description = "Category not found",
                             content = @Content(
                                     mediaType = "JSON Value",
-                                    schema = @Schema(implementation = ResourceNotFoundException.class)
+                                    schema = @Schema(implementation = ResourceNotFoundException.class),
+                                    examples = @ExampleObject(
+                                    name = "404",
+                                    summary = "Client Error 404",
+                                    description = "The request id is not found",
+                                    value = ("Error, ID is not found.")
+                            )
                             ))
             }
     )
@@ -150,7 +178,13 @@ public class CategoryController {
                             description = "Category not found",
                             content = @Content(
                                     mediaType = "JSON Value",
-                                    schema = @Schema(implementation = ResourceNotFoundException.class)
+                                    schema = @Schema(implementation = ResourceNotFoundException.class),
+                                    examples = @ExampleObject(
+                                    name = "404",
+                                    summary = "Client Error 400",
+                                    description = "The request id is not found",
+                                    value = ("Error, ID is not found.")
+                            )
                             ))
             }
     )

@@ -1,4 +1,4 @@
-package com.alkemy.ong.amazon.gateway;
+package com.alkemy.ong.data.repositories.gateway;
 
 import com.alkemy.ong.domain.cloud.CloudInput;
 import com.alkemy.ong.domain.cloud.CloudGateway;

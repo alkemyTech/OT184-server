@@ -9,4 +9,6 @@ public interface SlideGateway {
     void delete(Long id);
 
     List <Slide> findAll();
+
+    Slide save(Slide slide);
 }

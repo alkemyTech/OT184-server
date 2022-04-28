@@ -1,7 +1,9 @@
 package com.alkemy.ong.data.gateways;
 
+import com.alkemy.ong.data.entities.CommentEntity;
 import com.alkemy.ong.data.entities.SlidesEntity;
 import com.alkemy.ong.data.repositories.SlidesRepository;
+import com.alkemy.ong.domain.comments.Comment;
 import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
 import com.alkemy.ong.domain.slide.Slide;
 import com.alkemy.ong.domain.slide.SlideGateway;
@@ -42,6 +44,11 @@ public class DefaultSlideGateway implements SlideGateway {
                 .collect(toList());
     }
 
+    public Slide save(Slide slide) {
+        SlidesEntity slideEntity = toEntity(slide);
+        return toModel(slidesRepository.save(slideEntity));
+    }
+
     public Slide toModel(SlidesEntity slidesEntity){
         return Slide.builder()
                 .id(slidesEntity.getId())
@@ -49,6 +56,12 @@ public class DefaultSlideGateway implements SlideGateway {
                 .text(slidesEntity.getText())
                 .order(slidesEntity.getSlideOrder())
                 .organization(DefaultOrganizationGateway.toModel(slidesEntity.getOrganization()))
+                .build();
+    }
+    private SlidesEntity toEntity(Slide slide){
+        return SlidesEntity.builder()
+                .imageUrl(slide.getImageUrl())
+                .slideOrder(slide.getOrder())
                 .build();
     }
 

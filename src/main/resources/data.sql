@@ -49,7 +49,7 @@ INSERT INTO users (first_name, last_name, email, password, role_id)
 VALUE ('steve', 'jobs', 'stevejobs@gmail.com', 'sjobs', 1);
 
 INSERT INTO users (first_name, last_name, email, password, role_id)
-VALUE ('torvalds', 'linus', 'torvaldslinus@gmail.com', 'tlinus', 1);
+VALUE ('torvalds', 'linus', 'torvaldslinus@gmail.com', '$10$3n2ntpx9zBzMiQh0piZ5KeQH7ajiCG7nXvs67GKUpsP7IrLWPPmeq', 1);
 
 INSERT INTO users (first_name, last_name, email, password, role_id)
 VALUE ('alejandro', 'abondano', 'alejandroabondano@gmail.com', 'aabondano', 2);

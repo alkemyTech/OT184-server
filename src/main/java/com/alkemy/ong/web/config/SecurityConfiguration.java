@@ -1,7 +1,6 @@
 package com.alkemy.ong.web.config;
 
 import com.alkemy.ong.domain.users.UserService;
-import com.alkemy.ong.web.config.filters.RequestFilters;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -14,18 +13,17 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private UserService userService;
-    private RequestFilters requestFilters;
+    //private RequestFilters requestFilters;
 
-    public SecurityConfiguration(UserService userService,@Lazy RequestFilters requestFilters){
+    public SecurityConfiguration(UserService userService){
         this.userService = userService;
-        this.requestFilters = requestFilters;
+        //this.requestFilters = requestFilters;
     }
 
     @Override
@@ -55,7 +53,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        httpSecurity.addFilterBefore(requestFilters, UsernamePasswordAuthenticationFilter.class );
+        //httpSecurity.addFilterBefore(requestFilters, UsernamePasswordAuthenticationFilter.class );
     }
 
 }

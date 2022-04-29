@@ -1,7 +1,7 @@
 package com.alkemy.ong.web.config;
 
 import com.alkemy.ong.domain.users.UserService;
-import com.alkemy.ong.web.controllers.filters.RequestFilters;
+import com.alkemy.ong.web.config.filters.RequestFilters;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;

@@ -12,6 +12,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
@@ -41,8 +42,11 @@ public class DefaultUserGateway implements UserGateway {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity userEntity = userRepository.findByEmail(username);
+        if (userEntity == null) {
+            throw new NullPointerException("Username or password invalid");
+        }
 
         Collection<? extends GrantedAuthority> authorities = userEntityRole2Colletion(userEntity);
 
@@ -55,7 +59,6 @@ public class DefaultUserGateway implements UserGateway {
                 .map(role -> new SimpleGrantedAuthority(role.getRole().getName()))
                 .collect(Collectors.toList());
     }
-
 
     private Users toModel(UserEntity userEntity) {
         return Users.builder()

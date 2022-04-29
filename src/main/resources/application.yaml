@@ -6,8 +6,6 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     initialization-mode: always
     continue-on-error: true
-  jpa:
-    show-sql: true
   application:
     pageSize: 10
 loggin:
@@ -18,7 +16,6 @@ loggin:
           InstanceMetadataServiceResourceFetcher: error
         util:
           EC2MetadataUtils: error
-
 
 amazonProperties:
   endpointUrl: ${AMAZON_S3_ENDPOINT_URL}

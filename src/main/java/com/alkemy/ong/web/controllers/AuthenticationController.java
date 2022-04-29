@@ -2,14 +2,11 @@ package com.alkemy.ong.web.controllers;
 
 import com.alkemy.ong.domain.authentication.Auth;
 import com.alkemy.ong.domain.authentication.AuthService;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
 
 @RestController
 @RequestMapping("/auth")
@@ -36,17 +33,17 @@ public class AuthenticationController {
     }
 
     private AuthenticationResponse toAuthResponse(String auth) {
-        return AuthenticationResponse.builder().jwt(auth).build();
+        return AuthenticationResponse.builder().username(auth).build();
     }
 
     @Data
     @Builder
-    public static class AuthenticationResponse {
-        private String jwt;
+    private static class AuthenticationResponse {
+        private String username;
     }
 
     @Data
-    public static class AuthenticationRequest {
+    private static class AuthenticationRequest {
         private String username;
         private String password;
     }

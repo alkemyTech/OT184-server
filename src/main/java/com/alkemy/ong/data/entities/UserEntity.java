@@ -35,7 +35,7 @@ public class UserEntity {
   @Column(nullable = false)
   private String photo;
 
-  @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+  @ManyToOne
   private RoleEntity role;
 
   @Column(name = "is_deleted", nullable = false)

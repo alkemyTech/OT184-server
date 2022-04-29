@@ -13,7 +13,7 @@ import java.util.List;
 public class UserService implements UserDetailsService {
   private final UserGateway userGateway;
   
-  public List<User> findAll() {
+  public List<Users> findAll() {
     return userGateway.findAll();
   }
 

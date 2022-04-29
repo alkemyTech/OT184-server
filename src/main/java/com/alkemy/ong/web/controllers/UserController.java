@@ -1,8 +1,8 @@
 package com.alkemy.ong.web.controllers;
 
 import com.alkemy.ong.domain.roles.Role;
-import com.alkemy.ong.domain.users.User;
 import com.alkemy.ong.domain.users.UserService;
+import com.alkemy.ong.domain.users.Users;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
@@ -30,16 +30,16 @@ public class UserController {
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(@PathVariable Long id){
     userService.delete(id);
-    return ResponseEntity.status(HttpStatus.OK).build();
+    return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }
 
-  private List<UserDto> toListDto(List<User> users) {
+  private List<UserDto> toListDto(List<Users> users) {
     return users.stream()
         .map(this::toDto)
         .collect(toList());
   }
 
-  private UserDto toDto(User user) {
+  private UserDto toDto(Users user) {
     return UserDto.builder()
         .id(user.getId())
         .firstName(user.getFirstName())
@@ -50,7 +50,7 @@ public class UserController {
         .build();
   }
 
-  private RoleDto roleToDto(User user) {
+  private RoleDto roleToDto(Users user) {
     Role role = user.getRole();
     return RoleDto.builder()
         .id(role.getId())

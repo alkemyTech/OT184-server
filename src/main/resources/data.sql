@@ -48,11 +48,11 @@ VALUE ('bill', 'gates', 'billgates@gmail.com', 'bgates', 1);
 INSERT INTO users (first_name, last_name, email, password, role_id)
 VALUE ('steve', 'jobs', 'stevejobs@gmail.com', 'sjobs', 1);
 
-INSERT INTO users (first_name, last_name, email, password, role_id)
-VALUE ('torvalds', 'linus', 'torvaldslinus@gmail.com', '$10$3n2ntpx9zBzMiQh0piZ5KeQH7ajiCG7nXvs67GKUpsP7IrLWPPmeq', 1);
+INSERT INTO users (first_name, last_name, email, password, role_id,is_deleted)
+VALUE ('torvalds', 'linus', 'torvaldslinus@gmail.com','$2a$10$3n2ntpx9zBzMiQh0piZ5KeQH7ajiCG7nXvs67GKUpsP7IrLWPPmeq', 875,0);
 
-INSERT INTO users (first_name, last_name, email, password, role_id)
-VALUE ('alejandro', 'abondano', 'alejandroabondano@gmail.com', 'aabondano', 2);
+INSERT INTO users (first_name, last_name, email, password, role_id,is_deleted)
+VALUE ('alejandro', 'abondano', 'alejandroabondano@gmail.com', '$2a$10$3n2ntpx9zBzMiQh0piZ5KeQH7ajiCG7nXvs67GKUpsP7IrLWPPmeq', 307,0);
 
 INSERT INTO users (first_name, last_name, email, password, role_id)
 VALUE ('brigite', 'polanco', 'brigitepolanco@gmail.com', 'apuebla', 3);

@@ -32,7 +32,7 @@ public class AuthenticationController {
 
     private Auth toAuth(AuthenticationRequest authenticationRequest) {
         return Auth.builder()
-                .email(authenticationRequest.getEmail())
+                .email(authenticationRequest.getUsername())
                 .password(authenticationRequest.getPassword())
                 .build();
     }
@@ -49,7 +49,7 @@ public class AuthenticationController {
 
     @Data
     public static class AuthenticationRequest {
-        private String email;
+        private String username;
         private String password;
     }
 }

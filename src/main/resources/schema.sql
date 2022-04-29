@@ -105,11 +105,15 @@ CREATE TABLE IF NOT EXISTS organizations
 
 
 CREATE TABLE IF NOT EXISTS slides (
-  id BIGINT AUTO_INCREMENT NOT NULL,
+   id BIGINT AUTO_INCREMENT NOT NULL,
    image_url VARCHAR(255) NOT NULL,
    text VARCHAR(255) NULL,
    slide_order INT NULL,
    organization_id BIGINT NULL,
+   is_deleted BOOLEAN DEFAULT 0,
+   CONSTRAINT pk_slides PRIMARY KEY (id)
+);
+
 
 CREATE TABLE IF NOT EXISTS comments
 (
@@ -145,3 +149,18 @@ CREATE TABLE contacts (
    updated_at timestamp NULL NOT NULL,
    CONSTRAINT pk_contacts PRIMARY KEY (id)
 );
+
+CREATE TABLE comments (
+  id BIGINT AUTO_INCREMENT NOT NULL,
+   user_id BIGINT NOT NULL,
+   body VARCHAR(255) NOT NULL,
+   news_id BIGINT NOT NULL,
+   created_at datetime NOT NULL,
+   updated_at datetime NOT NULL,
+   is_deleted BIT(1) NOT NULL,
+   CONSTRAINT pk_comments PRIMARY KEY (id)
+);
+
+ALTER TABLE comments ADD CONSTRAINT FK_COMMENTS_ON_NEWS FOREIGN KEY (news_id) REFERENCES news (id);
+
+ALTER TABLE comments ADD CONSTRAINT FK_COMMENTS_ON_USER FOREIGN KEY (user_id) REFERENCES users (id);

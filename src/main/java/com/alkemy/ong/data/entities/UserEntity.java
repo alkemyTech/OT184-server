@@ -1,7 +1,7 @@
 package com.alkemy.ong.data.entities;
 
 
-import lombok.*;
+import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -9,18 +9,12 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")
-@SQLDelete(sql = "UPDATE users SET is_deleted = true, updated_at = now() WHERE id=? , updated_at=? ")
+@SQLDelete(sql = "UPDATE users SET is_deleted = true, updated_at = now() WHERE id=?")
 @Where(clause = "is_deleted=false")
 @Getter
-@Setter
-@Builder
-@NoArgsConstructor(force = true)
-@AllArgsConstructor
 public class UserEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,7 +39,6 @@ public class UserEntity {
   private RoleEntity role;
 
   @Column(name = "is_deleted", nullable = false)
-  @Builder.Default
   private boolean isDeleted = Boolean.FALSE;
 
   @Column(name = "created_at", updatable = false, nullable = false)

@@ -26,12 +26,27 @@ public class DefaultContactGateway implements ContactGateway {
                 .collect(toList());
     }
 
+    @Override
+    public Contact save(Contact contact) {
+        return toModel(contactRepository.save(toEntity(contact)));
+    }
+
+    private ContactEntity toEntity(Contact contact) {
+        return ContactEntity.builder()
+                .id(contact.getId())
+                .name(contact.getName())
+                .email(contact.getEmail())
+                .phone(contact.getPhone())
+                .message(contact.getMessage())
+                .build();
+    }
+
     private Contact toModel(ContactEntity contactEntity){
         return Contact.builder()
                 .id(contactEntity.getId())
                 .name(contactEntity.getName())
                 .email(contactEntity.getEmail())
-                .phone(contactEntity.getEmail())
+                .phone(contactEntity.getPhone())
                 .message(contactEntity.getMessage())
                 .build();
     }

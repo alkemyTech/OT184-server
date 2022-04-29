@@ -21,7 +21,15 @@ public class CommentService {
         return commentGateway.create(comment);
     }
 
+    public Comment update(Long id, Comment comment) {
+        return commentGateway.update(id, comment);
+    }
+
     public void delete(Long id) {
         commentGateway.delete(id);
+    }
+
+    public List<Comment> findAllByNewsId(Long id) {
+        return commentGateway.findAllByNewsId(id);
     }
 }

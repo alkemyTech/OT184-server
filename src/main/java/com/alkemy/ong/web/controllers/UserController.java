@@ -1,7 +1,7 @@
 package com.alkemy.ong.web.controllers;
 
 import com.alkemy.ong.domain.roles.Role;
-import com.alkemy.ong.domain.users.Users;
+import com.alkemy.ong.domain.users.User;
 import com.alkemy.ong.domain.users.UserService;
 import lombok.Builder;
 import lombok.Data;
@@ -33,13 +33,13 @@ public class UserController {
     return ResponseEntity.status(HttpStatus.OK).build();
   }
 
-  private List<UserDto> toListDto(List<Users> users) {
+  private List<UserDto> toListDto(List<User> users) {
     return users.stream()
         .map(this::toDto)
         .collect(toList());
   }
 
-  private UserDto toDto(Users user) {
+  private UserDto toDto(User user) {
     return UserDto.builder()
         .id(user.getId())
         .firstName(user.getFirstName())
@@ -50,7 +50,7 @@ public class UserController {
         .build();
   }
 
-  private RoleDto roleToDto(Users user) {
+  private RoleDto roleToDto(User user) {
     Role role = user.getRole();
     return RoleDto.builder()
         .id(role.getId())

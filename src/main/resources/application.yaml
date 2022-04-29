@@ -17,6 +17,7 @@ loggin:
         util:
           EC2MetadataUtils: error
 
+
 amazonProperties:
   endpointUrl: ${AMAZON_S3_ENDPOINT_URL}
   publicKey: ${AMAZON_S3_PUBLIC_KEY}
@@ -26,3 +27,7 @@ amazonProperties:
 springdoc:
   swagger-ui:
     path: /api/docs
+
+sendgridProperties:
+  emailApiKey: ${SENDGRID_API_KEY}
+  email: ${EMAIL_SENDGRID}

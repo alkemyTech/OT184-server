@@ -84,4 +84,21 @@ public class SlideController {
                 .collect(toList());
     }
 
+    @Data
+    @Builder
+    public static class SlideOrgDTO{
+        private Long id;
+        private String imageUrl;
+        private String text;
+        private Integer order;
+    }
+
+    public static SlideOrgDTO toOrgDTO(Slide slide){
+        return SlideOrgDTO.builder()
+                .id(slide.getId())
+                .imageUrl(slide.getImageUrl())
+                .text(slide.getText())
+                .order(slide.getOrder())
+                .build();
+    }
 }

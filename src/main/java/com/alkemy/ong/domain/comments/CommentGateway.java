@@ -8,5 +8,9 @@ public interface CommentGateway {
 
     Comment create(Comment comment);
 
+    Comment update(Long id, Comment comment);
+
     void delete(Long id);
+
+    List<Comment> findAllByNewsId(Long id);
 }

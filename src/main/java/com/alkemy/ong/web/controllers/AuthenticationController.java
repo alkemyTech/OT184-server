@@ -7,10 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @RestController
@@ -24,16 +22,16 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> singIn(@RequestBody AuthenticationRequest authRequest) throws Exception {
+    public ResponseEntity<?> singIn(@RequestParam("username") String username, @RequestParam("password") String password) throws Exception {
         return ResponseEntity
                 .status(HttpStatus.ACCEPTED)
-                .body(toAuthResponse(authService.auth(toAuth(authRequest)).getEmail()));
+                .body(toAuthResponse(authService.auth(toAuth(username, password)).getEmail()));
     }
 
-    private Auth toAuth(AuthenticationRequest authenticationRequest) {
+    private Auth toAuth(String username, String password) {
         return Auth.builder()
-                .email(authenticationRequest.getUsername())
-                .password(authenticationRequest.getPassword())
+                .email(username)
+                .password(password)
                 .build();
     }
 

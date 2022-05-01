@@ -77,7 +77,7 @@ public class AuthenticationController {
   }
 
   private AuthenticationResponse toAuthResponse(String auth) {
-    return AuthenticationResponse.builder().username(auth).build();
+    return AuthenticationResponse.builder().jwt(auth).build();
   }
 
   @Data
@@ -91,6 +91,6 @@ public class AuthenticationController {
   @Data
   @Builder
   private static class AuthenticationResponse {
-    private String username;
+    private String jwt;
   }
 }

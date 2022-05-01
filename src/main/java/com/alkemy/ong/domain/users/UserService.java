@@ -1,9 +1,6 @@
 package com.alkemy.ong.domain.users;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +17,8 @@ public class UserService implements UserDetailsService {
   public void delete(Long id){
     userGateway.delete(id);
   }
+
+  public Users findByEmail(String email) {return userGateway.findByEmail(email);}
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

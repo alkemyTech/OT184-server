@@ -184,8 +184,6 @@ public class TestimonialController {
 
     @Builder
     @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
     public static class TestimonialDTO {
         @Schema(example = "1", description = "ID of testimonial")
         private Long id;

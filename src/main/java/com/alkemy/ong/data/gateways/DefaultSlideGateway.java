@@ -1,16 +1,16 @@
 package com.alkemy.ong.data.gateways;
 
-import com.alkemy.ong.data.entities.CommentEntity;
+import com.alkemy.ong.data.entities.OrganizationEntity;
 import com.alkemy.ong.data.entities.SlidesEntity;
+import com.alkemy.ong.data.repositories.OrganizationRepository;
 import com.alkemy.ong.data.repositories.SlidesRepository;
-import com.alkemy.ong.domain.comments.Comment;
 import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
 import com.alkemy.ong.domain.slide.Slide;
 import com.alkemy.ong.domain.slide.SlideGateway;
-import com.alkemy.ong.domain.users.User;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -18,10 +18,13 @@ import static java.util.stream.Collectors.toList;
 public class DefaultSlideGateway implements SlideGateway {
 
     private final SlidesRepository slidesRepository;
+    private final OrganizationRepository organizationRepository;
 
-    public DefaultSlideGateway(SlidesRepository slidesRepository){
+    public DefaultSlideGateway(SlidesRepository slidesRepository, OrganizationRepository organizationRepository){
         this.slidesRepository = slidesRepository;
+        this.organizationRepository = organizationRepository;
     }
+
 
     @Override
     public Slide findById(Long id) {
@@ -44,8 +47,11 @@ public class DefaultSlideGateway implements SlideGateway {
                 .collect(toList());
     }
 
-    public Slide save(Slide slide) {
+    public Slide save(Slide slide, Long id) {
+        Optional<OrganizationEntity> organizationEntity = organizationRepository.findById(id);
+        organizationEntity.orElseThrow(() -> new ResourceNotFoundException("ID"));
         SlidesEntity slideEntity = toEntity(slide);
+        slideEntity.setOrganization(organizationEntity.get());
         return toModel(slidesRepository.save(slideEntity));
     }
 
@@ -62,8 +68,11 @@ public class DefaultSlideGateway implements SlideGateway {
         return SlidesEntity.builder()
                 .imageUrl(slide.getImageUrl())
                 .slideOrder(slide.getOrder())
+                .organization(OrganizationEntity.builder().build())
                 .build();
     }
+
+
 
 
 }

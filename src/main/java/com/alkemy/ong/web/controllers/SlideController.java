@@ -1,7 +1,6 @@
 package com.alkemy.ong.web.controllers;
 
 
-import com.alkemy.ong.domain.organizations.Organization;
 import com.alkemy.ong.domain.slide.Slide;
 import com.alkemy.ong.domain.slide.SlideService;
 import lombok.Builder;
@@ -45,9 +44,9 @@ public class SlideController {
 
     }
     @PostMapping
-    public ResponseEntity<SlidePostDTO> save( @RequestBody SlidePostDTO slideDTO){
-        Slide slide =  slideService.save(toModel(slideDTO));
-        return ResponseEntity.status(HttpStatus.CREATED).body(this.toPostDTO(slide));
+    public ResponseEntity<SlideBasicDTO> save( @RequestBody SlideBasicDTO slideBasicDTO, Long id){
+        Slide slide =  slideService.save(toBasicModel(slideBasicDTO),id);
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.toBasicDTO(slide));
     }
 
     @Data
@@ -67,13 +66,6 @@ public class SlideController {
         private Integer order;
     }
 
-    @Data
-    @Builder
-    private static class SlidePostDTO{
-        private String imageUrl;
-        private Integer order;
-        private Organization organization;
-    }
 
     private SlideBasicDTO toBasicDTO(Slide slide){
         return SlideBasicDTO.builder()
@@ -82,19 +74,10 @@ public class SlideController {
                 .build();
     }
 
-    private Slide toModel(SlidePostDTO slideDTO){
+    private Slide toBasicModel(SlideBasicDTO slideBasicDTO){
         return Slide.builder()
-                .imageUrl(slideDTO.getImageUrl())
-                .order(slideDTO.getOrder())
-                .organization(slideDTO.getOrganization())
-                .build();
-    }
-
-    private SlidePostDTO toPostDTO(Slide slide){
-        return SlidePostDTO.builder()
-                .imageUrl(slide.getImageUrl())
-                .order(slide.getOrder())
-                .organization(slide.getOrganization())
+                .imageUrl(slideBasicDTO.getImageUrl())
+                .order(slideBasicDTO.getOrder())
                 .build();
     }
 

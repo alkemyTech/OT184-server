@@ -23,7 +23,7 @@ public class ImageController {
         this.cloudService = cloudService;
     }
 
-    @PostMapping("${AMAZON_S3_ENDPOINT_URL}")
+    @PostMapping("${amazonProperties.endpointUrl}")
     public ResponseEntity<CloudOutputDTO> uploader(@RequestParam("file") MultipartFile multipartFile) throws IOException{
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(toCloudDTO(

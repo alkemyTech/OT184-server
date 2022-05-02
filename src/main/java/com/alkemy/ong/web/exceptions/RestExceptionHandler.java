@@ -24,7 +24,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {ResourceNotFoundException.class})
     protected ResponseEntity<Object> HandleParamNotFound(RuntimeException ex, WebRequest request) {
-
         ApiErrorDTO errorDTO = new ApiErrorDTO(
                 HttpStatus.NOT_FOUND,
                 ex.getMessage(),
@@ -33,10 +32,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, errorDTO, new HttpHeaders(), errorDTO.getStatus(), request);
     }
 
-    @ExceptionHandler(value
-            = { IllegalArgumentException.class })
-    protected ResponseEntity<Object> handleIllegalArgumentException(
-            RuntimeException ex, WebRequest request) {
+    @ExceptionHandler(value = { IllegalArgumentException.class })
+    protected ResponseEntity<Object> handleIllegalArgumentException(IllegalArgumentException ex, WebRequest request) {
         ApiErrorDTO errorDTO = new ApiErrorDTO(
                 HttpStatus.BAD_REQUEST,
                 ex.getMessage(),
@@ -51,7 +48,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         ApiErrorDTO errorDTO = new ApiErrorDTO(
                 HttpStatus.INTERNAL_SERVER_ERROR,
                 ex.getMessage(),
-                Arrays.asList("Error trying this activity")
+                Arrays.asList("Incorrect email or password")
         );
         return handleExceptionInternal(ex, errorDTO, new HttpHeaders(), errorDTO.getStatus(), request);
     }

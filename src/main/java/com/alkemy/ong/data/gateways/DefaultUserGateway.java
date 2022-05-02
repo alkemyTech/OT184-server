@@ -5,51 +5,78 @@ import com.alkemy.ong.data.entities.UserEntity;
 import com.alkemy.ong.data.repositories.UserRepository;
 import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
 import com.alkemy.ong.domain.roles.Role;
-import com.alkemy.ong.domain.users.User;
+import com.alkemy.ong.domain.users.Users;
 import com.alkemy.ong.domain.users.UserGateway;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
 @Component
 @RequiredArgsConstructor
 public class DefaultUserGateway implements UserGateway {
-  private final UserRepository userRepository;
+    private final UserRepository userRepository;
 
-  @Override
-  public List<User> findAll() {
-    return userRepository.findAll()
-        .stream()
-        .map(this::toModel)
-        .collect(toList());
-  }
+    @Override
+    public List<Users> findAll() {
+        return userRepository.findAll()
+                .stream()
+                .map(this::toModel)
+                .collect(toList());
+    }
 
-  @Override
-  public void delete(Long id) {
-    userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not found Id"));
-    userRepository.deleteById(id);
-  }
+    @Override
+    public void delete(Long id) {
+        userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not found Id"));
+        userRepository.deleteById(id);
+    }
 
-  private User toModel(UserEntity userEntity) {
-    return User.builder()
-        .id(userEntity.getId())
-        .firstName(userEntity.getFirstName())
-        .lastName(userEntity.getLastName())
-        .email(userEntity.getEmail())
-        .photo(userEntity.getPhoto())
-        .role(roleToModel(userEntity))
-        .build();
-  }
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        UserEntity userEntity = userRepository.findByEmail(username);
+        if (userEntity == null) {
+            throw new NullPointerException("Username or password invalid");
+        }
 
-  private Role roleToModel(UserEntity userEntity) {
-    RoleEntity role = userEntity.getRole();
-    return Role.builder()
-        .id(role.getId())
-        .name(role.getName())
-        .description(role.getDescription())
-        .build();
-  }
+        Collection<? extends GrantedAuthority> authorities = userEntityRole2Colletion(userEntity);
+
+        return new User(userEntity.getEmail(), userEntity.getPassword(), authorities);
+    }
+
+    private Collection<? extends GrantedAuthority> userEntityRole2Colletion(UserEntity userEntity) {
+        Optional<UserEntity> user = Optional.ofNullable(userEntity);
+        return user.stream()
+                .map(role -> new SimpleGrantedAuthority(role.getRole().getName()))
+                .collect(Collectors.toList());
+    }
+
+    private Users toModel(UserEntity userEntity) {
+        return Users.builder()
+                .id(userEntity.getId())
+                .firstName(userEntity.getFirstName())
+                .lastName(userEntity.getLastName())
+                .email(userEntity.getEmail())
+                .photo(userEntity.getPhoto())
+                .role(roleToModel(userEntity))
+                .build();
+    }
+
+    private Role roleToModel(UserEntity userEntity) {
+        RoleEntity role = userEntity.getRole();
+        return Role.builder()
+                .id(role.getId())
+                .name(role.getName())
+                .description(role.getDescription())
+                .build();
+    }
 }

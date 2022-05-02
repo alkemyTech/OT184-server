@@ -9,11 +9,8 @@ VALUES ('user', 'User level access');
 INSERT INTO roles (name, description)
 VALUES ('maintainer', 'Can read and update resources');
 
-INSERT INTO roles (name, description)
-VALUES ('developer', 'Developer access level');
-
-INSERT INTO users (role_id, first_name, last_name, email, password, photo)
-VALUES (1, 'Juan', 'Gomez', 'juangomez@mail.com', '12345678', 'https://www.somebucket.com/photos/image.jpg');
+INSERT INTO roles (name, description, is_deleted)
+VALUES ('dev', 'Developer access level',0);
 
 INSERT INTO users (role_id, first_name, last_name, email, password, photo)
 VALUES (2, 'Maria', 'Perez', 'mariaperez@mail.com', 'qwerty', 'https://www.somebucket.com/photos/image.jpg');
@@ -51,11 +48,11 @@ VALUE ('bill', 'gates', 'billgates@gmail.com', 'bgates', 1);
 INSERT INTO users (first_name, last_name, email, password, role_id)
 VALUE ('steve', 'jobs', 'stevejobs@gmail.com', 'sjobs', 1);
 
-INSERT INTO users (first_name, last_name, email, password, role_id)
-VALUE ('torvalds', 'linus', 'torvaldslinus@gmail.com', 'tlinus', 1);
+INSERT INTO users (first_name, last_name, email, password, role_id,is_deleted)
+VALUE ('torvalds', 'linus', 'torvaldslinus@gmail.com','$2a$10$3n2ntpx9zBzMiQh0piZ5KeQH7ajiCG7nXvs67GKUpsP7IrLWPPmeq', 875,0);
 
-INSERT INTO users (first_name, last_name, email, password, role_id)
-VALUE ('alejandro', 'abondano', 'alejandroabondano@gmail.com', 'aabondano', 2);
+INSERT INTO users (first_name, last_name, email, password, role_id,is_deleted)
+VALUE ('alejandro', 'abondano', 'alejandroabondano@gmail.com', '$2a$10$3n2ntpx9zBzMiQh0piZ5KeQH7ajiCG7nXvs67GKUpsP7IrLWPPmeq', 307,0);
 
 INSERT INTO users (first_name, last_name, email, password, role_id)
 VALUE ('brigite', 'polanco', 'brigitepolanco@gmail.com', 'apuebla', 3);

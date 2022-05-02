@@ -30,8 +30,8 @@ import java.io.IOException;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-  private UserService userService;
-  private JwtFilter jwtFilter;
+  private final UserService userService;
+  private final JwtFilter jwtFilter;
 
   public SecurityConfiguration(UserService userService, JwtFilter jwtFilter) {
     this.userService = userService;

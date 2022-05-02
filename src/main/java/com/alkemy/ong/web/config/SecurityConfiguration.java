@@ -1,7 +1,6 @@
 package com.alkemy.ong.web.config;
 
 import com.alkemy.ong.domain.users.UserService;
-import com.alkemy.ong.web.util.JwtUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

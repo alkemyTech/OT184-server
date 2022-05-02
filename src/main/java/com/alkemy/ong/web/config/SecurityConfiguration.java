@@ -1,18 +1,30 @@
 package com.alkemy.ong.web.config;
 
 import com.alkemy.ong.domain.users.UserService;
-import com.alkemy.ong.web.JwtFilter;
+import com.alkemy.ong.web.util.JwtUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
@@ -54,6 +66,45 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
     httpSecurity.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+  }
+
+
+  @Component
+  public static class JwtFilter extends OncePerRequestFilter {
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private JwtUtil jwtUtil;
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
+
+      final String authorizationHeader = request.getHeader("Authorization");
+
+      String username = null;
+      String jwt = null;
+
+      if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+        jwt = authorizationHeader.substring(7);
+        username = jwtUtil.extractUsername(jwt);
+      }
+
+      if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        UserDetails userDetails = this.userService.loadUserByUsername(username);
+
+        if (jwtUtil.validateToken(jwt, userDetails)) {
+          UsernamePasswordAuthenticationToken authReq =
+                  new UsernamePasswordAuthenticationToken(
+                          userDetails.getUsername(),
+                          userDetails.getPassword(),
+                          userDetails.getAuthorities()
+                  );
+          SecurityContextHolder.getContext().setAuthentication(authReq);
+        }
+      }
+
+      chain.doFilter(request, response);
+    }
   }
 
 }

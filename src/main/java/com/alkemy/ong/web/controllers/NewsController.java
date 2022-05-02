@@ -2,7 +2,6 @@ package com.alkemy.ong.web.controllers;
 
 import com.alkemy.ong.domain.comments.Comment;
 import com.alkemy.ong.domain.comments.CommentService;
-import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
 import com.alkemy.ong.domain.news.News;
 import com.alkemy.ong.domain.news.NewsService;
 import com.alkemy.ong.domain.utils.PageModel;
@@ -37,31 +36,18 @@ public class NewsController {
         this.commentService = commentService;
     }
 
-    @Operation(summary = "Get news by ID",
-            description = "Get news details by ID")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "Success, news found",
-                            content = @Content(
-                                    mediaType = "JSON Value",
-                                    schema = @Schema(implementation = NewsController.NewsDTO.class)
-                            )
-                    ),
-                    @ApiResponse(
-                            responseCode = "404",
-                            description = "News not found",
-                            content = @Content(
-                                    mediaType = "JSON Value",
-                                    schema = @Schema(implementation = ResourceNotFoundException.class),
-                                    examples = @ExampleObject(
-                                            name = "404",
-                                            summary = "Client Error 404",
-                                            description = "Bad Request, ID is not found",
-                                            value = ("Error, ID is not found.")
-                                    )
-                            ))
+    @Operation(summary = "Get news by ID", description = "Get details of the specific news ")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "News found",
+                    content = { @Content(mediaType = "JSON Value",
+                            schema = @Schema(implementation = NewsController.NewsDTO.class))}),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = @Content(mediaType = "JSON Value",
+                            examples = @ExampleObject(value="Incorrect parameter (ID)"))),
+            @ApiResponse(responseCode = "404",description = "Not Found",
+                    content = @Content(mediaType = "JSON Value",
+                            examples = @ExampleObject(value = ("Id is not found."))
+                    ))
             }
     )
     @GetMapping("/{id}")
@@ -70,53 +56,32 @@ public class NewsController {
         return ResponseEntity.status(HttpStatus.OK).body(returnDTO);
     }
 
-    @Operation(summary = "Create news",
-            description = "Create news with all details")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(
-                            responseCode = "201",
-                            description = "News created"
-                    ),
-                    @ApiResponse(
-                            responseCode = "400",
-                            description = "Bad request",
-                            content = @Content(
-                                    examples = @ExampleObject(
-                                            name = "400",
-                                            summary = "Client Error 400",
-                                            description = "The request of the save news is no correct",
-                                            value = ("Bad request, news not saved")
-                                    )
-                            ))}
-    )
+    @Operation(summary = "Create news", description = "Create news ")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "News created",
+                    content = { @Content(mediaType = "JSON Value",
+                            schema = @Schema(implementation = NewsController.NewsDTO.class))}),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = @Content(mediaType = "JSON Value",
+                            examples = @ExampleObject(value="Incorrect parameters in JSON Object")))}
+            )
     @PostMapping
     public ResponseEntity<NewsDTO> save(@Valid @RequestBody NewsDTO newsDTO){
         News returnModel =  newsService.save(this.toModel(newsDTO));
         return ResponseEntity.status(HttpStatus.CREATED).body(this.toDTO(returnModel));
     }
 
-    @Operation(summary = "Delete news by ID",
-            description = "Soft news by ID of the specific category")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(
-                            responseCode = "204",
-                            description = "No content, news deleted"
-                    ),
-                    @ApiResponse(
-                            responseCode = "404",
-                            description = "News not found",
-                            content = @Content(
-                                    mediaType = "JSON Value",
-                                    schema = @Schema(implementation = ResourceNotFoundException.class),
-                                    examples = @ExampleObject(
-                                            name = "404",
-                                            summary = "Client Error 404",
-                                            description = "The request id is not found",
-                                            value = ("Error, ID is not found.")
-                                    )
-                            ))
+    @Operation(summary = "Delete news", description = "Delete news by ID ")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "No content",
+                    content = { @Content(mediaType = "JSON Value")}),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = @Content(mediaType = "JSON Value",
+                            examples = @ExampleObject(value="Incorrect parameter (ID)"))),
+            @ApiResponse(responseCode = "404",description = "Not Found",
+                    content = @Content(mediaType = "JSON Value",
+                            examples = @ExampleObject(value = ("Id is not found."))
+                    ))
             }
     )
     @DeleteMapping("/{id}")
@@ -125,29 +90,14 @@ public class NewsController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @Operation(summary = "Get all news by page",
-            description = "Get all news by pages of 10")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "News found",
-                            content = @Content(
-                                    mediaType = "JSON Value",
-                                    schema = @Schema(implementation = NewsController.NewsDTO.class)
-                            )
-                    ),
-                    @ApiResponse(
-                            responseCode = "400",
-                            description = "Bad Request",
-                            content = @Content(
-                                    examples = @ExampleObject(
-                                            name = "400",
-                                            summary = "Client Error 400",
-                                            description = "Bad Request, site not correct",
-                                            value = ("Bad request, URL doesn't exist")
-                                    )
-                            ))
+    @Operation(summary = "Get news by page", description = "Get news by page, each one has 10 elements ")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "News page found",
+                    content = { @Content(mediaType = "JSON Value",
+                            schema = @Schema(implementation = PageResponse.class))}),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = @Content(mediaType = "JSON Value",
+                            examples = @ExampleObject(value="Incorrect parameter (ID)"))),
             }
     )
     @GetMapping
@@ -164,27 +114,18 @@ public class NewsController {
         return ResponseEntity.ok().body(response);
     }
 
-    @Operation(summary = "Update news by ID",
-            description = "Update all details of the specific news ")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "Success, news updated"
-                    ),
-                    @ApiResponse(
-                            responseCode = "404",
-                            description = "News not found",
-                            content = @Content(
-                                    mediaType = "JSON Value",
-                                    schema = @Schema(implementation = ResourceNotFoundException.class),
-                                    examples = @ExampleObject(
-                                            name = "404",
-                                            summary = "Client Error 400",
-                                            description = "The request id is not found",
-                                            value = ("Error, ID is not found.")
-                                    )
-                            ))
+    @Operation(summary = "Update news by ID", description = "Update all details of the specific news ")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "News updated",
+                    content = { @Content(mediaType = "JSON Value",
+                            schema = @Schema(implementation = NewsController.NewsDTO.class))}),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = @Content(mediaType = "JSON Value",
+                            examples = @ExampleObject(value="Incorrect parameters in JSON Object"))),
+            @ApiResponse(responseCode = "404",description = "Not Found",
+                    content = @Content(mediaType = "JSON Value",
+                            examples = @ExampleObject(value = ("News's ID is not found."))
+                    ))
             }
     )
     @PutMapping("/{id}")
@@ -192,6 +133,16 @@ public class NewsController {
         return ResponseEntity.ok().body(toDTO(newsService.update(this.toModel(newsDTO),id)));
     }
 
+    @Operation(summary = "Get news's comments", description = "Get news's comments by ID ")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Comments found",
+                    content = { @Content(mediaType = "JSON Value",
+                            schema = @Schema(implementation = CommentController.CommentBasicDTO.class))}),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = @Content(mediaType = "JSON Value",
+                            examples = @ExampleObject(value="Incorrect parameter (ID)"))),
+            }
+    )
     @GetMapping("/{id}/comments")
     public ResponseEntity<List<CommentController.CommentDTO>> findAllByNewsId(@PathVariable Long id){
         return ResponseEntity.ok().body(commentService.findAllByNewsId(id).stream().map(this::toDto).collect(toList()));

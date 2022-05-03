@@ -1,7 +1,7 @@
 package com.alkemy.ong.web.controllers;
 
 import com.alkemy.ong.domain.exceptions.CommunicationException;
-import com.alkemy.ong.web.config.SecurityConfiguration.JwtUtil;
+import com.alkemy.ong.web.security.JwtUtil;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.http.ResponseEntity;

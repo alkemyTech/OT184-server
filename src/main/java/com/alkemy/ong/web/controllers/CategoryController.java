@@ -15,12 +15,12 @@ import lombok.Builder;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
-import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
@@ -109,6 +109,7 @@ public class CategoryController {
         return ResponseEntity.ok().body(categoryDTO);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Operation(summary = "Create category",
             description = "Create category with all details")
     @ApiResponses(
@@ -137,6 +138,7 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Operation(summary = "Delete category by ID",
             description = "Soft delete by ID of the specific category")
     @ApiResponses(
@@ -188,6 +190,7 @@ public class CategoryController {
                             ))
             }
     )
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
     private ResponseEntity<CategoryDTO> update(@PathVariable Long id, @Valid @RequestBody CategoryDTO categoryDTO){
         Category categoryUpdated = categoryService.update(id, toModel(categoryDTO));

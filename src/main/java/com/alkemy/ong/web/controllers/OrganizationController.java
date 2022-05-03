@@ -6,10 +6,10 @@ import lombok.Builder;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -32,6 +32,7 @@ public class OrganizationController {
         OrganizationPublicDTO organizationPublicDataDTO=toDTOComplete(organization);
         return ResponseEntity.ok(organizationPublicDataDTO);
     }
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/public/{id}")
     public ResponseEntity<OrganizationPublicDTO> update(@PathVariable Long id,@RequestBody OrganizationPublicDTO dto){
         Organization organization=organizationService.update(id,toModel(dto));

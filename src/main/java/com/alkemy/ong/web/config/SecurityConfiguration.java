@@ -150,7 +150,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
       userDetails.getAuthorities().forEach(grantedAuthority -> {
         claims.put("role", grantedAuthority.getAuthority());
       });
-//    List<String> authorities = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(toList());
       return createToken(claims, userDetails.getUsername());
     }
 

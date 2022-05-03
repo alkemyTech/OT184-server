@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,7 +31,7 @@ public class OrganizationController {
         OrganizationPublicDTO organizationPublicDataDTO=toDTOComplete(organization);
         return ResponseEntity.ok(organizationPublicDataDTO);
     }
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+
     @PutMapping("/public/{id}")
     public ResponseEntity<OrganizationPublicDTO> update(@PathVariable Long id,@RequestBody OrganizationPublicDTO dto){
         Organization organization=organizationService.update(id,toModel(dto));

@@ -50,6 +50,11 @@ public class DefaultUserGateway implements UserGateway {
         return new User(userEntity.getEmail(), userEntity.getPassword(), authorities);
     }
 
+    @Override
+    public Users findByEmail(String email) {
+        return toModel(findByUsername(email));
+    }
+
     private UserEntity findByUsername(String username) {
         UserEntity userEntity = userRepository.findByEmail(username);
         if (userEntity == null) {

@@ -28,6 +28,10 @@ springdoc:
   swagger-ui:
     path: /api/docs
 
+security:
+  secret: ${SECRET}
+  expiration: ${EXPIRATION}
+
 sendgridProperties:
   emailApiKey: ${SENDGRID_API_KEY}
   email: ${EMAIL_SENDGRID}

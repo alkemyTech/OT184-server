@@ -10,6 +10,7 @@ import lombok.Builder;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -36,20 +37,12 @@ public class NewsController {
         return ResponseEntity.status(HttpStatus.OK).body(returnDTO);
     }
 
-    @PostMapping
-    public ResponseEntity<NewsDTO> save(@Valid @RequestBody NewsDTO newsDTO){
-        News returnModel =  newsService.save(this.toModel(newsDTO));
-        return ResponseEntity.status(HttpStatus.CREATED).body(this.toDTO(returnModel));
+    @GetMapping("/{id}/comments")
+    public ResponseEntity<List<CommentController.CommentDTO>> findAllByNewsId(@PathVariable Long id){
+        return ResponseEntity.ok().body(commentService.findAllByNewsId(id).stream().map(this::toDto).collect(toList()));
     }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id){
-        newsService.delete(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    }
-
     @GetMapping
-    public ResponseEntity<PageResponse<NewsDTO>> findByPage(@Valid @RequestParam("page") int pageNumber) {
+    public ResponseEntity<PageResponse<NewsDTO>> findAll(@Valid @RequestParam("page") int pageNumber) {
         PageModel<News> page = newsService.findByPage(pageNumber);
         String path = "/news";
         PageResponse response = PageResponse.builder()
@@ -62,14 +55,24 @@ public class NewsController {
         return ResponseEntity.ok().body(response);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping
+    public ResponseEntity<NewsDTO> save(@Valid @RequestBody NewsDTO newsDTO){
+        News returnModel =  newsService.save(this.toModel(newsDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.toDTO(returnModel));
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        newsService.delete(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<NewsDTO> update(@PathVariable Long id,@Valid @RequestBody NewsDTO newsDTO){
         return ResponseEntity.ok().body(toDTO(newsService.update(this.toModel(newsDTO),id)));
-    }
-
-    @GetMapping("/{id}/comments")
-    public ResponseEntity<List<CommentController.CommentDTO>> findAllByNewsId(@PathVariable Long id){
-        return ResponseEntity.ok().body(commentService.findAllByNewsId(id).stream().map(this::toDto).collect(toList()));
     }
 
     private CommentController.CommentDTO toDto(Comment comment) {

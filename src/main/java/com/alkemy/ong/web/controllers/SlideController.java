@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,6 +37,7 @@ public class SlideController {
         return ResponseEntity.ok().body(toListDto(slideService.findAll()));
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     private ResponseEntity<Void> delete(@PathVariable Long id){
         slideService.delete(id);

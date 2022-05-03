@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import static java.util.stream.Collectors.toList;
@@ -38,18 +39,21 @@ public class TestimonialController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     public ResponseEntity<TestimonialDTO> save(@RequestBody TestimonialDTO dto) {
         Testimonial testimonial = testimonialService.save(toDomain(dto));
         return new ResponseEntity<>(toDto(testimonial), HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<TestimonialDTO> update(@PathVariable Long id, @RequestBody TestimonialDTO dto) {
         Testimonial testimonial = testimonialService.update(id, toDomain(dto));
         return new ResponseEntity<>(toDto(testimonial), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Long id) {
         testimonialService.delete(id);

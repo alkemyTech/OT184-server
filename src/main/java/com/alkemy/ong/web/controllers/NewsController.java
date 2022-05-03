@@ -42,7 +42,7 @@ public class NewsController {
         return ResponseEntity.ok().body(commentService.findAllByNewsId(id).stream().map(this::toDto).collect(toList()));
     }
     @GetMapping
-    public ResponseEntity<PageResponse<NewsDTO>> findAll(@Valid @RequestParam("page") int pageNumber) {
+    public ResponseEntity<PageResponse<NewsDTO>> findAll(@Valid @RequestParam(value = "page",defaultValue = "0", required = false) int pageNumber) {
         PageModel<News> page = newsService.findByPage(pageNumber);
         String path = "/news";
         PageResponse response = PageResponse.builder()

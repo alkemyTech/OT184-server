@@ -3,6 +3,7 @@ package com.alkemy.ong.web.config;
 import com.alkemy.ong.domain.users.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -46,6 +47,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         httpSecurity.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/auth/*").permitAll()
+                .antMatchers(HttpMethod.POST,"/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT,"/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE,"/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and().httpBasic()
                 .and().exceptionHandling()

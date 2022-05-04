@@ -2,11 +2,13 @@ package com.alkemy.ong.sendgrid;
 
 import com.alkemy.ong.domain.email.EmailGateway;
 import com.alkemy.ong.domain.exceptions.CommunicationException;
+import com.alkemy.ong.web.controllers.utils.MailUtil;
 import com.sendgrid.Method;
 import com.sendgrid.Request;
 import com.sendgrid.Response;
 import com.sendgrid.SendGrid;
 import com.sendgrid.helpers.mail.Mail;
+import com.sendgrid.helpers.mail.objects.Attachments;
 import com.sendgrid.helpers.mail.objects.Content;
 import com.sendgrid.helpers.mail.objects.Email;
 import org.slf4j.Logger;
@@ -20,9 +22,11 @@ import java.io.IOException;
 public class DefaultEmailGateway implements EmailGateway {
 
     private final SendGrid sendGrid;
+    private MailUtil mailUtil;
 
-    public DefaultEmailGateway(SendGrid sendGrid){
+    public DefaultEmailGateway(SendGrid sendGrid, MailUtil mailUtil){
         this.sendGrid = sendGrid;
+        this.mailUtil = mailUtil;
     }
 
     @Value("${sendgridProperties.email}")
@@ -32,7 +36,9 @@ public class DefaultEmailGateway implements EmailGateway {
     public String sendmail(String to, String subject, String body) {
 
         Email email = new Email(senderMail);
-        Mail mail = new Mail(email, subject, new Email(to), new Content("text", body));
+
+        Mail mail = new Mail(email, subject, new Email(to), new Content( "text/html", mailUtil.getMAIL_UTIL()));
+
 
         Request request = new Request();
 

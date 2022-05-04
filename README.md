@@ -28,7 +28,7 @@ Type of data to send: x-www-form-urlenconded
 
 #### singIn(username, password)
 
-allows the user to login if he is previously registered
+allows the user to login if he is previously registered, note that the password in the database must be encrypted
 
 ## Screenshots
 

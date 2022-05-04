@@ -21,6 +21,8 @@ public class UserService implements UserDetailsService {
     userGateway.delete(id);
   }
 
+  public Users findByEmail(String email) {return userGateway.findByEmail(email);}
+
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     return userGateway.loadUserByUsername(username);

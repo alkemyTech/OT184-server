@@ -4,6 +4,12 @@ import com.alkemy.ong.domain.testimonials.Testimonial;
 import com.alkemy.ong.domain.testimonials.TestimonialService;
 import com.alkemy.ong.domain.utils.PageModel;
 import com.alkemy.ong.web.controllers.utils.PageResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,6 +17,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.constraints.NotEmpty;
 
 import static java.util.stream.Collectors.toList;
 
@@ -24,6 +32,33 @@ public class TestimonialController {
         this.testimonialService = testimonialService;
     }
 
+    @Operation(
+            summary = "Get all testimonials",
+            description = "Get testimonials, 10 for page"
+    )
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Testimonials found",
+                            content = @Content(mediaType = "JSON Value",
+                                    schema = @Schema(implementation = TestimonialDTO.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Bad request",
+                            content = @Content(
+                                    examples = @ExampleObject(
+                                            name = "400",
+                                            summary = "Bad request",
+                                            description = "Bad request",
+                                            value = "Incorrect index"
+                                    )
+                            )
+                    )
+            }
+    )
     @GetMapping
     public ResponseEntity<PageResponse<TestimonialDTO>> getTestimonialPage(@RequestParam("page") int pageNumber) {
         PageModel<Testimonial> page = testimonialService.findByPage(pageNumber);
@@ -38,18 +73,91 @@ public class TestimonialController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+
+    @Operation(
+            summary = "Create a testimonial",
+            description = "Create a testimonial in table"
+    )
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            responseCode = "201",
+                            description = "Testimonial created"
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Bad request",
+                            content = @Content(
+                                    examples = @ExampleObject(
+                                            name = "400",
+                                            summary = "Bad request",
+                                            description = "Body request is incompleted",
+                                            value = "Testimonial not saved"
+                                    )
+                            )
+                    )
+            }
+    )
     @PostMapping
     public ResponseEntity<TestimonialDTO> save(@RequestBody TestimonialDTO dto) {
         Testimonial testimonial = testimonialService.save(toDomain(dto));
         return new ResponseEntity<>(toDto(testimonial), HttpStatus.CREATED);
     }
 
+    @Operation(
+            summary = "Update testimonial",
+            description = "Update testimonial, for testimonial id"
+    )
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Updated testimonial successfully"
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Bad request",
+                            content = @Content(
+                                    examples = @ExampleObject(
+                                            name = "400",
+                                            summary = "Bad request",
+                                            description = "Body request is incompleted",
+                                            value = "Testimonial don't update"
+                                    )
+                            )
+                    )
+            }
+    )
     @PutMapping("/{id}")
     public ResponseEntity<TestimonialDTO> update(@PathVariable Long id, @RequestBody TestimonialDTO dto) {
         Testimonial testimonial = testimonialService.update(id, toDomain(dto));
         return new ResponseEntity<>(toDto(testimonial), HttpStatus.OK);
     }
 
+    @Operation(
+            summary = "Deleted testimonial",
+            description = "Deleted testimonial, deleted logical"
+    )
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            responseCode = "204",
+                            description = "No content"
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "Not found",
+                            content = @Content(
+                                    examples = @ExampleObject(
+                                            name = "404",
+                                            summary = "Not Found",
+                                            description = "Testimonial's Id, not found",
+                                            value = "Testimonial don't deleted"
+                                    )
+                            )
+                    )
+            }
+    )
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Long id) {
         testimonialService.delete(id);
@@ -76,12 +184,15 @@ public class TestimonialController {
 
     @Builder
     @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
     public static class TestimonialDTO {
+        @Schema(example = "1", description = "ID of testimonial")
         private Long id;
+        @Schema(example = "Personal growth", description = "Name of testimonial")
+        @NotEmpty(message = "The name field not empty")
         private String name;
+        @Schema(example = "https://cdn.pixabay.com/photo/2022/01/22/16/54/book-6957870_960_720.jpg", description = "URL of testimonial image")
         private String image;
+        @NotEmpty(message = "The content field not empty")
         private String content;
     }
 

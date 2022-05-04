@@ -6,6 +6,12 @@ import com.alkemy.ong.domain.news.News;
 import com.alkemy.ong.domain.news.NewsService;
 import com.alkemy.ong.domain.utils.PageModel;
 import com.alkemy.ong.web.controllers.utils.PageResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
@@ -30,24 +36,70 @@ public class NewsController {
         this.commentService = commentService;
     }
 
+    @Operation(summary = "Get news by ID", description = "Get details of the specific news ")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "News found",
+                    content = { @Content(mediaType = "JSON Value",
+                            schema = @Schema(implementation = NewsController.NewsDTO.class))}),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = @Content(mediaType = "JSON Value",
+                            examples = @ExampleObject(value="Incorrect parameter (ID)"))),
+            @ApiResponse(responseCode = "404",description = "Not Found",
+                    content = @Content(mediaType = "JSON Value",
+                            examples = @ExampleObject(value = ("Id is not found."))
+                    ))
+            }
+    )
     @GetMapping("/{id}")
     public ResponseEntity<NewsDTO> getDetails(@PathVariable Long id){
         NewsDTO returnDTO = this.toDTO(newsService.getDetails(id));
         return ResponseEntity.status(HttpStatus.OK).body(returnDTO);
     }
 
+    @Operation(summary = "Create news", description = "Create news ")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "News created",
+                    content = { @Content(mediaType = "JSON Value",
+                            schema = @Schema(implementation = NewsController.NewsDTO.class))}),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = @Content(mediaType = "JSON Value",
+                            examples = @ExampleObject(value="Incorrect parameters in JSON Object")))}
+            )
     @PostMapping
     public ResponseEntity<NewsDTO> save(@Valid @RequestBody NewsDTO newsDTO){
         News returnModel =  newsService.save(this.toModel(newsDTO));
         return ResponseEntity.status(HttpStatus.CREATED).body(this.toDTO(returnModel));
     }
 
+    @Operation(summary = "Delete news", description = "Delete news by ID ")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "No content",
+                    content = { @Content(mediaType = "JSON Value")}),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = @Content(mediaType = "JSON Value",
+                            examples = @ExampleObject(value="Incorrect parameter (ID)"))),
+            @ApiResponse(responseCode = "404",description = "Not Found",
+                    content = @Content(mediaType = "JSON Value",
+                            examples = @ExampleObject(value = ("Id is not found."))
+                    ))
+            }
+    )
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
         newsService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    @Operation(summary = "Get news by page", description = "Get news by page, each one has 10 elements ")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "News page found",
+                    content = { @Content(mediaType = "JSON Value",
+                            schema = @Schema(implementation = PageResponse.class))}),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = @Content(mediaType = "JSON Value",
+                            examples = @ExampleObject(value="Incorrect parameter (ID)"))),
+            }
+    )
     @GetMapping
     public ResponseEntity<PageResponse<NewsDTO>> findByPage(@Valid @RequestParam("page") int pageNumber) {
         PageModel<News> page = newsService.findByPage(pageNumber);
@@ -62,11 +114,35 @@ public class NewsController {
         return ResponseEntity.ok().body(response);
     }
 
+    @Operation(summary = "Update news by ID", description = "Update all details of the specific news ")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "News updated",
+                    content = { @Content(mediaType = "JSON Value",
+                            schema = @Schema(implementation = NewsController.NewsDTO.class))}),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = @Content(mediaType = "JSON Value",
+                            examples = @ExampleObject(value="Incorrect parameters in JSON Object"))),
+            @ApiResponse(responseCode = "404",description = "Not Found",
+                    content = @Content(mediaType = "JSON Value",
+                            examples = @ExampleObject(value = ("News's ID is not found."))
+                    ))
+            }
+    )
     @PutMapping("/{id}")
     public ResponseEntity<NewsDTO> update(@PathVariable Long id,@Valid @RequestBody NewsDTO newsDTO){
         return ResponseEntity.ok().body(toDTO(newsService.update(this.toModel(newsDTO),id)));
     }
 
+    @Operation(summary = "Get news's comments", description = "Get news's comments by ID ")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Comments found",
+                    content = { @Content(mediaType = "JSON Value",
+                            schema = @Schema(implementation = CommentController.CommentBasicDTO.class))}),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = @Content(mediaType = "JSON Value",
+                            examples = @ExampleObject(value="Incorrect parameter (ID)"))),
+            }
+    )
     @GetMapping("/{id}/comments")
     public ResponseEntity<List<CommentController.CommentDTO>> findAllByNewsId(@PathVariable Long id){
         return ResponseEntity.ok().body(commentService.findAllByNewsId(id).stream().map(this::toDto).collect(toList()));

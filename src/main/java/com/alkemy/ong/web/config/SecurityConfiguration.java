@@ -5,6 +5,7 @@ import com.alkemy.ong.web.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -57,13 +58,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity httpSecurity) throws Exception {
     httpSecurity.csrf().disable()
-        .authorizeRequests()
-        .antMatchers("/auth/**").permitAll()
-        .anyRequest().authenticated()
-        .and().exceptionHandling()
-        .and().sessionManagement()
-        .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
+            .authorizeRequests()
+            .antMatchers("/auth/**").permitAll()
+            .antMatchers(HttpMethod.POST,"/**").hasAuthority("ADMIN")
+            .antMatchers(HttpMethod.PUT,"/**").hasAuthority("ADMIN")
+            .antMatchers(HttpMethod.DELETE,"/**").hasAuthority("ADMIN")
+            .anyRequest().authenticated()
+            .and().exceptionHandling()
+            .and().sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     httpSecurity.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
   }
 

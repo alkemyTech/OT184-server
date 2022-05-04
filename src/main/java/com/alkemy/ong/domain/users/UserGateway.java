@@ -11,4 +11,6 @@ public interface UserGateway {
   void delete(Long id);
 
   UserDetails loadUserByUsername (String username) throws UsernameNotFoundException;
+
+  Users findByEmail(String email);
 }

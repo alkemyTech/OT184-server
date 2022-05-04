@@ -43,7 +43,10 @@ public class DefaultUserGateway implements UserGateway {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity userEntity = findByUsername(username);
+        UserEntity userEntity = userRepository.findByEmail(username);
+        if (userEntity == null) {
+            throw new NullPointerException("Username or password invalid");
+        }
 
         Collection<? extends GrantedAuthority> authorities = userEntityRole2Colletion(userEntity);
 
@@ -51,16 +54,14 @@ public class DefaultUserGateway implements UserGateway {
     }
 
     @Override
-    public Users findByEmail(String email) {
-        return toModel(findByUsername(email));
+    public Users findById(Long id) {
+        UserEntity foundUser = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        return toModel(foundUser);
     }
 
-    private UserEntity findByUsername(String username) {
-        UserEntity userEntity = userRepository.findByEmail(username);
-        if (userEntity == null) {
-            throw new NullPointerException("Username or password invalid");
-        }
-        return userEntity;
+    @Override
+    public Users findByEmail(String email) {
+        return toModel(userRepository.findByEmail(email));
     }
 
     private Collection<? extends GrantedAuthority> userEntityRole2Colletion(UserEntity userEntity) {

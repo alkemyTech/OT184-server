@@ -36,7 +36,7 @@ public class AuthenticationController {
   }
 
     @PostMapping("/login")
-    public ResponseEntity<?> singIn(@RequestParam("username") String username,
+    public ResponseEntity<?> login(@RequestParam("username") String username,
                                     @RequestParam("password") String password) {
         CustomUserDetails userDetails;
         try {

@@ -26,11 +26,11 @@ Type of data to send: x-www-form-urlenconded
 | `password` | `string` | **Required**. Your password |
 
 
-#### signing(username, password)
+#### singIn(username, password)
 
 permite el login del usuario en caso de que esté previamente registrado
 
 
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![App Screenshot](https://github.com/alkemyTech/OT184-server/blob/OT184-29-welcome_email_template_integration/src/main/resources/static/successful%20authentication.png?raw=true)

@@ -7,9 +7,12 @@ import lombok.Builder;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 import static java.util.stream.Collectors.toList;
 
@@ -27,8 +30,20 @@ public class UserController {
     return ResponseEntity.ok().body(toListDto(userService.findAll()));
   }
 
+  @GetMapping("/{id}")
+  public ResponseEntity<UserDto> findById(@PathVariable Long id, Authentication authentication) {
+    Users foundUser = userService.findById(id);
+    String principal = (String) authentication.getPrincipal();
+
+    if (Objects.equals(foundUser.getEmail(), principal) ||
+        authentication.getAuthorities().contains(new SimpleGrantedAuthority("admin"))) {
+      return ResponseEntity.ok(toDto(foundUser));
+    }
+    return ResponseEntity.ok(toDto(userService.findByEmail(principal)));
+  }
+
   @DeleteMapping("/{id}")
-  public ResponseEntity<Void> delete(@PathVariable Long id){
+  public ResponseEntity<Void> delete(@PathVariable Long id) {
     userService.delete(id);
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }

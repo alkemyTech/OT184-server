@@ -56,7 +56,7 @@ public class DefaultUserGateway implements UserGateway {
     private Collection<? extends GrantedAuthority> userEntityRole2Colletion(UserEntity userEntity) {
         Optional<UserEntity> user = Optional.ofNullable(userEntity);
         return user.stream()
-                .map(role -> new SimpleGrantedAuthority(role.getRole().getName()))
+                .map(role -> new SimpleGrantedAuthority(role.getRole().getName().toUpperCase()))
                 .collect(Collectors.toList());
     }
 

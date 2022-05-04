@@ -48,12 +48,12 @@ public class DefaultUserGateway implements UserGateway {
             throw new NullPointerException("Username or password invalid");
         }
 
-        Collection<? extends GrantedAuthority> authorities = userEntityRole2Colletion(userEntity);
+        Collection<? extends GrantedAuthority> authorities = userEntityRole2Collection(userEntity);
 
         return new User(userEntity.getEmail(), userEntity.getPassword(), authorities);
     }
 
-    private Collection<? extends GrantedAuthority> userEntityRole2Colletion(UserEntity userEntity) {
+    private Collection<? extends GrantedAuthority> userEntityRole2Collection(UserEntity userEntity) {
         Optional<UserEntity> user = Optional.ofNullable(userEntity);
         return user.stream()
                 .map(role -> new SimpleGrantedAuthority(role.getRole().getName().toUpperCase()))

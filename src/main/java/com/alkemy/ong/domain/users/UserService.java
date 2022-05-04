@@ -32,7 +32,4 @@ public class UserService implements UserDetailsService {
     return userGateway.findById(id);
   }
 
-  public Users findByEmail(String email) {
-    return userGateway.findByEmail(email);
-  }
 }

@@ -6,6 +6,12 @@ import com.alkemy.ong.domain.roles.Role;
 import com.alkemy.ong.domain.users.UserService;
 import com.alkemy.ong.domain.users.Users;
 import com.alkemy.ong.web.security.JwtUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.http.ResponseEntity;
@@ -24,17 +30,26 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/auth")
 public class AuthenticationController {
 
-  private final AuthenticationManager authenticationManager;
-  private final JwtUtil jwtUtil;
-  private final UserService userService;
+    private final AuthenticationManager authenticationManager;
+    private final JwtUtil jwtUtil;
+    private final UserService userService;
 
-  public AuthenticationController(AuthenticationManager authenticationManager,
-                                  JwtUtil jwtUtil, UserService userService) {
-    this.authenticationManager = authenticationManager;
-    this.jwtUtil = jwtUtil;
-    this.userService = userService;
-  }
-
+    public AuthenticationController(AuthenticationManager authenticationManager,
+                                    JwtUtil jwtUtil, UserService userService) {
+        this.authenticationManager = authenticationManager;
+        this.jwtUtil = jwtUtil;
+        this.userService = userService;
+    }
+    @Operation(summary = "Login user", description = "Get user JSON web token")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "user JWT",
+                    content = {@Content(mediaType = "JSON Value",
+                            schema = @Schema(implementation = AuthenticationController.AuthenticationResponse.class))}),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error",
+                    content = @Content(mediaType = "JSON Value",
+                            examples = @ExampleObject(value = "Incorrect username or password")))
+    }
+    )
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestParam("username") String username,
                                     @RequestParam("password") String password) {

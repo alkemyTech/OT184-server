@@ -6,6 +6,7 @@ import com.alkemy.ong.domain.exceptions.BadRequestException;
 import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
 import com.alkemy.ong.web.controllers.utils.PageResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static net.bytebuddy.matcher.ElementMatchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -58,9 +59,9 @@ public class CategoryTest {
 
         mockMvc.perform(MockMvcRequestBuilders.get("/categories").param("Page","0").contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(categoryEntity1)))
-                .andExpect((ResultMatcher) jsonPath("$[0].id", is(1)))
-                .andExpect((ResultMatcher) jsonPath("$[1].id", is(2)))
-                .andExpect((ResultMatcher) jsonPath("$[0].name", is("Health")))
+                .andExpect(jsonPath("$[0].id", is(1)))
+                .andExpect(jsonPath("$[1].id", is(2)))
+                .andExpect(jsonPath("$[0].name", is("Health")))
                 .andExpect(status().isOk());
 
     }
@@ -74,10 +75,10 @@ public class CategoryTest {
 
         mockMvc.perform(MockMvcRequestBuilders.get("/categories/1").contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(categoryEntity)))
-                .andExpect((ResultMatcher) jsonPath("$.id", is(1)))
-                .andExpect((ResultMatcher) jsonPath("$.name", is("Health")))
-                .andExpect((ResultMatcher) jsonPath("$.description", is("Health is very important for the world")))
-                .andExpect((ResultMatcher) jsonPath("$.image", is("health.jpg")))
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.name", is("Health")))
+                .andExpect(jsonPath("$.description", is("Health is very important for the world")))
+                .andExpect(jsonPath("$.image", is("health.jpg")))
                 .andExpect(status().isOk());
     }
 
@@ -98,14 +99,14 @@ public class CategoryTest {
         var categoryEntity = createCategory(null,"Health", "Health is very important for the world", "health.jpg");
         var categoryEntityResponse = createCategory(1L,"Health", "Health is very important for the world", "health.jpg");
 
-        when(categoryRepository.save(categoryEntity)).thenReturn(categoryEntity);
+        when(categoryRepository.save(categoryEntity)).thenReturn(categoryEntityResponse);
 
         mockMvc.perform((MockMvcRequestBuilders.post("/categories")).contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(categoryEntityResponse)))
-                .andExpect((ResultMatcher) jsonPath("$.id", is(1)))
-                .andExpect((ResultMatcher) jsonPath("$.name", is("Health")))
-                .andExpect((ResultMatcher) jsonPath("$.description", is("Health is very important for the world")))
-                .andExpect((ResultMatcher) jsonPath("$.image", is("health.jpg")))
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.name", is("Health")))
+                .andExpect(jsonPath("$.description", is("Health is very important for the world")))
+                .andExpect(jsonPath("$.image", is("health.jpg")))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated());
 
@@ -157,10 +158,10 @@ public class CategoryTest {
 
         mockMvc.perform((MockMvcRequestBuilders.put("/categories/1")).contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(categoryEntity)))
-                .andExpect((ResultMatcher) jsonPath("$.id", is(1)))
-                .andExpect((ResultMatcher) jsonPath("$.name", is("Health")))
-                .andExpect((ResultMatcher) jsonPath("$.description", is("Health is very important for the world")))
-                .andExpect((ResultMatcher) jsonPath("$.image", is("health.jpg")))
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.name", is("Health")))
+                .andExpect(jsonPath("$.description", is("Health is very important for the world")))
+                .andExpect(jsonPath("$.image", is("health.jpg")))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 

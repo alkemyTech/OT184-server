@@ -126,7 +126,7 @@ public class CategoryTest {
         categoryEntity.setIsDeleted(true);
 
         when(categoryRepository.findById(categoryEntity.getId())).thenReturn(Optional.of(categoryEntity));
-        when(categoryRepository.save(categoryEntity)).thenReturn(null);
+        when(categoryRepository.save(categoryEntity)).thenReturn(categoryEntity);
 
         mockMvc.perform((MockMvcRequestBuilders.delete("/categories/1")))
                 .andExpect(status().isNoContent());

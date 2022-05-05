@@ -57,7 +57,7 @@ public class CategoryTest {
         when(categoryRepository.findAll()).thenReturn(categoryEntities);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/categories").param("Page","0").contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(categoryEntity1)))
+                        .content(objectMapper.writeValueAsString(categoryEntity1)))
                 .andExpect((ResultMatcher) jsonPath("$[0].id", is(1)))
                 .andExpect((ResultMatcher) jsonPath("$[1].id", is(2)))
                 .andExpect((ResultMatcher) jsonPath("$[0].name", is("Health")))
@@ -72,7 +72,7 @@ public class CategoryTest {
         when(categoryRepository.findById(categoryEntity.getId())).thenReturn(Optional.of(categoryEntity));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/categories/1").contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(categoryEntity)))
+                        .content(objectMapper.writeValueAsString(categoryEntity)))
                 .andExpect((ResultMatcher) jsonPath("$.id", is(1)))
                 .andExpect((ResultMatcher) jsonPath("$.name", is("Health")))
                 .andExpect((ResultMatcher) jsonPath("$.description", is("Health is very important for the world")))
@@ -98,7 +98,7 @@ public class CategoryTest {
         when(categoryRepository.save(categoryEntity)).thenReturn(categoryEntity);
 
         mockMvc.perform((MockMvcRequestBuilders.post("/categories")).contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(categoryEntityResponse)))
+                        .content(objectMapper.writeValueAsString(categoryEntityResponse)))
                 .andExpect((ResultMatcher) jsonPath("$.id", is(1)))
                 .andExpect((ResultMatcher) jsonPath("$.name", is("Health")))
                 .andExpect((ResultMatcher) jsonPath("$.description", is("Health is very important for the world")))
@@ -115,7 +115,7 @@ public class CategoryTest {
         when(categoryRepository.save(categoryEntity)).thenThrow(BadRequestException.class);
 
         mockMvc.perform((MockMvcRequestBuilders.post("/categories")).contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(categoryEntity)))
+                        .content(objectMapper.writeValueAsString(categoryEntity)))
                 .andExpect(status().isBadRequest());
 
     }
@@ -139,6 +139,37 @@ public class CategoryTest {
 
         mockMvc.perform((MockMvcRequestBuilders.delete("/categories/1234")).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void updateTest() throws Exception{
+        CategoryEntity categoryEntity = createCategory(1L,"Health", "Health is very important for the world", "health.jpg");
+
+        when(categoryRepository.findById(categoryEntity.getId())).thenReturn(Optional.of(categoryEntity));
+        when(categoryRepository.save(categoryEntity)).thenReturn(categoryEntity);
+
+        mockMvc.perform((MockMvcRequestBuilders.put("/categories/1")).contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(categoryEntity)))
+                .andExpect((ResultMatcher) jsonPath("$.id", is(1)))
+                .andExpect((ResultMatcher) jsonPath("$.name", is("Health")))
+                .andExpect((ResultMatcher) jsonPath("$.description", is("Health is very important for the world")))
+                .andExpect((ResultMatcher) jsonPath("$.image", is("health.jpg")))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+    }
+
+    @Test
+    public void updateTestError() throws Exception{
+        CategoryEntity categoryEntity = createCategory(1L,null, "Health is very important for the world", "health.jpg");
+
+        when(categoryRepository.findById(categoryEntity.getId())).thenReturn(Optional.of(categoryEntity));
+        when(categoryRepository.save(categoryEntity)).thenThrow(BadRequestException.class);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("categories/1").contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(categoryEntity)))
+                .andExpect(status().isBadRequest());
+
     }
 
     private CategoryEntity createCategory(Long id, String name,String description, String image){

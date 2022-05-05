@@ -1,6 +1,7 @@
 package com.alkemy.ong.web.controllers;
 
 import com.alkemy.ong.domain.exceptions.CommunicationException;
+import com.alkemy.ong.web.security.CustomUserDetails;
 import com.alkemy.ong.domain.roles.Role;
 import com.alkemy.ong.domain.users.UserService;
 import com.alkemy.ong.domain.users.Users;
@@ -13,7 +14,10 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -31,22 +35,22 @@ public class AuthenticationController {
     this.userService = userService;
   }
 
-  @PostMapping("/login")
-  public ResponseEntity<?> singIn(@RequestParam("username") String username,
-                                  @RequestParam("password") String password) {
-    UserDetails userDetails;
-    try {
-      Authentication auth = authenticationManager
-          .authenticate(new UsernamePasswordAuthenticationToken(username, password));
-      SecurityContextHolder.getContext().setAuthentication(auth);
-      userDetails = (UserDetails) auth.getPrincipal();
-    } catch (BadCredentialsException e) {
-      throw new CommunicationException("Incorrect username or password");
-    }
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestParam("username") String username,
+                                    @RequestParam("password") String password) {
+        CustomUserDetails userDetails;
+        try {
+            Authentication auth = authenticationManager
+                    .authenticate(new UsernamePasswordAuthenticationToken(username, password));
+            SecurityContextHolder.getContext().setAuthentication(auth);
+            userDetails = (CustomUserDetails) auth.getPrincipal();
+        } catch (BadCredentialsException e) {
+            throw new CommunicationException("Incorrect username or password");
+        }
 
-    String jwt = jwtUtil.generateToken(userDetails);
-    return ResponseEntity.ok(toAuthResponse(jwt));
-  }
+        String jwt = jwtUtil.generateToken(userDetails);
+        return ResponseEntity.ok(toAuthResponse(jwt));
+    }
 
   private AuthenticationResponse toAuthResponse(String auth) {
     return AuthenticationResponse.builder().jwt(auth).build();

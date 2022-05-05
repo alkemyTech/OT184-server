@@ -7,10 +7,10 @@ import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
 import com.alkemy.ong.domain.roles.Role;
 import com.alkemy.ong.domain.users.Users;
 import com.alkemy.ong.domain.users.UserGateway;
+import com.alkemy.ong.web.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
@@ -43,24 +43,25 @@ public class DefaultUserGateway implements UserGateway {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity userEntity = findByUsername(username);
-
-        Collection<? extends GrantedAuthority> authorities = userEntityRole2Colletion(userEntity);
-
-        return new User(userEntity.getEmail(), userEntity.getPassword(), authorities);
-    }
-
-    @Override
-    public Users findByEmail(String email) {
-        return toModel(findByUsername(email));
-    }
-
-    private UserEntity findByUsername(String username) {
         UserEntity userEntity = userRepository.findByEmail(username);
         if (userEntity == null) {
             throw new NullPointerException("Username or password invalid");
         }
-        return userEntity;
+
+        Collection<? extends GrantedAuthority> authorities = userEntityRole2Colletion(userEntity);
+
+        return new CustomUserDetails(userEntity.getEmail(), userEntity.getPassword(), authorities, userEntity.getId());
+    }
+
+    @Override
+    public Users findById(Long id) {
+        UserEntity foundUser = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        return toModel(foundUser);
+    }
+
+    @Override
+    public Users findByEmail(String email) {
+        return toModel(userRepository.findByEmail(email));
     }
 
     private Collection<? extends GrantedAuthority> userEntityRole2Colletion(UserEntity userEntity) {

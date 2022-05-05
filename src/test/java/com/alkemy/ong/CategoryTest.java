@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
@@ -42,6 +43,7 @@ public class CategoryTest {
     private ObjectMapper objectMapper;
 
     @Test
+    @WithMockUser(roles = "user")
     public void getAllCategoryBasicByPageTest() throws Exception{
         var categoryEntity1 = createCategory(1L,"Health", "Health is very important for the world", "health.jpg");
         var categoryEntity2 = createCategory(2L,"Greenpeace", "Nature protection", "greenpeace.jpg");
@@ -64,6 +66,7 @@ public class CategoryTest {
     }
 
     @Test
+    @WithMockUser(roles = "user")
     public void getCategoryByIDTest() throws Exception{
         var categoryEntity = createCategory(1L,"Health", "Health is very important for the world", "health.jpg");
 
@@ -79,6 +82,7 @@ public class CategoryTest {
     }
 
     @Test
+    @WithMockUser(roles = "user")
     public void getCategoryByIDTestError() throws Exception{
 
         when(categoryRepository.findById(1234L)).thenThrow(ResourceNotFoundException.class);
@@ -89,6 +93,7 @@ public class CategoryTest {
     }
 
     @Test
+    @WithMockUser(roles = "admin")
     public void saveTest() throws Exception{
         var categoryEntity = createCategory(null,"Health", "Health is very important for the world", "health.jpg");
         var categoryEntityResponse = createCategory(1L,"Health", "Health is very important for the world", "health.jpg");
@@ -107,6 +112,7 @@ public class CategoryTest {
     }
 
     @Test
+    @WithMockUser(roles = "admin")
     public void saveTestError() throws Exception{
         var categoryEntity = createCategory(null, null, "Health is very important for the world", "health.jpg");
 
@@ -119,6 +125,7 @@ public class CategoryTest {
     }
 
     @Test
+    @WithMockUser(roles = "admin")
     public void deleteTest() throws Exception{
         CategoryEntity categoryEntity = createCategory(1L,"Health", "Health is very important for the world", "health.jpg");
         categoryEntity.setIsDeleted(true);
@@ -131,6 +138,7 @@ public class CategoryTest {
     }
 
     @Test
+    @WithMockUser(roles = "admin")
     public void deleteTestError() throws Exception{
 
         when(categoryRepository.findById(1234L)).thenThrow(ResourceNotFoundException.class);
@@ -140,6 +148,7 @@ public class CategoryTest {
     }
 
     @Test
+    @WithMockUser(roles = "admin")
     public void updateTest() throws Exception{
         CategoryEntity categoryEntity = createCategory(1L,"Health", "Health is very important for the world", "health.jpg");
 
@@ -158,13 +167,14 @@ public class CategoryTest {
     }
 
     @Test
+    @WithMockUser(roles = "admin")
     public void updateTestError() throws Exception{
         CategoryEntity categoryEntity = createCategory(1L,null, "Health is very important for the world", "health.jpg");
 
         when(categoryRepository.findById(categoryEntity.getId())).thenReturn(Optional.of(categoryEntity));
         when(categoryRepository.save(categoryEntity)).thenThrow(BadRequestException.class);
 
-        mockMvc.perform(MockMvcRequestBuilders.put("categories/1").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(MockMvcRequestBuilders.put("/categories/1").contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(categoryEntity)))
                 .andExpect(status().isBadRequest());
 

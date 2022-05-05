@@ -8,7 +8,6 @@ import com.sendgrid.Request;
 import com.sendgrid.Response;
 import com.sendgrid.SendGrid;
 import com.sendgrid.helpers.mail.Mail;
-import com.sendgrid.helpers.mail.objects.Attachments;
 import com.sendgrid.helpers.mail.objects.Content;
 import com.sendgrid.helpers.mail.objects.Email;
 import org.slf4j.Logger;
@@ -33,11 +32,11 @@ public class DefaultEmailGateway implements EmailGateway {
     private String senderMail;
 
     private static final Logger log = LoggerFactory.getLogger(DefaultEmailGateway.class);
-    public String sendmail(String to, String subject, String body) {
+    public String sendmail(String to, String subject, String body, String title) {
 
         Email email = new Email(senderMail);
 
-        Mail mail = new Mail(email, subject, new Email(to), new Content( "text/html", mailUtil.getMAIL_UTIL()));
+        Mail mail = new Mail(email, subject, new Email(to), new Content( "text/html", mailUtil.mailTemplate(title, body)));
 
 
         Request request = new Request();

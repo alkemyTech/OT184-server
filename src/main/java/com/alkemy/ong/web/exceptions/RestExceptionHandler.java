@@ -7,6 +7,7 @@ import lombok.Data;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -43,7 +44,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 new HttpHeaders(), errorDTO.getStatus(), request);
     }
 
-    @ExceptionHandler(value = {CommunicationException.class})
+    @ExceptionHandler(value = {CommunicationException.class, InternalAuthenticationServiceException.class})
     protected ResponseEntity<Object> HandleCommunicationException(RuntimeException ex, WebRequest request) {
         ApiErrorDTO errorDTO = new ApiErrorDTO(
                 HttpStatus.INTERNAL_SERVER_ERROR,

@@ -40,6 +40,7 @@ public class AuthenticationController {
         this.jwtUtil = jwtUtil;
         this.userService = userService;
     }
+
     @Operation(summary = "Login user", description = "Get user JSON web token")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "user JWT",
@@ -67,41 +68,51 @@ public class AuthenticationController {
         return ResponseEntity.ok(toAuthResponse(jwt));
     }
 
-  private AuthenticationResponse toAuthResponse(String auth) {
-    return AuthenticationResponse.builder().jwt(auth).build();
-  }
+    private AuthenticationResponse toAuthResponse(String auth) {
+        return AuthenticationResponse.builder().jwt(auth).build();
+    }
 
-  @GetMapping("/me")
-  public ResponseEntity<UserController.UserDto> getAuthenticatedUser() {
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    String email = (String) authentication.getPrincipal();
-    Users userEntity = userService.findByEmail(email);
-    return ResponseEntity.ok(toDto(userEntity));
-  }
+    @Operation(summary = "Get authenticated user data", description = "return user data based on the sent token")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User data",
+                    content = {@Content(mediaType = "JSON Value",
+                            schema = @Schema(implementation = UserController.UserDto.class))}),
+            @ApiResponse(responseCode = "403", description = "Forbidden",
+                    content = @Content(mediaType = "JSON Value",
+                            examples = @ExampleObject(value = "Incorrect username or password")))
+    }
+    )
+    @GetMapping("/me")
+    public ResponseEntity<UserController.UserDto> getAuthenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = (String) authentication.getPrincipal();
+        Users userEntity = userService.findByEmail(email);
+        return ResponseEntity.ok(toDto(userEntity));
+    }
 
-  private UserController.UserDto toDto(Users user) {
-    return UserController.UserDto.builder()
-        .id(user.getId())
-        .firstName(user.getFirstName())
-        .lastName(user.getLastName())
-        .email(user.getEmail())
-        .photo(user.getPhoto())
-        .role(roleToDto(user))
-        .build();
-  }
+    private UserController.UserDto toDto(Users user) {
+        return UserController.UserDto.builder()
+                .id(user.getId())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .email(user.getEmail())
+                .photo(user.getPhoto())
+                .role(roleToDto(user))
+                .build();
+    }
 
-  private UserController.RoleDto roleToDto(Users user) {
-    Role role = user.getRole();
-    return UserController.RoleDto.builder()
-        .id(role.getId())
-        .name(role.getName())
-        .description(role.getDescription())
-        .build();
-  }
+    private UserController.RoleDto roleToDto(Users user) {
+        Role role = user.getRole();
+        return UserController.RoleDto.builder()
+                .id(role.getId())
+                .name(role.getName())
+                .description(role.getDescription())
+                .build();
+    }
 
-  @Data
-  @Builder
-  private static class AuthenticationResponse {
+    @Data
+    @Builder
+    private static class AuthenticationResponse {
         private String jwt;
-  }
+    }
 }

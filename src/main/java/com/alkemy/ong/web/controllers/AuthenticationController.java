@@ -78,10 +78,10 @@ public class AuthenticationController {
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User data",
-                    content = {@Content(mediaType = "JSON Value",
+                    content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = UserController.UserDto.class))}),
             @ApiResponse(responseCode = "403", description = "Forbidden",
-                    content = @Content(mediaType = "JSON Value",
+                    content = @Content(mediaType = "application/json",
                             examples = @ExampleObject(value = "Incorrect username or password")))
     }
     )

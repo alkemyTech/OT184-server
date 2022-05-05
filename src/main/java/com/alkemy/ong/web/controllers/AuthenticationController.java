@@ -72,7 +72,10 @@ public class AuthenticationController {
         return AuthenticationResponse.builder().jwt(auth).build();
     }
 
-    @Operation(summary = "Get authenticated user data", description = "return user data based on the sent token")
+    @Operation(
+            summary = "Get authenticated user data",
+            description = "Get user data by username. Extracts username from authentication token."
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User data",
                     content = {@Content(mediaType = "JSON Value",

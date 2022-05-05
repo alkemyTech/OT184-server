@@ -120,7 +120,28 @@ public class CategoryTest {
 
     }
 
-    private CategoryEntity createCategory(Long id, String name,String description, String image ){
+    @Test
+    public void deleteTest() throws Exception{
+        CategoryEntity categoryEntity = createCategory(1L,"Health", "Health is very important for the world", "health.jpg");
+        categoryEntity.setIsDeleted(true);
+
+        when(categoryRepository.findById(categoryEntity.getId())).thenReturn(Optional.of(categoryEntity));
+        when(categoryRepository.save(categoryEntity)).thenReturn(null);
+
+        mockMvc.perform((MockMvcRequestBuilders.delete("/categories/1")))
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    public void deleteTestError() throws Exception{
+
+        when(categoryRepository.findById(1234L)).thenThrow(ResourceNotFoundException.class);
+
+        mockMvc.perform((MockMvcRequestBuilders.delete("/categories/1234")).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
+    private CategoryEntity createCategory(Long id, String name,String description, String image){
         CategoryEntity category = new CategoryEntity();
         category.setId(id);
         category.setName(name);

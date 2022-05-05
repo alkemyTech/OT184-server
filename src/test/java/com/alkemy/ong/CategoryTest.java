@@ -47,7 +47,7 @@ public class CategoryTest {
     public void getAllCategoryBasicByPageTest() throws Exception{
         var categoryEntity1 = createCategory(1L,"Health", "Health is very important for the world", "health.jpg");
         var categoryEntity2 = createCategory(2L,"Greenpeace", "Nature protection", "greenpeace.jpg");
-        var categoryEntity3 = createCategory(2L,"UNICEF", "Best solidarity", "unicef.jpg");
+        var categoryEntity3 = createCategory(3L,"UNICEF", "Best solidarity", "unicef.jpg");
 
         List<CategoryEntity> categoryEntities = new ArrayList<>();
         categoryEntities.add(categoryEntity1);

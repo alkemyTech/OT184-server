@@ -2,7 +2,9 @@ package com.alkemy.ong;
 
 import com.alkemy.ong.data.entities.CategoryEntity;
 import com.alkemy.ong.data.repositories.CategoryRepository;
+import com.alkemy.ong.domain.exceptions.BadRequestException;
 import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
+import com.alkemy.ong.web.controllers.utils.PageResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,8 +27,7 @@ import static org.mockito.ArgumentMatchers.isNotNull;
 import static org.mockito.ArgumentMatchers.notNull;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -86,6 +87,36 @@ public class CategoryTest {
 
         mockMvc.perform((MockMvcRequestBuilders.get("/categories/1234")).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
+
+    }
+
+    @Test
+    public void saveTest() throws Exception{
+        var categoryEntity = createCategory(null,"Health", "Health is very important for the world", "health.jpg");
+        var categoryEntityResponse = createCategory(1L,"Health", "Health is very important for the world", "health.jpg");
+
+        when(categoryRepository.save(categoryEntity)).thenReturn(categoryEntity);
+
+        mockMvc.perform((MockMvcRequestBuilders.post("/categories")).contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(categoryEntityResponse)))
+                .andExpect((ResultMatcher) jsonPath("$.id", is(1)))
+                .andExpect((ResultMatcher) jsonPath("$.name", is("Health")))
+                .andExpect((ResultMatcher) jsonPath("$.description", is("Health is very important for the world")))
+                .andExpect((ResultMatcher) jsonPath("$.image", is("health.jpg")))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated());
+
+    }
+
+    @Test
+    public void saveTestError() throws Exception{
+        var categoryEntity = createCategory(null, null, "Health is very important for the world", "health.jpg");
+
+        when(categoryRepository.save(categoryEntity)).thenThrow(BadRequestException.class);
+
+        mockMvc.perform((MockMvcRequestBuilders.post("/categories")).contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(categoryEntity)))
+                .andExpect(status().isBadRequest());
 
     }
 

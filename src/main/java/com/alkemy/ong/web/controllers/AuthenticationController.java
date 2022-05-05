@@ -44,10 +44,10 @@ public class AuthenticationController {
     @Operation(summary = "Login user", description = "Get user JSON web token")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "user JWT",
-                    content = {@Content(mediaType = "JSON Value",
+                    content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = AuthenticationController.AuthenticationResponse.class))}),
             @ApiResponse(responseCode = "500", description = "Internal Server Error",
-                    content = @Content(mediaType = "JSON Value",
+                    content = @Content(mediaType = "application/json",
                             examples = @ExampleObject(value = "Incorrect username or password")))
     }
     )

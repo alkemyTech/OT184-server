@@ -12,5 +12,7 @@ public interface UserGateway {
 
   UserDetails loadUserByUsername (String username) throws UsernameNotFoundException;
 
+  Users findById(Long id);
+
   Users findByEmail(String email);
 }

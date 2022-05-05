@@ -2,6 +2,7 @@ package com.alkemy.ong.sendgrid;
 
 import com.alkemy.ong.domain.email.EmailGateway;
 import com.alkemy.ong.domain.exceptions.CommunicationException;
+import com.alkemy.ong.web.controllers.utils.MailUtil;
 import com.sendgrid.Method;
 import com.sendgrid.Request;
 import com.sendgrid.Response;
@@ -20,19 +21,23 @@ import java.io.IOException;
 public class DefaultEmailGateway implements EmailGateway {
 
     private final SendGrid sendGrid;
+    private MailUtil mailUtil;
 
-    public DefaultEmailGateway(SendGrid sendGrid){
+    public DefaultEmailGateway(SendGrid sendGrid, MailUtil mailUtil){
         this.sendGrid = sendGrid;
+        this.mailUtil = mailUtil;
     }
 
     @Value("${sendgridProperties.email}")
     private String senderMail;
 
     private static final Logger log = LoggerFactory.getLogger(DefaultEmailGateway.class);
-    public String sendmail(String to, String subject, String body) {
+    public String sendmail(String to, String subject, String body, String title) {
 
         Email email = new Email(senderMail);
-        Mail mail = new Mail(email, subject, new Email(to), new Content("text", body));
+
+        Mail mail = new Mail(email, subject, new Email(to), new Content( "text/html", mailUtil.mailTemplate(title, body)));
+
 
         Request request = new Request();
 

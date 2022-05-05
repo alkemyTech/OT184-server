@@ -11,5 +11,5 @@ public class EmailService {
         this.emailGateway = emailGateway;
     }
 
-    public String sendMail(String to, String subject, String body){return emailGateway.sendmail(to,subject, body);}
+    public String sendMail(String to, String subject, String body, String title){return emailGateway.sendmail(to,subject, body, title);}
 }

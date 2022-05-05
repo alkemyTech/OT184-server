@@ -48,7 +48,7 @@ public class DefaultUserGateway implements UserGateway {
             throw new NullPointerException("Username or password invalid");
         }
 
-        Collection<? extends GrantedAuthority> authorities = userEntityRole2Colletion(userEntity);
+        Collection<? extends GrantedAuthority> authorities = userEntityRole2Collection(userEntity);
 
         return new CustomUserDetails(userEntity.getEmail(), userEntity.getPassword(), authorities, userEntity.getId());
     }
@@ -64,10 +64,10 @@ public class DefaultUserGateway implements UserGateway {
         return toModel(userRepository.findByEmail(email));
     }
 
-    private Collection<? extends GrantedAuthority> userEntityRole2Colletion(UserEntity userEntity) {
+    private Collection<? extends GrantedAuthority> userEntityRole2Collection(UserEntity userEntity) {
         Optional<UserEntity> user = Optional.ofNullable(userEntity);
         return user.stream()
-                .map(role -> new SimpleGrantedAuthority(role.getRole().getName()))
+                .map(role -> new SimpleGrantedAuthority(role.getRole().getName().toUpperCase()))
                 .collect(Collectors.toList());
     }
 

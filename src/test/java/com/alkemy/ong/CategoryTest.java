@@ -4,20 +4,20 @@ import com.alkemy.ong.data.entities.CategoryEntity;
 import com.alkemy.ong.data.repositories.CategoryRepository;
 import com.alkemy.ong.domain.exceptions.BadRequestException;
 import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
-import com.alkemy.ong.web.controllers.utils.PageResponse;
+import com.alkemy.ong.domain.utils.PageModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.ArrayList;
@@ -55,13 +55,19 @@ public class CategoryTest {
         categoryEntities.add(categoryEntity2);
         categoryEntities.add(categoryEntity3);
 
-        when(categoryRepository.findAll()).thenReturn(categoryEntities);
+        PageModel<CategoryEntity> pageModel =
+                PageModel.<CategoryEntity>builder()
+                        .content(categoryEntities)
+                        .build();
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/categories").param("Page","0").contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(categoryEntity1)))
-                .andExpect(jsonPath("$[0].id", is(1)))
-                .andExpect(jsonPath("$[1].id", is(2)))
-                .andExpect(jsonPath("$[0].name", is("Health")))
+        when(categoryRepository.findAll(PageRequest.of(0,10))).thenReturn(new PageImpl<>(pageModel.getContent()));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/categories").param("page","0").contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(pageModel)))
+                .andExpect(jsonPath("$.content.[0].id", is(1)))
+                .andExpect(jsonPath("$.content.[1].id", is(2)))
+                .andExpect(jsonPath("$.content.[0].name", is("Health")))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
     }

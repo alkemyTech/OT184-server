@@ -64,10 +64,13 @@ public class CategoryTest {
                         .content(objectMapper.writeValueAsString(pageModel)))
                 .andExpect(jsonPath("$.content.[0].id", is(1)))
                 .andExpect(jsonPath("$.content.[1].id", is(2)))
+                .andExpect(jsonPath("$.content.[2].id", is(3)))
                 .andExpect(jsonPath("$.content.[0].name", is("Health")))
+                .andExpect(jsonPath("$.content.[1].name", is("Greenpeace")))
+                .andExpect(jsonPath("$.content.[2].name", is("UNICEF")))
+                .andExpect(jsonPath("$.content", hasSize(3)))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
-
     }
 
     @Test

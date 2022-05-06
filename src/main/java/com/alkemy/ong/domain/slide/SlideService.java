@@ -2,6 +2,7 @@ package com.alkemy.ong.domain.slide;
 
 import com.alkemy.ong.domain.cloud.CloudGateway;
 import com.alkemy.ong.domain.cloud.CloudInput;
+import com.alkemy.ong.domain.cloud.CloudOutput;
 import com.alkemy.ong.domain.cloud.CloudService;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -45,7 +46,8 @@ public class SlideService {
 
         BASE64DecodedMultipartFile multiPart =
                 new BASE64DecodedMultipartFile(Base64.decodeBase64(slide.getImageUrl()));
-        cloudService.save(CloudInput.builder().file(multiPart).build());
+        CloudOutput output = cloudService.save(CloudInput.builder().file(multiPart).build());
+        slide.setImageUrl(output.getUrl());
         return slideGateway.save(slide, id); }
 
 

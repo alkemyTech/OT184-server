@@ -50,6 +50,7 @@ public class DefaultCloudGateway implements CloudGateway {
     private AmazonS3 accessAmazon(PutObjectRequest putObjectRequest){
         return AmazonS3ClientBuilder
                 .standard()
+                .withRegion("us-east-1")
                 .withCredentials(new EnvironmentVariableCredentialsProvider())
                 .build();
     }

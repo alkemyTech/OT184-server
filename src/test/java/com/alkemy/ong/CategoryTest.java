@@ -124,12 +124,9 @@ public class CategoryTest {
     public void saveTestError() throws Exception{
         var categoryEntity = createCategory(null, null, "Health is very important for the world", "health.jpg");
 
-        when(categoryRepository.save(categoryEntity)).thenThrow(BadRequestException.class);
-
         mockMvc.perform((MockMvcRequestBuilders.post("/categories")).contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(categoryEntity)))
                 .andExpect(status().isBadRequest());
-
     }
 
     @Test

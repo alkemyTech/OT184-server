@@ -44,7 +44,7 @@ public class CategoryTest {
     private ObjectMapper objectMapper;
 
     @Test
-    @WithMockUser(roles = "user")
+    @WithMockUser(authorities = "USER")
     public void getAllCategoryBasicByPageTest() throws Exception{
         var categoryEntity1 = createCategory(1L,"Health", "Health is very important for the world", "health.jpg");
         var categoryEntity2 = createCategory(2L,"Greenpeace", "Nature protection", "greenpeace.jpg");
@@ -73,7 +73,7 @@ public class CategoryTest {
     }
 
     @Test
-    @WithMockUser(roles = "user")
+    @WithMockUser(authorities = "USER")
     public void getCategoryByIDTest() throws Exception{
         var categoryEntity = createCategory(1L,"Health", "Health is very important for the world", "health.jpg");
 
@@ -89,7 +89,7 @@ public class CategoryTest {
     }
 
     @Test
-    @WithMockUser(roles = "user")
+    @WithMockUser(roles = "USER")
     public void getCategoryByIDTestError() throws Exception{
 
         when(categoryRepository.findById(1234L)).thenThrow(ResourceNotFoundException.class);
@@ -100,7 +100,7 @@ public class CategoryTest {
     }
 
     @Test
-    @WithMockUser(roles = "admin")
+    @WithMockUser(authorities = "ADMIN")
     public void saveTest() throws Exception{
         var categoryEntity = createCategory(null,"Health", "Health is very important for the world", "health.jpg");
         var categoryEntityResponse = createCategory(1L,"Health", "Health is very important for the world", "health.jpg");
@@ -119,7 +119,7 @@ public class CategoryTest {
     }
 
     @Test
-    @WithMockUser(roles = "admin")
+    @WithMockUser(authorities = "ADMIN")
     public void saveTestError() throws Exception{
         var categoryEntity = createCategory(null, null, "Health is very important for the world", "health.jpg");
 
@@ -132,7 +132,7 @@ public class CategoryTest {
     }
 
     @Test
-    @WithMockUser(roles = "admin")
+    @WithMockUser(authorities = "ADMIN")
     public void deleteTest() throws Exception{
         CategoryEntity categoryEntity = createCategory(1L,"Health", "Health is very important for the world", "health.jpg");
         categoryEntity.setIsDeleted(true);
@@ -145,7 +145,7 @@ public class CategoryTest {
     }
 
     @Test
-    @WithMockUser(roles = "admin")
+    @WithMockUser(authorities = "ADMIN")
     public void deleteTestError() throws Exception{
 
         when(categoryRepository.findById(1234L)).thenThrow(ResourceNotFoundException.class);
@@ -155,7 +155,7 @@ public class CategoryTest {
     }
 
     @Test
-    @WithMockUser(roles = "admin")
+    @WithMockUser(authorities = "ADMIN")
     public void updateTest() throws Exception{
         CategoryEntity categoryEntity = createCategory(1L,"Health", "Health is very important for the world", "health.jpg");
 
@@ -174,7 +174,7 @@ public class CategoryTest {
     }
 
     @Test
-    @WithMockUser(roles = "admin")
+    @WithMockUser(authorities = "ADMIN")
     public void updateTestError() throws Exception{
         CategoryEntity categoryEntity = createCategory(1L,null, "Health is very important for the world", "health.jpg");
 

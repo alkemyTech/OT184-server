@@ -64,6 +64,24 @@ public class DefaultUserGateway implements UserGateway {
         return toModel(userRepository.findByEmail(email));
     }
 
+    @Override
+    public Users create(Users users) {
+        UserEntity entidad = toEntity(users);
+        return toModel(userRepository.save(entidad));
+    }
+
+    private UserEntity toEntity(Users user) {
+        return UserEntity.builder()
+                .id(user.getId())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .photo(user.getPhoto())
+                .role(roleEntity(user.getRole()))
+                .build();
+    }
+
     private Collection<? extends GrantedAuthority> userEntityRole2Collection(UserEntity userEntity) {
         Optional<UserEntity> user = Optional.ofNullable(userEntity);
         return user.stream()
@@ -88,6 +106,14 @@ public class DefaultUserGateway implements UserGateway {
                 .id(role.getId())
                 .name(role.getName())
                 .description(role.getDescription())
+                .build();
+    }
+
+    private RoleEntity roleEntity(Role role) {
+       return RoleEntity.builder()
+                .id(role.getId())
+                .description(role.getDescription())
+                .name(role.getName())
                 .build();
     }
 }

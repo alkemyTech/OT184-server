@@ -6,13 +6,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import java.util.List;
 
 public interface UserGateway {
-  List<Users> findAll();
+    List<Users> findAll();
 
-  void delete(Long id);
+    void delete(Long id);
 
-  UserDetails loadUserByUsername (String username) throws UsernameNotFoundException;
+    UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
 
-  Users findById(Long id);
+    Users findById(Long id);
 
-  Users findByEmail(String email);
+    Users findByEmail(String email);
+
+    Users create(Users users);
 }

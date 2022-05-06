@@ -1,8 +1,11 @@
 package com.alkemy.ong.domain.organizations;
 
+import com.alkemy.ong.domain.slide.Slide;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -16,4 +19,5 @@ public class Organization {
     private String facebook;
     private String linkedin;
     private String instagram;
+    private List<Slide> slides;
 }

@@ -8,6 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
+
 @RestController
 @RequestMapping("/organization")
 public class OrganizationController {
@@ -24,7 +29,7 @@ public class OrganizationController {
     public ResponseEntity<OrganizationPublicDTO> findOrganizationById(@PathVariable Long id){
 
         Organization organization= organizationService.findById(id);
-        OrganizationPublicDTO organizationPublicDataDTO=toDTO(organization);
+        OrganizationPublicDTO organizationPublicDataDTO=toDTOComplete(organization);
         return ResponseEntity.ok(organizationPublicDataDTO);
     }
     @PutMapping("/public/{id}")
@@ -65,7 +70,22 @@ public class OrganizationController {
         private String facebook;
         private String linkedin;
         private String instagram;
+        private List<SlideController.SlideOrgDTO> slides;
+    }
 
-
+    public OrganizationPublicDTO toDTOComplete(Organization organization){
+        return OrganizationPublicDTO.builder()
+                .address(organization.getAddress())
+                .name(organization.getName())
+                .image(organization.getImage())
+                .phone(organization.getPhone())
+                .facebook(organization.getFacebook())
+                .instagram(organization.getInstagram())
+                .linkedin(organization.getLinkedin())
+                .slides(organization.getSlides()
+                        .stream()
+                        .map(slide -> SlideController.toOrgDTO(slide))
+                        .collect(toList()))
+                .build();
     }
 }

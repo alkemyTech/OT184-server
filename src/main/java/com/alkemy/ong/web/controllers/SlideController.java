@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.io.IOException;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -44,7 +45,7 @@ public class SlideController {
 
     }
     @PostMapping
-    public ResponseEntity<SlideBasicDTO> save( @RequestBody SlideBasicDTO slideBasicDTO, Long id){
+    public ResponseEntity<SlideBasicDTO> save( @RequestBody SlideBasicDTO slideBasicDTO, Long id) throws IOException {
         Slide slide =  slideService.save(toBasicModel(slideBasicDTO),id);
         return ResponseEntity.status(HttpStatus.CREATED).body(this.toBasicDTO(slide));
     }
@@ -98,4 +99,21 @@ public class SlideController {
                 .collect(toList());
     }
 
+    @Data
+    @Builder
+    public static class SlideOrgDTO{
+        private Long id;
+        private String imageUrl;
+        private String text;
+        private Integer order;
+    }
+
+    public static SlideOrgDTO toOrgDTO(Slide slide){
+        return SlideOrgDTO.builder()
+                .id(slide.getId())
+                .imageUrl(slide.getImageUrl())
+                .text(slide.getText())
+                .order(slide.getOrder())
+                .build();
+    }
 }

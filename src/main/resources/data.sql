@@ -9,11 +9,8 @@ VALUES ('user', 'User level access');
 INSERT INTO roles (name, description)
 VALUES ('maintainer', 'Can read and update resources');
 
-INSERT INTO roles (name, description)
-VALUES ('developer', 'Developer access level');
-
-INSERT INTO users (role_id, first_name, last_name, email, password, photo)
-VALUES (1, 'Juan', 'Gomez', 'juangomez@mail.com', '12345678', 'https://www.somebucket.com/photos/image.jpg');
+INSERT INTO roles (name, description, is_deleted)
+VALUES ('dev', 'Developer access level',0);
 
 INSERT INTO users (role_id, first_name, last_name, email, password, photo)
 VALUES (2, 'Maria', 'Perez', 'mariaperez@mail.com', 'qwerty', 'https://www.somebucket.com/photos/image.jpg');
@@ -51,11 +48,11 @@ VALUE ('bill', 'gates', 'billgates@gmail.com', 'bgates', 1);
 INSERT INTO users (first_name, last_name, email, password, role_id)
 VALUE ('steve', 'jobs', 'stevejobs@gmail.com', 'sjobs', 1);
 
-INSERT INTO users (first_name, last_name, email, password, role_id)
-VALUE ('torvalds', 'linus', 'torvaldslinus@gmail.com', 'tlinus', 1);
+INSERT INTO users (first_name, last_name, email, password, role_id,is_deleted)
+VALUE ('torvalds', 'linus', 'torvaldslinus@gmail.com','$2a$10$3n2ntpx9zBzMiQh0piZ5KeQH7ajiCG7nXvs67GKUpsP7IrLWPPmeq', 1,0);
 
-INSERT INTO users (first_name, last_name, email, password, role_id)
-VALUE ('alejandro', 'abondano', 'alejandroabondano@gmail.com', 'aabondano', 2);
+INSERT INTO users (first_name, last_name, email, password, role_id,is_deleted)
+VALUE ('alejandro', 'abondano', 'alejandroabondano@gmail.com', '$2a$10$3n2ntpx9zBzMiQh0piZ5KeQH7ajiCG7nXvs67GKUpsP7IrLWPPmeq', 1,0);
 
 INSERT INTO users (first_name, last_name, email, password, role_id)
 VALUE ('brigite', 'polanco', 'brigitepolanco@gmail.com', 'apuebla', 3);
@@ -151,3 +148,20 @@ INSERT INTO contacts (name, phone, email, message, is_deleted, created_at,update
     VALUES('name 2', '2222222222', 'email2@contact.com', "message 2",0,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 INSERT INTO contacts (name, phone, email, message, is_deleted, created_at,updated_at)
     VALUES('name 3', '3333333333', 'email3@contact.com', "message 3",0,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+
+INSERT INTO organizations (name, image, address, phone, email, welcome_text, about_us_text, facebook, linkedin, instagram, created_at, updated_at, is_deleted)
+    VALUES ('Alkemy', 'alkemy.jpg', 'Argentina',35122310, 'alkemy@jejemail', 'Hola', 'Job ready', 'fb/alkemy', 'ln/alkemy', 'insta/alkemy', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0);
+INSERT INTO organizations (name, image, address, phone, email, welcome_text, about_us_text, facebook, linkedin, instagram, created_at, updated_at, is_deleted)
+    VALUES ('Coca', 'coca.jpg', 'USA',21322310, 'coca@jejemail', 'Hola', 'Gaseosa', 'fb/coca', 'ln/coca', 'insta/coca', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0);
+
+INSERT INTO slides (image_url, text, slide_order, organization_id, is_deleted)
+    VALUES ('www.jpg.com/worldslides', 'Tercera entrega slides', 3, 1, 0);
+INSERT INTO slides (image_url, text, slide_order, organization_id, is_deleted)
+    VALUES ('www.jpg.com/worldslides', 'Muchas slides', 1, 1, 0);
+INSERT INTO slides (image_url, text, slide_order, organization_id, is_deleted)
+    VALUES ('www.jpg.com/worldslides', 'Otras slides', 2, 1, 0);
+INSERT INTO slides (image_url, text, slide_order, organization_id, is_deleted)
+    VALUES ('www.jpg.com/worldslides', 'Mas slides', 1, 2, 0);
+
+INSERT INTO users (first_name, last_name, email, password, photo, is_deleted,created_at,updated_at)
+    VALUES('first_name', 'last_name', 'email@email.com', 'password', '/photo.jpg',0,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);

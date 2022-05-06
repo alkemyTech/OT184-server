@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS users
     created_at DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP(),
     updated_at DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP(),
     is_deleted BOOL         NOT NULL DEFAULT FALSE
-)
+);
 
 CREATE TABLE IF NOT EXISTS members (
   id BIGINT AUTO_INCREMENT NOT NULL,
@@ -102,8 +102,10 @@ CREATE TABLE IF NOT EXISTS organizations
     is_deleted    BIT(1)                NULL,
     CONSTRAINT pk_organizations PRIMARY KEY (id)
 );
+
+
 CREATE TABLE IF NOT EXISTS slides (
-  id BIGINT AUTO_INCREMENT NOT NULL,
+   id BIGINT AUTO_INCREMENT NOT NULL,
    image_url VARCHAR(255) NOT NULL,
    text VARCHAR(255) NULL,
    slide_order INT NULL,

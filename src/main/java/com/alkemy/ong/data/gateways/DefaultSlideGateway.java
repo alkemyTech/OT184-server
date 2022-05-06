@@ -52,6 +52,7 @@ public class DefaultSlideGateway implements SlideGateway {
         organizationEntity.orElseThrow(() -> new ResourceNotFoundException("ID"));
         SlidesEntity slideEntity = toEntity(slide);
         slideEntity.setOrganization(organizationEntity.get());
+
         return toModel(slidesRepository.save(slideEntity));
     }
 
@@ -69,6 +70,17 @@ public class DefaultSlideGateway implements SlideGateway {
                 .imageUrl(slide.getImageUrl())
                 .slideOrder(slide.getOrder())
                 .organization(OrganizationEntity.builder().build())
+                .build();
+    }
+
+
+
+    public static Slide toModelBasic(SlidesEntity slidesEntity){
+        return Slide.builder()
+                .id(slidesEntity.getId())
+                .imageUrl(slidesEntity.getImageUrl())
+                .text(slidesEntity.getText())
+                .order(slidesEntity.getSlideOrder())
                 .build();
     }
 

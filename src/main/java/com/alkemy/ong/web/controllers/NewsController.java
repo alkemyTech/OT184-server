@@ -1,5 +1,7 @@
 package com.alkemy.ong.web.controllers;
 
+import com.alkemy.ong.domain.comments.Comment;
+import com.alkemy.ong.domain.comments.CommentService;
 import com.alkemy.ong.domain.news.News;
 import com.alkemy.ong.domain.news.NewsService;
 import com.alkemy.ong.domain.utils.PageModel;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
@@ -21,8 +24,10 @@ import static java.util.stream.Collectors.toList;
 public class NewsController {
 
     private final NewsService newsService;
-    public NewsController(NewsService newsService){
+    private final CommentService commentService;
+    public NewsController(NewsService newsService, CommentService commentService){
         this.newsService = newsService;
+        this.commentService = commentService;
     }
 
     @GetMapping("/{id}")
@@ -60,6 +65,20 @@ public class NewsController {
     @PutMapping("/{id}")
     public ResponseEntity<NewsDTO> update(@PathVariable Long id,@Valid @RequestBody NewsDTO newsDTO){
         return ResponseEntity.ok().body(toDTO(newsService.update(this.toModel(newsDTO),id)));
+    }
+
+    @GetMapping("/{id}/comments")
+    public ResponseEntity<List<CommentController.CommentDTO>> findAllByNewsId(@PathVariable Long id){
+        return ResponseEntity.ok().body(commentService.findAllByNewsId(id).stream().map(this::toDto).collect(toList()));
+    }
+
+    private CommentController.CommentDTO toDto(Comment comment) {
+        return CommentController.CommentDTO.builder()
+                .id(comment.getId())
+                .userId(comment.getUserId())
+                .body(comment.getBody())
+                .newsId(comment.getNewsId())
+                .build();
     }
 
     @Data

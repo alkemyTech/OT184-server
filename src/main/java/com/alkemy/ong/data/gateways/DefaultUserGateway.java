@@ -8,7 +8,6 @@ import com.alkemy.ong.domain.roles.Role;
 import com.alkemy.ong.domain.users.Users;
 import com.alkemy.ong.domain.users.UserGateway;
 import com.alkemy.ong.web.security.CustomUserDetails;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,9 +22,12 @@ import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 
 @Component
-@RequiredArgsConstructor
 public class DefaultUserGateway implements UserGateway {
     private final UserRepository userRepository;
+
+    public DefaultUserGateway(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public List<Users> findAll() {

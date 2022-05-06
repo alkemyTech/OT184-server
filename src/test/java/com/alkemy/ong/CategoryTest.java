@@ -146,7 +146,7 @@ public class CategoryTest {
     @WithMockUser(authorities = "ADMIN")
     public void deleteTestError() throws Exception{
 
-        when(categoryRepository.findById(1234L)).thenThrow(ResourceNotFoundException.class);
+        when(categoryRepository.findById(1234L)).thenReturn(Optional.empty());
 
         mockMvc.perform((MockMvcRequestBuilders.delete("/categories/1234")).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());

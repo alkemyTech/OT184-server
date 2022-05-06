@@ -177,7 +177,7 @@ public class CategoryTest {
         CategoryEntity categoryEntity = createCategory(1L,null, "Health is very important for the world", "health.jpg");
 
         when(categoryRepository.findById(categoryEntity.getId())).thenReturn(Optional.of(categoryEntity));
-        when(categoryRepository.save(categoryEntity)).thenThrow(BadRequestException.class);
+        when(categoryRepository.save(categoryEntity)).thenReturn(categoryEntity);
 
         mockMvc.perform(MockMvcRequestBuilders.put("/categories/1").contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(categoryEntity)))

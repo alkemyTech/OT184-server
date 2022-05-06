@@ -93,7 +93,7 @@ public class CategoryTest {
     @WithMockUser(roles = "USER")
     public void getCategoryByIDTestError() throws Exception{
 
-        when(categoryRepository.findById(1234L)).thenThrow(ResourceNotFoundException.class);
+        when(categoryRepository.findById(1234L)).thenReturn(Optional.empty());
 
         mockMvc.perform((MockMvcRequestBuilders.get("/categories/1234")).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());

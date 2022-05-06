@@ -7,10 +7,10 @@ import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
 import com.alkemy.ong.domain.roles.Role;
 import com.alkemy.ong.domain.users.Users;
 import com.alkemy.ong.domain.users.UserGateway;
+import com.alkemy.ong.web.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
@@ -48,15 +48,26 @@ public class DefaultUserGateway implements UserGateway {
             throw new NullPointerException("Username or password invalid");
         }
 
-        Collection<? extends GrantedAuthority> authorities = userEntityRole2Colletion(userEntity);
+        Collection<? extends GrantedAuthority> authorities = userEntityRole2Collection(userEntity);
 
-        return new User(userEntity.getEmail(), userEntity.getPassword(), authorities);
+        return new CustomUserDetails(userEntity.getEmail(), userEntity.getPassword(), authorities, userEntity.getId());
     }
 
-    private Collection<? extends GrantedAuthority> userEntityRole2Colletion(UserEntity userEntity) {
+    @Override
+    public Users findById(Long id) {
+        UserEntity foundUser = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        return toModel(foundUser);
+    }
+
+    @Override
+    public Users findByEmail(String email) {
+        return toModel(userRepository.findByEmail(email));
+    }
+
+    private Collection<? extends GrantedAuthority> userEntityRole2Collection(UserEntity userEntity) {
         Optional<UserEntity> user = Optional.ofNullable(userEntity);
         return user.stream()
-                .map(role -> new SimpleGrantedAuthority(role.getRole().getName()))
+                .map(role -> new SimpleGrantedAuthority(role.getRole().getName().toUpperCase()))
                 .collect(Collectors.toList());
     }
 

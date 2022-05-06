@@ -28,6 +28,13 @@ springdoc:
   swagger-ui:
     path: /api/docs
 
+module-name: Alkemy Server
+api-version: v1
+
+security:
+  secret: ${SECRET}
+  expiration: ${EXPIRATION}
+
 sendgridProperties:
   emailApiKey: ${SENDGRID_API_KEY}
   email: ${EMAIL_SENDGRID}

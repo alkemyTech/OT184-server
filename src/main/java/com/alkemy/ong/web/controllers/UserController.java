@@ -25,6 +25,7 @@ public class UserController {
     private final UserService userService;
     private final EmailService emailService;
     private final PasswordEncoder encoder;
+    private final String texto = "Gracias por registrarte con nosotros ";
 
     public UserController(UserService userService, EmailService emailService, PasswordEncoder encoder) {
         this.userService = userService;
@@ -54,7 +55,7 @@ public class UserController {
         users.setEmail(userBasicDto.getEmail());
         users.setPassword(encoder.encode(userBasicDto.getPassword()));
         users.setPhoto("asd");
-        emailService.sendMail(userBasicDto.getEmail(), "Bienvenido a Alkemy", "Bienvenido a Alkemy", "Bienvenido");
+        emailService.sendMail(userBasicDto.getEmail(), "Bienvenido a Alkemy " + userBasicDto.getFirstName(), texto + userBasicDto.getFirstName() +  "" + userBasicDto.getLastName(), "Bienvenido " + userBasicDto.getFirstName());
         Users usuario = userService.save(users);
         return new ResponseEntity<>(toDto(usuario), HttpStatus.CREATED);
     }

@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,14 +47,11 @@ public class CategoryTest {
     @Test
     @WithMockUser(authorities = "USER")
     public void getAllCategoryBasicByPageTest() throws Exception{
-        var categoryEntity1 = createCategory(1L,"Health", "Health is very important for the world", "health.jpg");
-        var categoryEntity2 = createCategory(2L,"Greenpeace", "Nature protection", "greenpeace.jpg");
-        var categoryEntity3 = createCategory(3L,"UNICEF", "Best solidarity", "unicef.jpg");
-
-        List<CategoryEntity> categoryEntities = new ArrayList<>();
-        categoryEntities.add(categoryEntity1);
-        categoryEntities.add(categoryEntity2);
-        categoryEntities.add(categoryEntity3);
+        List<CategoryEntity> categoryEntities = Arrays.asList(
+                createCategory(1L,"Health", "Health is very important for the world", "health.jpg"),
+                createCategory(2L,"Greenpeace", "Nature protection", "greenpeace.jpg"),
+                createCategory(3L,"UNICEF", "Best solidarity", "unicef.jpg")
+        );
 
         PageModel<CategoryEntity> pageModel =
                 PageModel.<CategoryEntity>builder()

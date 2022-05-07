@@ -75,4 +75,11 @@ public class UserControllerTest {
 
         mockMvc.perform(get("/users/1")).andExpect(status().isNotFound());
     }
+
+    @Test
+    @WithMockUser(authorities = {"user"}, username = "user@mail.com", password = "123")
+    @DisplayName("Should return forbidden if a non admin user tries to delete a user")
+    public void deleteUserByUserIsForbidden() throws Exception {
+        mockMvc.perform(delete("/users/1")).andExpect(status().isForbidden());
+    }
 }

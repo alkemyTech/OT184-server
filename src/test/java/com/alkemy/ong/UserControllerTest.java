@@ -46,7 +46,11 @@ public class UserControllerTest {
         when(mockUserRepository.findById(eq(1L))).thenReturn(Optional.of(userEntity));
         when(mockUserRepository.findByEmail(eq("user"))).thenReturn(userEntity);
 
-        mockMvc.perform(get("/users/1")).andExpect(status().isOk());
+        mockMvc.perform(get("/users/1")).andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", Is.is(1)))
+                .andExpect(jsonPath("$.email", Is.is("user@mail.com")))
+                .andExpect(jsonPath("$.role.name", Is.is("user")))
+                .andExpect(jsonPath("$.role.id", Is.is(1)));
     }
 
     @Test

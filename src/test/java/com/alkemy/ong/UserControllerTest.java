@@ -77,7 +77,7 @@ public class UserControllerTest {
 
     @Test
     @WithMockUser(authorities = {"admin", "2"}, username = "admin@mail.com", password = "123")
-    @DisplayName("Sound return not found when requesting a non existing user")
+    @DisplayName("Should return not found when requesting a non existing user")
     public void getUserByIdFail() throws Exception {
         when(mockUserRepository.findById(eq(1L))).thenReturn(Optional.empty());
 

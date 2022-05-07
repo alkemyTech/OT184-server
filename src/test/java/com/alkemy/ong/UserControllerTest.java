@@ -3,16 +3,7 @@ package com.alkemy.ong;
 import com.alkemy.ong.data.entities.RoleEntity;
 import com.alkemy.ong.data.entities.UserEntity;
 import com.alkemy.ong.data.repositories.UserRepository;
-import com.alkemy.ong.domain.roles.Role;
-import com.alkemy.ong.web.controllers.UserController;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.type.CollectionType;
 import org.hamcrest.core.Is;
-import org.junit.Assert;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,14 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static com.alkemy.ong.web.controllers.UserController.*;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -115,7 +103,7 @@ public class UserControllerTest {
 
     @Test
     @WithMockUser(authorities = {"ADMIN"}, username = "admin@mail.com", password = "123")
-    @DisplayName("Should return not found when tring to delete a non existing user")
+    @DisplayName("Should return not found when trying to delete a non existing user")
     public void deleteUserByAdminNotFound() throws Exception {
         when(mockUserRepository.findById(eq(1L))).thenReturn(Optional.empty());
         mockMvc.perform(delete("/users/1")).andExpect(status().isNotFound());

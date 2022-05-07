@@ -35,10 +35,9 @@ public class UserControllerTest {
     @WithMockUser(authorities = "ADMIN", username = "user", password = "123")
     @DisplayName("Should return the requested user if the request has the ADMIN authority")
     public void getUserByIdSuccess() throws Exception {
-        String email = "user@mail.com";
         UserEntity userEntity = UserEntity.builder()
                 .id(1L)
-                .email(email)
+                .email("admin@mail.com")
                 .firstName("Mock")
                 .lastName("User")
                 .role(RoleEntity.builder().id(1L).name("ADMIN").description("Admin level access").build())

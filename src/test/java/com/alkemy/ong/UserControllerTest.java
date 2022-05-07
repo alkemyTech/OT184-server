@@ -26,6 +26,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static com.alkemy.ong.web.controllers.UserController.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -123,7 +124,7 @@ public class UserControllerTest {
                 .andDo(mvcResult -> {
                     MockHttpServletResponse response = mvcResult.getResponse();
                     List<UserDto> userDtos = jsonToList(response.getContentAsString(), UserDto.class);
-                    Assertions.assertEquals(userDtos.size(), 2);
+                    assertEquals(userDtos.size(), 2);
                 });
     }
 

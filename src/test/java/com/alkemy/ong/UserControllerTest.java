@@ -26,6 +26,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static com.alkemy.ong.web.controllers.UserController.*;
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -121,24 +122,10 @@ public class UserControllerTest {
                 UserEntity.builder().id(2L).email("usertwo@mail.com").role(RoleEntity.builder().id(1L).build()).build()
         ));
         mockMvc.perform(get("/users")).andExpect(status().isOk())
-                .andDo(mvcResult -> {
-                    MockHttpServletResponse response = mvcResult.getResponse();
-                    List<UserDto> userDtos = jsonToList(response.getContentAsString(), UserDto.class);
-                    assertEquals(userDtos.size(), 2);
-                    assertEquals(userDtos.get(0).getEmail(), "userone@mail.com");
-                    assertEquals(userDtos.get(1).getEmail(), "usertwo@mail.com");
-                });
-    }
-
-    private static <T> List<T> jsonToList(String json, Class<T> expectedType) throws JsonProcessingException {
-        CollectionType collectionType = mapper().getTypeFactory().constructCollectionType(List.class, expectedType);
-        return mapper().readValue(json, collectionType);
-    }
-
-    private static ObjectMapper mapper() {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
-        return mapper;
+                .andExpect(jsonPath("$.*", hasSize(2)))
+                .andExpect(jsonPath("$[0].email", Is.is("userone@mail.com")))
+                .andExpect(jsonPath("$[0].id", Is.is(1)))
+                .andExpect(jsonPath("$[1].email", Is.is("usertwo@mail.com")))
+                .andExpect(jsonPath("$[1].id", Is.is(2)));
     }
 }

@@ -125,6 +125,8 @@ public class UserControllerTest {
                     MockHttpServletResponse response = mvcResult.getResponse();
                     List<UserDto> userDtos = jsonToList(response.getContentAsString(), UserDto.class);
                     assertEquals(userDtos.size(), 2);
+                    assertEquals(userDtos.get(0).getEmail(), "userone@mail.com");
+                    assertEquals(userDtos.get(1).getEmail(), "usertwo@mail.com");
                 });
     }
 

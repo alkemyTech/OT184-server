@@ -67,4 +67,12 @@ public class UserControllerTest {
         mockMvc.perform(get("/users/1")).andExpect(status().isOk());
     }
 
+    @Test
+    @WithMockUser(authorities = {"admin", "2"}, username = "admin@mail.com", password = "123")
+    @DisplayName("Sound return not found when requesting a non existing user")
+    public void getUserByIdFail() throws Exception {
+        when(mockUserRepository.findById(eq(1L))).thenReturn(Optional.empty());
+
+        mockMvc.perform(get("/users/1")).andExpect(status().isNotFound());
+    }
 }

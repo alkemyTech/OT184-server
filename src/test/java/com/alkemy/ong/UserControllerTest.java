@@ -33,7 +33,7 @@ public class UserControllerTest {
 
     @Test
     @WithMockUser(authorities = "ADMIN", username = "user", password = "123")
-    @DisplayName("Should return a user when requesting a user by an existing id")
+    @DisplayName("Should return the requested user if the request has the ADMIN authority")
     public void getUserByIdSuccess() throws Exception {
         String email = "user@mail.com";
         UserEntity userEntity = UserEntity.builder()

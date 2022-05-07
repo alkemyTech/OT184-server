@@ -114,6 +114,14 @@ public class UserControllerTest {
     }
 
     @Test
+    @WithMockUser(authorities = {"ADMIN"}, username = "admin@mail.com", password = "123")
+    @DisplayName("Sould return not found when tring to delete a non existing user")
+    public void deleteUserByAdminNotFound() throws Exception {
+        when(mockUserRepository.findById(eq(1L))).thenReturn(Optional.empty());
+        mockMvc.perform(delete("/users/1")).andExpect(status().isNotFound());
+    }
+
+    @Test
     @WithMockUser(authorities = {"USER"}, username = "user@mail.com", password = "123")
     @DisplayName("Should return a list of users")
     public void getListOfUsers() throws Exception {

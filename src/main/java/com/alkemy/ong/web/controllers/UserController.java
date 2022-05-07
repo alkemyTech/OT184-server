@@ -9,6 +9,7 @@ import com.alkemy.ong.domain.users.Users;
 import com.alkemy.ong.web.security.CustomUserDetails;
 import com.alkemy.ong.web.security.JwtUtil;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -119,6 +120,8 @@ public class UserController {
 
     @Builder
     @Data
+    @RequiredArgsConstructor
+    @AllArgsConstructor
     public static class RoleDto {
         private Long id;
         private String name;
@@ -127,6 +130,8 @@ public class UserController {
 
     @Builder
     @Data
+    @RequiredArgsConstructor
+    @AllArgsConstructor
     public static class UserDto {
         private Long id;
         private String firstName;

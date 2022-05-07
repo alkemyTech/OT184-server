@@ -32,15 +32,15 @@ public class UserControllerTest {
     UserRepository mockUserRepository;
 
     @Test
-    @WithMockUser(authorities = "ADMIN", username = "user", password = "123")
+    @WithMockUser(authorities = {"admin", "2"}, username = "admin", password = "123")
     @DisplayName("Should return the requested user if the request has the ADMIN authority")
     public void getUserByIdSuccess() throws Exception {
         UserEntity userEntity = UserEntity.builder()
                 .id(1L)
-                .email("admin@mail.com")
+                .email("user@mail.com")
                 .firstName("Mock")
                 .lastName("User")
-                .role(RoleEntity.builder().id(1L).name("ADMIN").description("Admin level access").build())
+                .role(RoleEntity.builder().id(1L).name("user").description("user level access").build())
                 .photo("https://www.s3.bucket/mock_user.jpg")
                 .build();
 

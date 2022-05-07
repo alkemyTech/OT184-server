@@ -20,6 +20,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -48,7 +49,6 @@ public class UserController {
         this.authenticationManager = authenticationManager;
     }
 
-
     @GetMapping
     public ResponseEntity<List<UserDto>> findAll() {
         return ResponseEntity.ok().body(toListDto(userService.findAll()));
@@ -59,7 +59,8 @@ public class UserController {
         if (hasRole(authentication, id.toString()) || hasRole(authentication, "admin")) {
             return ResponseEntity.ok(toDto(userService.findById(id)));
         }
-        return ResponseEntity.ok(toDto(userService.findByEmail((String) authentication.getPrincipal())));
+        User user = (User) authentication.getPrincipal();
+        return ResponseEntity.ok(toDto(userService.findByEmail(user.getUsername())));
     }
 
     @PostMapping("/auth/register")

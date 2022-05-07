@@ -38,10 +38,7 @@ public class UserControllerTest {
         UserEntity userEntity = UserEntity.builder()
                 .id(1L)
                 .email("user@mail.com")
-                .firstName("Mock")
-                .lastName("User")
                 .role(RoleEntity.builder().id(1L).name("user").description("user level access").build())
-                .photo("https://www.s3.bucket/mock_user.jpg")
                 .build();
 
         when(mockUserRepository.findById(eq(1L))).thenReturn(Optional.of(userEntity));
@@ -57,8 +54,6 @@ public class UserControllerTest {
         UserEntity userEntity = UserEntity.builder()
                 .id(2L)
                 .email("user@mail.com")
-                .firstName("Mock")
-                .lastName("User")
                 .role(RoleEntity.builder().id(1L).name("USER").description("User level access").build())
                 .build();
 

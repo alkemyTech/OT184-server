@@ -50,4 +50,21 @@ public class UserControllerTest {
         mockMvc.perform(get("/users/1")).andExpect(status().isOk());
     }
 
+    @Test
+    @WithMockUser(authorities = {"user", "2"}, username = "user@mail.com", password = "123")
+    @DisplayName("Should return the authenticated user if requested by a non admin user")
+    public void getUserByIdSuccessUser() throws Exception {
+        UserEntity userEntity = UserEntity.builder()
+                .id(2L)
+                .email("user@mail.com")
+                .firstName("Mock")
+                .lastName("User")
+                .role(RoleEntity.builder().id(1L).name("USER").description("User level access").build())
+                .build();
+
+        when(mockUserRepository.findByEmail(eq("user@mail.com"))).thenReturn(userEntity);
+
+        mockMvc.perform(get("/users/1")).andExpect(status().isOk());
+    }
+
 }

@@ -3,6 +3,7 @@ package com.alkemy.ong;
 import com.alkemy.ong.data.entities.RoleEntity;
 import com.alkemy.ong.data.entities.UserEntity;
 import com.alkemy.ong.data.repositories.UserRepository;
+import org.hamcrest.core.Is;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Optional;
@@ -51,15 +53,20 @@ public class UserControllerTest {
     @WithMockUser(authorities = {"user", "2"}, username = "user@mail.com", password = "123")
     @DisplayName("Should return the authenticated user if requested by a non admin user")
     public void getUserByIdSuccessUser() throws Exception {
+        String userEmail = "user@mail.com";
         UserEntity userEntity = UserEntity.builder()
                 .id(2L)
-                .email("user@mail.com")
+                .email(userEmail)
                 .role(RoleEntity.builder().id(1L).name("USER").description("User level access").build())
                 .build();
 
-        when(mockUserRepository.findByEmail(eq("user@mail.com"))).thenReturn(userEntity);
+        when(mockUserRepository.findByEmail(eq(userEmail))).thenReturn(userEntity);
 
-        mockMvc.perform(get("/users/1")).andExpect(status().isOk());
+        mockMvc.perform(get("/users/1")).andExpect(status().isOk())
+                .andExpect(jsonPath("$.email", Is.is(userEmail)))
+                .andExpect(jsonPath("$.id", Is.is(2)))
+                .andExpect(jsonPath("$.role.name", Is.is("USER")))
+                .andExpect(jsonPath("$.role.id", Is.is(1)));
     }
 
     @Test
@@ -80,7 +87,7 @@ public class UserControllerTest {
 
     @Test
     @WithMockUser(authorities = {"ADMIN"}, username = "admin@mail.com", password = "123")
-    @DisplayName("should return deleted when a request to delete a user is made by and admin")
+    @DisplayName("Should return deleted when a request to delete a user is made by and admin")
     public void deleteUserByAdminIsAllowed() throws Exception {
         UserEntity user = UserEntity.builder().id(1L).build();
         when(mockUserRepository.findById(eq(1L))).thenReturn(Optional.of(user));

@@ -82,4 +82,14 @@ public class UserControllerTest {
     public void deleteUserByUserIsForbidden() throws Exception {
         mockMvc.perform(delete("/users/1")).andExpect(status().isForbidden());
     }
+
+    @Test
+    @WithMockUser(authorities = {"ADMIN"}, username = "admin@mail.com", password = "123")
+    @DisplayName("should return deleted when a request to delete a user is made by and admin")
+    public void deleteUserByAdminIsAllowed() throws Exception {
+        UserEntity user = UserEntity.builder().id(1L).build();
+        when(mockUserRepository.findById(eq(1L))).thenReturn(Optional.of(user));
+
+        mockMvc.perform(delete("/users/1")).andExpect(status().isNoContent());
+    }
 }

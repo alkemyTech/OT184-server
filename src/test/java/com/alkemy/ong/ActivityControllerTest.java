@@ -156,4 +156,17 @@ public class ActivityControllerTest {
                         )))
                 .andExpect(status().isForbidden());
     }
+    @Test
+    @WithMockUser(authorities = {"ADMIN", "2"}, username = "user@mail.com", password = "123")
+    @DisplayName("should return bad request when trying to update an activity with missing fields in the request")
+    public void nose() throws Exception {
+        mockMvc.perform(put("/activities/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(Json.mapper().writeValueAsString(ActivityDto.builder()
+                                .id(1L)
+                                .name("name")
+                                .image("image")
+                        )))
+                .andExpect(status().isBadRequest());
+    }
 }

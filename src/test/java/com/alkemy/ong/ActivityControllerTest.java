@@ -2,6 +2,7 @@ package com.alkemy.ong;
 
 import com.alkemy.ong.data.entities.ActivityEntity;
 import com.alkemy.ong.data.repositories.ActivityRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.core.util.Json;
 import org.hamcrest.core.Is;
 import org.junit.jupiter.api.DisplayName;
@@ -16,10 +17,16 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import javax.swing.text.html.Option;
+
+import java.util.Optional;
+
 import static com.alkemy.ong.web.controllers.ActivityController.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -85,6 +92,7 @@ public class ActivityControllerTest {
                 )
                 .andExpect(status().isForbidden());
     }
+
     @Test
     @WithMockUser(authorities = {"ADMIN", "2"}, username = "admin@mail.com", password = "123")
     @DisplayName("trying to create a invalid activity should return error")
@@ -100,5 +108,40 @@ public class ActivityControllerTest {
                         .content(Json.mapper().writeValueAsString(activityDto))
                 )
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @WithMockUser(authorities = {"ADMIN", "2"}, username = "admin@mail.com", password = "123")
+    @DisplayName("an admin should be able to update an activity")
+    public void updateActivitySuccess() throws Exception {
+
+        String contentAfter = "After activity content";
+        String imageAfter = "https://bucket.com/after.jpg";
+        String nameAfter = "After activity name";
+
+        ActivityDto activityDto = ActivityDto.builder()
+                .id(1L)
+                .content(contentAfter)
+                .image(imageAfter)
+                .name(nameAfter)
+                .build();
+
+        when(mockActivityRepository.findById(eq(1L))).thenReturn(Optional.of(ActivityEntity.builder()
+                .id(activityDto.getId())
+                .name("Before activity content")
+                .image("https://bucket.com/before.jpg")
+                .content("Before activity name")
+                .build()));
+
+        when(mockActivityRepository.save(any(ActivityEntity.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArguments()[0]);
+
+        mockMvc.perform(put("/activities/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(Json.mapper().writeValueAsString(activityDto)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", Is.is(1)))
+                .andExpect(jsonPath("$.name", Is.is(nameAfter)))
+                .andExpect(jsonPath("$.content", Is.is(contentAfter)))
+                .andExpect(jsonPath("$.image", Is.is(imageAfter)));
     }
 }

@@ -3,6 +3,7 @@ package com.alkemy.ong;
 import com.alkemy.ong.data.entities.ActivityEntity;
 import com.alkemy.ong.data.repositories.ActivityRepository;
 import io.swagger.v3.core.util.Json;
+import org.hamcrest.core.Is;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,6 +20,7 @@ import static com.alkemy.ong.web.controllers.ActivityController.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -52,12 +54,17 @@ public class ActivityControllerTest {
                         .id(1L)
                         .content(content)
                         .name(name)
+                        .image(image)
                         .build());
 
         mockMvc.perform(post("/activities")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(Json.mapper().writeValueAsString(activityDto))
                 )
-                .andExpect(status().isCreated());
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id", Is.is(1)))
+                .andExpect(jsonPath("$.content", Is.is(content)))
+                .andExpect(jsonPath("$.name", Is.is(name)))
+                .andExpect(jsonPath("$.image", Is.is(image)));
     }
 }

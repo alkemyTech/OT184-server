@@ -156,6 +156,7 @@ public class ActivityControllerTest {
                         )))
                 .andExpect(status().isForbidden());
     }
+
     @Test
     @WithMockUser(authorities = {"ADMIN", "2"}, username = "user@mail.com", password = "123")
     @DisplayName("should return bad request when trying to update an activity with missing fields in the request")

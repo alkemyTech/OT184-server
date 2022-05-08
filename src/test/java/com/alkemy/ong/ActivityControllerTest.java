@@ -141,4 +141,19 @@ public class ActivityControllerTest {
                 .andExpect(jsonPath("$.content", Is.is(contentAfter)))
                 .andExpect(jsonPath("$.image", Is.is(imageAfter)));
     }
+
+    @Test
+    @WithMockUser(authorities = {"USER", "2"}, username = "user@mail.com", password = "123")
+    @DisplayName("non admin users shouldn't be able to update activities")
+    public void updateActivityNonAdminFail() throws Exception {
+        mockMvc.perform(put("/activities/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(Json.mapper().writeValueAsString(ActivityDto.builder()
+                                .id(1L)
+                                .name("name")
+                                .content("content")
+                                .image("image")
+                        )))
+                .andExpect(status().isForbidden());
+    }
 }

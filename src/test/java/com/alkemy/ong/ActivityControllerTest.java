@@ -40,7 +40,7 @@ public class ActivityControllerTest {
 
     @Test
     @WithMockUser(authorities = {"ADMIN", "2"}, username = "admin@mail.com", password = "123")
-    @DisplayName("an admin should be able to create an activity")
+    @DisplayName("admins should be able to create activities")
     public void createActivitySuccess() throws Exception {
         String content = "Activity Content";
         String name = "Activity Name";
@@ -74,7 +74,7 @@ public class ActivityControllerTest {
 
     @Test
     @WithMockUser(authorities = {"USER", "2"}, username = "user@mail.com", password = "123")
-    @DisplayName("non admin users should not be able to create activities")
+    @DisplayName("non admin users shouldn't be able to create activities")
     public void createActivityFailure() throws Exception {
 
         ActivityDto activityDto = ActivityDto.builder()
@@ -109,7 +109,7 @@ public class ActivityControllerTest {
 
     @Test
     @WithMockUser(authorities = {"ADMIN", "2"}, username = "admin@mail.com", password = "123")
-    @DisplayName("an admin should be able to update an activity")
+    @DisplayName("admins should be able to update activities")
     public void updateActivitySuccess() throws Exception {
 
         String contentAfter = "After activity content";

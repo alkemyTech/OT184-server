@@ -39,7 +39,7 @@ public class ActivityControllerTest {
 
     @Test
     @WithMockUser(authorities = {"ADMIN", "2"}, username = "admin@mail.com", password = "123")
-    @DisplayName("should be able to create a user")
+    @DisplayName("an admin should be able to create an activity")
     public void createUserSuccess() throws Exception {
         String content = "Activity Content";
         String name = "Activity Name";

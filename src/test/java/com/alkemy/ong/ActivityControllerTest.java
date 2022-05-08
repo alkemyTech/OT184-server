@@ -74,7 +74,7 @@ public class ActivityControllerTest {
 
     @Test
     @WithMockUser(authorities = {"USER", "2"}, username = "user@mail.com", password = "123")
-    @DisplayName("a user should not be able to create an activity")
+    @DisplayName("non admin users should not be able to create an activity")
     public void createActivityFailure() throws Exception {
 
         ActivityDto activityDto = ActivityDto.builder()

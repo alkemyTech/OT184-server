@@ -67,4 +67,22 @@ public class ActivityControllerTest {
                 .andExpect(jsonPath("$.name", Is.is(name)))
                 .andExpect(jsonPath("$.image", Is.is(image)));
     }
+
+    @Test
+    @WithMockUser(authorities = {"USER", "2"}, username = "user@mail.com", password = "123")
+    @DisplayName("a user should not be able to create an activity")
+    public void createActivityFailure() throws Exception {
+
+        ActivityDto activityDto = ActivityDto.builder()
+                .content("Activity Content")
+                .name("Activity Name")
+                .image("https://bucket.com/image.jpg")
+                .build();
+
+        mockMvc.perform(post("/activities")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(Json.mapper().writeValueAsString(activityDto))
+                )
+                .andExpect(status().isForbidden());
+    }
 }

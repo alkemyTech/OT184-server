@@ -37,7 +37,7 @@ public class ActivityControllerTest {
     @Test
     @WithMockUser(authorities = {"ADMIN", "2"}, username = "admin@mail.com", password = "123")
     @DisplayName("an admin should be able to create an activity")
-    public void createUserSuccess() throws Exception {
+    public void createActivitySuccess() throws Exception {
         String content = "Activity Content";
         String name = "Activity Name";
         String image = "https://bucket.com/image.jpg";

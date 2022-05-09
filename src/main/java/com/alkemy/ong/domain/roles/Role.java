@@ -9,10 +9,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Role {
-  private Long id;
+    Long id;
 
-  private String name;
+    String name;
 
-  private String description;
+    String description;
 
 }

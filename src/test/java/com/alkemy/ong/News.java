@@ -120,5 +120,63 @@ public class News {
                 .andExpect(status().isNotFound());
     }
 
+    @Test
+    @WithMockUser(authorities  = "USER")
+    @DisplayName("Delete news by USER, error case")
+    public void deleteByUserError() throws Exception{
+        mockMvc.perform(delete("/news/1"))
+                .andExpect(status().isForbidden());
+    }
+
+
+    @Test
+    @WithMockUser(authorities  = "ADMIN")
+    @DisplayName("Update news by ADMIN, success case")
+    public void updateByAdmin() throws Exception{
+        when(newsRepo.findById(eq(1L))).thenReturn(Optional.of(newsEntity));
+
+        newsEntity.setContent("¡Updated content!");
+        when(newsRepo.save(any(NewsEntity.class))).thenReturn(newsEntity);
+
+        mockMvc.perform(put("/news/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(Json.mapper().writeValueAsString(newsEntity)))
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.name", is("news")))
+                .andExpect(jsonPath("$.content", is("¡Updated content!")))
+                .andExpect(jsonPath("$.image", is("/img.png")))
+                .andExpect(jsonPath("$.categoryId", is(1)))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser(authorities  = "USER")
+    @DisplayName("Update news by USER, error case")
+    public void updateByUser() throws Exception{
+        when(newsRepo.findById(eq(1L))).thenReturn(Optional.of(newsEntity));
+
+        newsEntity.setContent("¡Updated content!");
+        when(newsRepo.save(any(NewsEntity.class))).thenReturn(newsEntity);
+
+        mockMvc.perform(put("/news/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(Json.mapper().writeValueAsString(newsEntity)))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(authorities  = "ADMIN")
+    @DisplayName("Update news by ADMIN, error case")
+    public void updateByAdminError() throws Exception{
+        when(newsRepo.findById(eq(1L))).thenReturn(Optional.of(newsEntity));
+
+        newsEntity.setContent(null);
+        when(newsRepo.save(any(NewsEntity.class))).thenReturn(newsEntity);
+
+        mockMvc.perform(put("/news/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(Json.mapper().writeValueAsString(newsEntity)))
+                .andExpect(status().isBadRequest());
+    }
 
 }

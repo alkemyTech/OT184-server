@@ -17,6 +17,6 @@ public interface SlidesRepository extends JpaRepository<SlidesEntity,Long> {
 
     List<SlidesEntity> findByOrganizationOrderBySlideOrderAsc(OrganizationEntity organization);
 
-    //@Query("SELECT c FROM Slide c WHERE c.slideOrder = :slideOrder")
-    //Slide findOrder(@Param("slideOrder") Integer slideOrder);
+    @Query(value="SELECT * FROM slides order by timestamps desc Limit 1", nativeQuery=true)
+    Integer findOrder();
 }

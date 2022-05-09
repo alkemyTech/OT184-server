@@ -44,8 +44,8 @@ public class SlideController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
     }
-    @PostMapping
-    public ResponseEntity<SlideBasicDTO> save( @RequestBody SlideBasicDTO slideBasicDTO, Long id) throws IOException {
+    @PostMapping("/{id}")
+    public ResponseEntity<SlideBasicDTO> save( @RequestBody SlideBasicDTO slideBasicDTO, @PathVariable Long id) throws IOException {
         Slide slide =  slideService.save(toBasicModel(slideBasicDTO),id);
         return ResponseEntity.status(HttpStatus.CREATED).body(this.toBasicDTO(slide));
     }

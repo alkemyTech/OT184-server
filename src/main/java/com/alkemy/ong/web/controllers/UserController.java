@@ -1,6 +1,7 @@
 package com.alkemy.ong.web.controllers;
 
 import com.alkemy.ong.domain.email.EmailService;
+import com.alkemy.ong.domain.exceptions.CommunicationException;
 import com.alkemy.ong.domain.roles.Role;
 import com.alkemy.ong.domain.roles.RoleService;
 import com.alkemy.ong.domain.users.UserService;
@@ -13,6 +14,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,14 +36,16 @@ public class UserController {
 
     private final JwtUtil jwtUtil;
 
+    private final AuthenticationManager authenticationManager;
 
     public UserController(UserService userService, EmailService emailService, PasswordEncoder encoder,
-                          RoleService roleService, JwtUtil jwtUtil) {
+                          RoleService roleService, JwtUtil jwtUtil, AuthenticationManager authenticationManager) {
         this.userService = userService;
         this.emailService = emailService;
         this.encoder = encoder;
         this.roleService = roleService;
         this.jwtUtil = jwtUtil;
+        this.authenticationManager = authenticationManager;
     }
 
 
@@ -58,14 +64,15 @@ public class UserController {
 
     @PostMapping("/auth/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody UserBasicDto userBasicDto) {
-        Users users = new Users();
-        users.setRole(roleService.searchRoleById(2L));
-        users.setFirstName(userBasicDto.getFirstName());
-        users.setLastName(userBasicDto.getLastName());
-        users.setEmail(userBasicDto.getEmail());
-        users.setPassword(encoder.encode(userBasicDto.getPassword()));
-        users.setPhoto("No photo");
+        Users users = createUser(userBasicDto);
         UserDto userSaved = toDto(userService.save(users));
+
+        try{
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(users.getEmail(), userBasicDto.getPassword()));
+        }catch (BadCredentialsException e){
+            throw new CommunicationException("Incorrect credentials");
+        }
 
         final CustomUserDetails userDetails = userService.loadUserByUsername(users.getEmail());
         final String jwt = jwtUtil.generateToken(userDetails);
@@ -143,5 +150,16 @@ public class UserController {
     @AllArgsConstructor
     public static class AuthenticationResponse {
         private String jwt;
+    }
+
+    private Users createUser(UserBasicDto userBasicDto){
+        Users users = new Users();
+        users.setRole(roleService.searchRoleById(2L));
+        users.setFirstName(userBasicDto.getFirstName());
+        users.setLastName(userBasicDto.getLastName());
+        users.setEmail(userBasicDto.getEmail());
+        users.setPassword(encoder.encode(userBasicDto.getPassword()));
+        users.setPhoto("No photo");
+        return users;
     }
 }

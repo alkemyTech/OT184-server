@@ -110,7 +110,15 @@ public class News {
                 .andExpect(status().isNoContent());
     }
 
+    @Test
+    @WithMockUser(authorities  = "ADMIN")
+    @DisplayName("Delete news by ADMIN, error case")
+    public void deleteByAdminError() throws Exception{
+        when(newsRepo.findById(eq(2L))).thenReturn(Optional.empty());
 
+        mockMvc.perform(delete("/news/2"))
+                .andExpect(status().isNotFound());
+    }
 
 
 }

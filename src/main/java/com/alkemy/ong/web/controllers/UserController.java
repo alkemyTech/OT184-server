@@ -5,6 +5,8 @@ import com.alkemy.ong.domain.roles.Role;
 import com.alkemy.ong.domain.roles.RoleService;
 import com.alkemy.ong.domain.users.UserService;
 import com.alkemy.ong.domain.users.Users;
+import com.alkemy.ong.web.security.CustomUserDetails;
+import com.alkemy.ong.web.security.JwtUtil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,13 +30,18 @@ public class UserController {
     private final PasswordEncoder encoder;
     private final RoleService roleService;
 
+    private final JwtUtil jwtUtil;
 
-    public UserController(UserService userService, EmailService emailService, PasswordEncoder encoder, RoleService roleService) {
+
+    public UserController(UserService userService, EmailService emailService, PasswordEncoder encoder,
+                          RoleService roleService, JwtUtil jwtUtil) {
         this.userService = userService;
         this.emailService = emailService;
         this.encoder = encoder;
         this.roleService = roleService;
+        this.jwtUtil = jwtUtil;
     }
+
 
     @GetMapping
     public ResponseEntity<List<UserDto>> findAll() {
@@ -50,7 +57,7 @@ public class UserController {
     }
 
     @PostMapping("/auth/register")
-    public ResponseEntity<UserDto> register(@RequestBody UserBasicDto userBasicDto) {
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody UserBasicDto userBasicDto) {
         Users users = new Users();
         users.setRole(roleService.searchRoleById(2L));
         users.setFirstName(userBasicDto.getFirstName());
@@ -58,7 +65,12 @@ public class UserController {
         users.setEmail(userBasicDto.getEmail());
         users.setPassword(encoder.encode(userBasicDto.getPassword()));
         users.setPhoto("No photo");
-        return new ResponseEntity<>(toDto(userService.save(users)), HttpStatus.CREATED);
+        UserDto userSaved = toDto(userService.save(users));
+
+        final CustomUserDetails userDetails = userService.loadUserByUsername(users.getEmail());
+        final String jwt = jwtUtil.generateToken(userDetails);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(new AuthenticationResponse(jwt));
     }
 
     @DeleteMapping("/{id}")
@@ -125,5 +137,11 @@ public class UserController {
         private String lastName;
         private String email;
         private String password;
+    }
+
+    @Data
+    @AllArgsConstructor
+    public static class AuthenticationResponse {
+        private String jwt;
     }
 }

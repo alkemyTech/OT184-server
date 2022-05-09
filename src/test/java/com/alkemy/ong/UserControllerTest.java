@@ -36,8 +36,8 @@ public class UserControllerTest {
     UserRepository mockUserRepository;
 
     @Test
-    @WithMockUser(authorities = {"admin", "2"}, username = "admin", password = "123")
-    @DisplayName("Should return the requested user if the request has the ADMIN authority")
+    @WithMockUser(authorities = {"ADMIN", "2"}, username = "admin", password = "123")
+    @DisplayName("admins can request a user detail")
     public void getUserByIdSuccess() throws Exception {
         UserEntity userEntity = UserEntity.builder()
                 .id(1L)
@@ -57,7 +57,7 @@ public class UserControllerTest {
 
     @Test
     @WithMockUser(authorities = {"user", "2"}, username = "user@mail.com", password = "123")
-    @DisplayName("Should return the authenticated user if requested by a non admin user")
+    @DisplayName("non admin users can't request details of other users")
     public void getUserByIdSuccessUser() throws Exception {
         String userEmail = "user@mail.com";
         UserEntity userEntity = UserEntity.builder()
@@ -76,8 +76,8 @@ public class UserControllerTest {
     }
 
     @Test
-    @WithMockUser(authorities = {"admin", "2"}, username = "admin@mail.com", password = "123")
-    @DisplayName("Should return not found when requesting a non existing user")
+    @WithMockUser(authorities = {"ADMIN", "2"}, username = "admin@mail.com", password = "123")
+    @DisplayName("should return not found when requesting a non existing user")
     public void getUserByIdFail() throws Exception {
         when(mockUserRepository.findById(eq(1L))).thenReturn(Optional.empty());
 
@@ -86,14 +86,14 @@ public class UserControllerTest {
 
     @Test
     @WithMockUser(authorities = {"user"}, username = "user@mail.com", password = "123")
-    @DisplayName("Should return forbidden if a non admin user tries to delete a user")
+    @DisplayName("non admin users can't delete other users")
     public void deleteUserByUserIsForbidden() throws Exception {
         mockMvc.perform(delete("/users/1")).andExpect(status().isForbidden());
     }
 
     @Test
     @WithMockUser(authorities = {"ADMIN"}, username = "admin@mail.com", password = "123")
-    @DisplayName("Should return deleted when a request to delete a user is made by and admin")
+    @DisplayName("admins can delete users")
     public void deleteUserByAdminIsAllowed() throws Exception {
         UserEntity user = UserEntity.builder().id(1L).build();
         when(mockUserRepository.findById(eq(1L))).thenReturn(Optional.of(user));
@@ -103,7 +103,7 @@ public class UserControllerTest {
 
     @Test
     @WithMockUser(authorities = {"ADMIN"}, username = "admin@mail.com", password = "123")
-    @DisplayName("Should return not found when trying to delete a non existing user")
+    @DisplayName("trying to delete a non existing user returns not found")
     public void deleteUserByAdminNotFound() throws Exception {
         when(mockUserRepository.findById(eq(1L))).thenReturn(Optional.empty());
         mockMvc.perform(delete("/users/1")).andExpect(status().isNotFound());
@@ -111,7 +111,7 @@ public class UserControllerTest {
 
     @Test
     @WithMockUser(authorities = {"USER"}, username = "user@mail.com", password = "123")
-    @DisplayName("Should return a list of users")
+    @DisplayName("should return a list of users")
     public void getListOfUsers() throws Exception {
         when(mockUserRepository.findAll()).thenReturn(List.of(
                 UserEntity.builder().id(1L).email("userone@mail.com").role(RoleEntity.builder().id(1L).build()).build(),

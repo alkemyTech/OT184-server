@@ -65,8 +65,6 @@ public class News {
     @WithMockUser(authorities  = "USER")
     @DisplayName("Save news by USER, forbidden case")
     public void saveByUserError() throws Exception{
-        when(newsRepo.save(any(NewsEntity.class))).thenReturn(newsEntity);
-
         mockMvc.perform(post("/news")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(Json.mapper().writeValueAsString(newsEntity)))
@@ -110,7 +108,7 @@ public class News {
 
     @Test
     @WithMockUser(authorities  = "ADMIN")
-    @DisplayName("Delete news by ADMIN, error case")
+    @DisplayName("Delete news by ADMIN, Not Found case")
     public void deleteByAdminError() throws Exception{
         when(newsRepo.findById(eq(2L))).thenReturn(Optional.empty());
 
@@ -151,10 +149,7 @@ public class News {
     @WithMockUser(authorities  = "USER")
     @DisplayName("Update news by USER, error case")
     public void updateByUser() throws Exception{
-        when(newsRepo.findById(eq(1L))).thenReturn(Optional.of(newsEntity));
         newsEntity.setContent("¡Updated content!");
-        when(newsRepo.save(any(NewsEntity.class))).thenReturn(newsEntity);
-
         mockMvc.perform(put("/news/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(Json.mapper().writeValueAsString(newsEntity)))
@@ -171,5 +166,4 @@ public class News {
                         .content(Json.mapper().writeValueAsString(newsEntity)))
                 .andExpect(status().isBadRequest());
     }
-
 }

@@ -57,7 +57,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> findById(@PathVariable Long id, Authentication authentication) {
-        if (hasRole(authentication, id.toString()) || hasRole(authentication, "admin")) {
+        if (hasRole(authentication, id.toString()) || hasRole(authentication, "ADMIN")) {
             return ResponseEntity.ok(toDto(userService.findById(id)));
         }
         User user = (User) authentication.getPrincipal();

@@ -100,7 +100,7 @@ public class NewsTest {
     @WithMockUser(authorities  = "ADMIN")
     @DisplayName("Delete news by ADMIN, success case")
     public void deleteSuccess() throws Exception{
-        when(newsRepo.findById(eq(1L))).thenReturn(Optional.of(newsEntity));
+        when(newsRepo.findById(1L)).thenReturn(Optional.of(newsEntity));
 
         mockMvc.perform(delete("/news/1"))
                 .andExpect(status().isNoContent());

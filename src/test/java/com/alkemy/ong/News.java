@@ -63,7 +63,7 @@ public class News {
 
     @Test
     @WithMockUser(authorities  = "USER")
-    @DisplayName("Save news by USER, forbidden case")
+    @DisplayName("Save news by USER, Forbidden case")
     public void saveByUserError() throws Exception{
         mockMvc.perform(post("/news")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -73,7 +73,7 @@ public class News {
 
     @Test
     @WithMockUser(authorities  = "ADMIN")
-    @DisplayName("Save news by ADMIN, error case")
+    @DisplayName("Save news by ADMIN, Bad Request case")
     public void saveByAdminError() throws Exception{
         newsEntity.setName(null);
         mockMvc.perform(post("/news")
@@ -118,7 +118,7 @@ public class News {
 
     @Test
     @WithMockUser(authorities  = "USER")
-    @DisplayName("Delete news by USER, error case")
+    @DisplayName("Delete news by USER, Forbidden case")
     public void deleteByUserError() throws Exception{
         mockMvc.perform(delete("/news/1"))
                 .andExpect(status().isForbidden());
@@ -147,7 +147,7 @@ public class News {
 
     @Test
     @WithMockUser(authorities  = "USER")
-    @DisplayName("Update news by USER, error case")
+    @DisplayName("Update news by USER, Forbidden case")
     public void updateByUser() throws Exception{
         newsEntity.setContent("¡Updated content!");
         mockMvc.perform(put("/news/1")
@@ -158,7 +158,7 @@ public class News {
 
     @Test
     @WithMockUser(authorities  = "ADMIN")
-    @DisplayName("Update news by ADMIN, error case")
+    @DisplayName("Update news by ADMIN, Bad Request case")
     public void updateByAdminError() throws Exception{
         newsEntity.setContent(null);
         mockMvc.perform(put("/news/1")

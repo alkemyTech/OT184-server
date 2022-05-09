@@ -45,7 +45,7 @@ public class Contacts {
     @Test
     @WithMockUser(authorities  = "ADMIN")
     @DisplayName("Save contact by ADMIN, success case")
-    public void saveSuccess() throws Exception{
+    public void saveByAdminSuccess() throws Exception{
         when(contactRepo.save(any(ContactEntity.class))).thenReturn(contactEntity);
 
         mockMvc.perform(post("/contacts")
@@ -59,6 +59,16 @@ public class Contacts {
                 .andExpect(status().isCreated());
     }
 
+    @Test
+    @WithMockUser(authorities  = "ADMIN")
+    @DisplayName("Save contact by ADMIN, error case")
+    public void saveByAdminError() throws Exception{
+        contactEntity.setName(null);
+        mockMvc.perform(post("/contacts")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(Json.mapper().writeValueAsString(contactEntity)))
+                .andExpect(status().isBadRequest());
+    }
 
 
 }

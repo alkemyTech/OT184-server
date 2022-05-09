@@ -53,6 +53,7 @@ public class DefaultSlideGateway implements SlideGateway {
         SlidesEntity slideEntity = toEntity(slide);
         slideEntity.setOrganization(organizationEntity.get());
 
+
         return toModel(slidesRepository.save(slideEntity));
     }
 

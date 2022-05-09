@@ -50,9 +50,9 @@ public class SlideService {
                 new BASE64DecodedMultipartFile(Base64.decodeBase64(slide.getImageUrl()));
         CloudOutput output = cloudService.save(CloudInput.builder().file(multiPart).build());
         slide.setImageUrl(output.getUrl());
-        if(slide.getOrder()==null){
-            slide.setOrder(slidesRepository.findOrder()+1);
-        }
+      //  if(slide.getOrder()==null){
+       //     slide.setOrder(slidesRepository.findOrder()+1);
+      //  }
         return slideGateway.save(slide, id); }
 
 

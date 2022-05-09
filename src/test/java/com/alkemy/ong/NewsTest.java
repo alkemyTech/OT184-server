@@ -86,7 +86,7 @@ public class NewsTest {
     @WithMockUser(authorities  = "USER")
     @DisplayName("Get news by id, success case")
     public void getById() throws Exception{
-        when(newsRepo.findById(eq(1L))).thenReturn(Optional.of(newsEntity));
+        when(newsRepo.findById(1L)).thenReturn(Optional.of(newsEntity));
 
         mockMvc.perform(get("/news/1"))
                 .andExpect(jsonPath("$.name", is("news")))

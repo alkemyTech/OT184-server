@@ -34,7 +34,6 @@ public class ContactsTest {
 
     @Autowired
     private MockMvc mockMvc;
-
     @MockBean
     private ContactRepository contactRepo;
 
@@ -99,5 +98,15 @@ public class ContactsTest {
                 .andExpect(jsonPath("$[0].name", is("Contact 1")))
                 .andExpect(jsonPath("$[1].id", is(2)))
                 .andExpect(jsonPath("$[1].name", is("Contact 2")));
+    }
+
+
+    private ContactEntity createEntity(){
+        return ContactEntity.builder()
+                .name("contact")
+                .email("email@email.com")
+                .message("hello!")
+                .phone("1126306411")
+                .build();
     }
 }

@@ -16,10 +16,13 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Optional;
+
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -43,7 +46,7 @@ public class News {
 
     @Test
     @WithMockUser(authorities  = "ADMIN")
-    @DisplayName("Save success case")
+    @DisplayName("Save news by ADMIN, success case")
     public void saveSuccess() throws Exception{
         when(newsRepo.save(any(NewsEntity.class))).thenReturn(newsEntity);
 
@@ -60,7 +63,7 @@ public class News {
 
     @Test
     @WithMockUser(authorities  = "USER")
-    @DisplayName("Save forbidden case by USER")
+    @DisplayName("Save user by USER, forbidden case")
     public void saveByUserError() throws Exception{
         when(newsRepo.save(any(NewsEntity.class))).thenReturn(newsEntity);
 
@@ -72,7 +75,7 @@ public class News {
 
     @Test
     @WithMockUser(authorities  = "ADMIN")
-    @DisplayName("Save error by ADMIN")
+    @DisplayName("Save user by ADMIN, error case")
     public void saveByAdminError() throws Exception{
         when(newsRepo.save(any(NewsEntity.class))).thenReturn(newsEntity);
         newsEntity.setName(null);
@@ -81,6 +84,20 @@ public class News {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(Json.mapper().writeValueAsString(newsEntity)))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @WithMockUser(authorities  = "USER")
+    @DisplayName("Get user by id, success case")
+    public void getById() throws Exception{
+        when(newsRepo.findById(eq(1L))).thenReturn(Optional.of(newsEntity));
+
+        mockMvc.perform(get("/news/1"))
+                .andExpect(jsonPath("$.name", is("news")))
+                .andExpect(jsonPath("$.content", is("content")))
+                .andExpect(jsonPath("$.image", is("/img.png")))
+                .andExpect(jsonPath("$.categoryId", is(1)))
+                .andExpect(status().isOk());
     }
 
 

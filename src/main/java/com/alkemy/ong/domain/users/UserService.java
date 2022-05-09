@@ -1,6 +1,7 @@
 package com.alkemy.ong.domain.users;
 
 import com.alkemy.ong.domain.email.EmailService;
+import com.alkemy.ong.web.security.CustomUserDetails;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -37,7 +38,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public CustomUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userGateway.loadUserByUsername(username);
     }
 

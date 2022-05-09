@@ -70,5 +70,16 @@ public class Contacts {
                 .andExpect(status().isBadRequest());
     }
 
+    @Test
+    @WithMockUser(authorities  = "USER")
+    @DisplayName("Save contact by USER, error case")
+    public void saveByUserError() throws Exception{
+        contactEntity.setName(null);
+        mockMvc.perform(post("/contacts")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(Json.mapper().writeValueAsString(contactEntity)))
+                .andExpect(status().isForbidden());
+    }
+
 
 }

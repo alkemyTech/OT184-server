@@ -20,7 +20,6 @@ import java.util.Optional;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -129,7 +128,7 @@ public class NewsTest {
     @WithMockUser(authorities  = "ADMIN")
     @DisplayName("Update news by ADMIN, success case")
     public void updateByAdmin() throws Exception{
-        when(newsRepo.findById(eq(1L))).thenReturn(Optional.of(newsEntity));
+        when(newsRepo.findById(1L)).thenReturn(Optional.of(newsEntity));
 
         newsEntity.setContent("¡Updated content!");
         when(newsRepo.save(any(NewsEntity.class))).thenReturn(newsEntity);

@@ -8,7 +8,6 @@ import com.alkemy.ong.domain.roles.Role;
 import com.alkemy.ong.domain.users.Users;
 import com.alkemy.ong.domain.users.UserGateway;
 import com.alkemy.ong.web.security.CustomUserDetails;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,9 +22,12 @@ import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 
 @Component
-@RequiredArgsConstructor
 public class DefaultUserGateway implements UserGateway {
     private final UserRepository userRepository;
+
+    public DefaultUserGateway(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public List<Users> findAll() {
@@ -64,6 +66,24 @@ public class DefaultUserGateway implements UserGateway {
         return toModel(userRepository.findByEmail(email));
     }
 
+    @Override
+    public Users create(Users users) {
+        UserEntity entidad = toEntity(users);
+        return toModel(userRepository.save(entidad));
+    }
+
+    private UserEntity toEntity(Users user) {
+        return UserEntity.builder()
+                .id(user.getId())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .photo(user.getPhoto())
+                .role(roleEntity(user.getRole()))
+                .build();
+    }
+
     private Collection<? extends GrantedAuthority> userEntityRole2Collection(UserEntity userEntity) {
         Optional<UserEntity> user = Optional.ofNullable(userEntity);
         return user.stream()
@@ -88,6 +108,14 @@ public class DefaultUserGateway implements UserGateway {
                 .id(role.getId())
                 .name(role.getName())
                 .description(role.getDescription())
+                .build();
+    }
+
+    private RoleEntity roleEntity(Role role) {
+       return RoleEntity.builder()
+                .id(role.getId())
+                .description(role.getDescription())
+                .name(role.getName())
                 .build();
     }
 }

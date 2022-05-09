@@ -1,14 +1,19 @@
 package com.alkemy.ong.web.controllers;
 
+import com.alkemy.ong.domain.email.EmailService;
 import com.alkemy.ong.domain.roles.Role;
+import com.alkemy.ong.domain.roles.RoleService;
 import com.alkemy.ong.domain.users.UserService;
 import com.alkemy.ong.domain.users.Users;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,9 +24,16 @@ import static java.util.stream.Collectors.toList;
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
+    private final EmailService emailService;
+    private final PasswordEncoder encoder;
+    private final RoleService roleService;
 
-    public UserController(UserService userService) {
+
+    public UserController(UserService userService, EmailService emailService, PasswordEncoder encoder, RoleService roleService) {
         this.userService = userService;
+        this.emailService = emailService;
+        this.encoder = encoder;
+        this.roleService = roleService;
     }
 
     @GetMapping
@@ -35,6 +47,18 @@ public class UserController {
             return ResponseEntity.ok(toDto(userService.findById(id)));
         }
         return ResponseEntity.ok(toDto(userService.findByEmail((String) authentication.getPrincipal())));
+    }
+
+    @PostMapping("/auth/register")
+    public ResponseEntity<UserDto> register(@RequestBody UserBasicDto userBasicDto) {
+        Users users = new Users();
+        users.setRole(roleService.searchRoleById(2L));
+        users.setFirstName(userBasicDto.getFirstName());
+        users.setLastName(userBasicDto.getLastName());
+        users.setEmail(userBasicDto.getEmail());
+        users.setPassword(encoder.encode(userBasicDto.getPassword()));
+        users.setPhoto("No photo");
+        return new ResponseEntity<>(toDto(userService.save(users)), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
@@ -90,5 +114,16 @@ public class UserController {
         private String email;
         private String photo;
         private RoleDto role;
+    }
+
+    @Builder
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class UserBasicDto {
+        private String firstName;
+        private String lastName;
+        private String email;
+        private String password;
     }
 }

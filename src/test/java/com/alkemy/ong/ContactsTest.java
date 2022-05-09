@@ -19,7 +19,6 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -49,7 +48,7 @@ public class ContactsTest {
     @WithMockUser(authorities  = "ADMIN")
     @DisplayName("Save contact by ADMIN, success case")
     public void saveByAdminSuccess() throws Exception{
-        when(contactRepo.save(any(ContactEntity.class))).thenReturn(contactEntity);
+        when(contactRepo.save(createEntity())).thenReturn(contactEntity);
 
         mockMvc.perform(post("/contacts")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -104,9 +103,9 @@ public class ContactsTest {
     private ContactEntity createEntity(){
         return ContactEntity.builder()
                 .name("contact")
-                .email("email@email.com")
-                .message("hello!")
-                .phone("1126306411")
+                .email("contact@alkemy.com")
+                .phone("1144054522")
+                .message("tocayo!")
                 .build();
     }
 }

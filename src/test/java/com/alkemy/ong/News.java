@@ -70,5 +70,18 @@ public class News {
                 .andExpect(status().isForbidden());
     }
 
+    @Test
+    @WithMockUser(authorities  = "ADMIN")
+    @DisplayName("Save error by ADMIN")
+    public void saveByAdminError() throws Exception{
+        when(newsRepo.save(any(NewsEntity.class))).thenReturn(newsEntity);
+        newsEntity.setName(null);
+
+        mockMvc.perform(post("/news")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(Json.mapper().writeValueAsString(newsEntity)))
+                .andExpect(status().isBadRequest());
+    }
+
 
 }

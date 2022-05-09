@@ -63,7 +63,7 @@ public class News {
 
     @Test
     @WithMockUser(authorities  = "USER")
-    @DisplayName("Save user by USER, forbidden case")
+    @DisplayName("Save news by USER, forbidden case")
     public void saveByUserError() throws Exception{
         when(newsRepo.save(any(NewsEntity.class))).thenReturn(newsEntity);
 
@@ -75,7 +75,7 @@ public class News {
 
     @Test
     @WithMockUser(authorities  = "ADMIN")
-    @DisplayName("Save user by ADMIN, error case")
+    @DisplayName("Save news by ADMIN, error case")
     public void saveByAdminError() throws Exception{
         when(newsRepo.save(any(NewsEntity.class))).thenReturn(newsEntity);
         newsEntity.setName(null);
@@ -88,7 +88,7 @@ public class News {
 
     @Test
     @WithMockUser(authorities  = "USER")
-    @DisplayName("Get user by id, success case")
+    @DisplayName("Get news by id, success case")
     public void getById() throws Exception{
         when(newsRepo.findById(eq(1L))).thenReturn(Optional.of(newsEntity));
 
@@ -99,6 +99,18 @@ public class News {
                 .andExpect(jsonPath("$.categoryId", is(1)))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    @WithMockUser(authorities  = "ADMIN")
+    @DisplayName("Delete news by ADMIN, success case")
+    public void deleteSuccess() throws Exception{
+        when(newsRepo.findById(eq(1L))).thenReturn(Optional.of(newsEntity));
+
+        mockMvc.perform(delete("/news/1"))
+                .andExpect(status().isNoContent());
+    }
+
+
 
 
 }

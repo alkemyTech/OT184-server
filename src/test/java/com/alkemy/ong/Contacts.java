@@ -65,7 +65,7 @@ public class Contacts {
 
     @Test
     @WithMockUser(authorities  = "ADMIN")
-    @DisplayName("Save contact by ADMIN, error case")
+    @DisplayName("Save contact by ADMIN, Bad Request case")
     public void saveByAdminError() throws Exception{
         contactEntity.setName(null);
         mockMvc.perform(post("/contacts")
@@ -76,7 +76,7 @@ public class Contacts {
 
     @Test
     @WithMockUser(authorities  = "USER")
-    @DisplayName("Save contact by USER, error case")
+    @DisplayName("Save contact by USER, Forbidden case")
     public void saveByUserError() throws Exception{
         contactEntity.setName(null);
         mockMvc.perform(post("/contacts")

@@ -1,24 +1,18 @@
 package com.alkemy.ong.domain.roles;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Builder
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Role {
-  private Long id;
+    Long id;
 
-  private String name;
+    String name;
 
-  private String description;
+    String description;
 
-  private LocalDateTime createdAt;
-
-  private LocalDateTime updatedAt;
-
-  private Boolean isDeleted;
 }

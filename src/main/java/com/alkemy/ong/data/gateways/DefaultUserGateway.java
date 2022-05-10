@@ -72,6 +72,13 @@ public class DefaultUserGateway implements UserGateway {
         return toModel(userRepository.save(entidad));
     }
 
+    @Override
+    public Users update(Users users) {
+        UserEntity validar = userRepository.findById(users.getId()).orElseThrow(() -> new ResourceNotFoundException("Id not match"));
+        UserEntity entidad = toEntity(users);
+        return toModel(userRepository.save(entidad));
+    }
+
     private UserEntity toEntity(Users user) {
         return UserEntity.builder()
                 .id(user.getId())
@@ -112,7 +119,7 @@ public class DefaultUserGateway implements UserGateway {
     }
 
     private RoleEntity roleEntity(Role role) {
-       return RoleEntity.builder()
+        return RoleEntity.builder()
                 .id(role.getId())
                 .description(role.getDescription())
                 .name(role.getName())

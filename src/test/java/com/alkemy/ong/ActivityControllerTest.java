@@ -103,12 +103,7 @@ public class ActivityControllerTest {
         String imageAfter = "https://bucket.com/after.jpg";
         String nameAfter = "After activity name";
 
-        ActivityDto activityDto = ActivityDto.builder()
-                .id(1L)
-                .content(contentAfter)
-                .image(imageAfter)
-                .name(nameAfter)
-                .build();
+        ActivityDto activityDto = getActivityDto(1L, contentAfter, imageAfter, nameAfter);
 
         when(mockActivityRepository.findById(eq(1L))).thenReturn(Optional.of(ActivityEntity.builder()
                 .id(activityDto.getId())
@@ -156,6 +151,15 @@ public class ActivityControllerTest {
                                 .image("image")
                         )))
                 .andExpect(status().isBadRequest());
+    }
+
+    private ActivityDto getActivityDto(Long id, String contentAfter, String imageAfter, String nameAfter) {
+        return ActivityDto.builder()
+                .id(id)
+                .content(contentAfter)
+                .image(imageAfter)
+                .name(nameAfter)
+                .build();
     }
 
     private ActivityEntity getActivityEntity(Long id, String content, String name, String image) {

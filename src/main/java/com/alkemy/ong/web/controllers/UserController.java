@@ -9,6 +9,7 @@ import com.alkemy.ong.domain.users.Users;
 import com.alkemy.ong.web.security.CustomUserDetails;
 import com.alkemy.ong.web.security.JwtUtil;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -48,7 +50,6 @@ public class UserController {
         this.authenticationManager = authenticationManager;
     }
 
-
     @GetMapping
     public ResponseEntity<List<UserDto>> findAll() {
         return ResponseEntity.ok().body(toListDto(userService.findAll()));
@@ -56,10 +57,11 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> findById(@PathVariable Long id, Authentication authentication) {
-        if (hasRole(authentication, id.toString()) || hasRole(authentication, "admin")) {
+        if (hasRole(authentication, id.toString()) || hasRole(authentication, "ADMIN")) {
             return ResponseEntity.ok(toDto(userService.findById(id)));
         }
-        return ResponseEntity.ok(toDto(userService.findByEmail((String) authentication.getPrincipal())));
+        User user = (User) authentication.getPrincipal();
+        return ResponseEntity.ok(toDto(userService.findByEmail(user.getUsername())));
     }
 
     @PostMapping("/auth/register")
@@ -118,6 +120,8 @@ public class UserController {
 
     @Builder
     @Data
+    @RequiredArgsConstructor
+    @AllArgsConstructor
     public static class RoleDto {
         private Long id;
         private String name;
@@ -126,6 +130,8 @@ public class UserController {
 
     @Builder
     @Data
+    @RequiredArgsConstructor
+    @AllArgsConstructor
     public static class UserDto {
         private Long id;
         private String firstName;

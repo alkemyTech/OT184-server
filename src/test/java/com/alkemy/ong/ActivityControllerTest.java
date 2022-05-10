@@ -56,10 +56,6 @@ public class ActivityControllerTest {
         checkActivityFields(resultAction, 1, content, name, image);
     }
 
-    private ResultActions performHttpAction(MockHttpServletRequestBuilder httpAction, ActivityDto activityDto) throws Exception {
-        return mockMvc.perform(httpAction.contentType(MediaType.APPLICATION_JSON).content(Json.mapper().writeValueAsString(activityDto)));
-    }
-
     @Test
     @WithMockUser(authorities = {"USER", "2"}, username = "user@mail.com", password = "123")
     @DisplayName("non admin users shouldn't be able to create activities")
@@ -115,6 +111,10 @@ public class ActivityControllerTest {
     public void nose() throws Exception {
         performHttpAction(put("/activities/1"), getActivityDto(1L, "", "image", "name"))
                 .andExpect(status().isBadRequest());
+    }
+
+    private ResultActions performHttpAction(MockHttpServletRequestBuilder httpAction, ActivityDto activityDto) throws Exception {
+        return mockMvc.perform(httpAction.contentType(MediaType.APPLICATION_JSON).content(Json.mapper().writeValueAsString(activityDto)));
     }
 
     public void checkActivityFields(ResultActions resultActions, Integer id, String content, String name, String image) throws Exception {

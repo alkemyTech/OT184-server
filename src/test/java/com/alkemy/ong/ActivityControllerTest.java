@@ -20,7 +20,6 @@ import org.springframework.test.web.servlet.ResultActions;
 import java.util.Optional;
 
 import static com.alkemy.ong.web.controllers.ActivityController.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;

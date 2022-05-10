@@ -102,6 +102,7 @@ public class ContactsTest {
 
     private ContactEntity createEntity(){
         return ContactEntity.builder()
+                .id(null)
                 .name("contact")
                 .email("contact@alkemy.com")
                 .phone("1144054522")

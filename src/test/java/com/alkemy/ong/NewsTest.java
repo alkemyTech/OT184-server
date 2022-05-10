@@ -47,7 +47,11 @@ public class NewsTest {
     @WithMockUser(authorities  = "ADMIN")
     @DisplayName("Save news by ADMIN, success case")
     public void saveSuccess() throws Exception{
-        when(newsRepo.save(any(NewsEntity.class))).thenReturn(newsEntity);
+        when(newsRepo.save(createNews(null,
+                "news",
+                "content",
+                "image",
+                1L))).thenReturn(newsEntity);
 
         mockMvc.perform(post("/news")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -57,6 +61,7 @@ public class NewsTest {
                 .andExpect(jsonPath("$.content", is("content")))
                 .andExpect(jsonPath("$.image", is("/img.png")))
                 .andExpect(jsonPath("$.categoryId", is(1)))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated());
     }
 
@@ -129,10 +134,9 @@ public class NewsTest {
     @DisplayName("Update news by ADMIN, success case")
     public void updateByAdmin() throws Exception{
         when(newsRepo.findById(1L)).thenReturn(Optional.of(newsEntity));
-
         newsEntity.setContent("¡Updated content!");
-        when(newsRepo.save(any(NewsEntity.class))).thenReturn(newsEntity);
 
+        when(newsRepo.save(createNews(null,"news","¡Updated content!","image",1L))).thenReturn(newsEntity);
         mockMvc.perform(put("/news/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(Json.mapper().writeValueAsString(newsEntity)))
@@ -164,5 +168,15 @@ public class NewsTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(Json.mapper().writeValueAsString(newsEntity)))
                 .andExpect(status().isBadRequest());
+    }
+
+    private NewsEntity createNews(Long id,String name,String content,String image,Long categoryId) {
+        return NewsEntity.builder()
+                .id(id)
+                .name(name)
+                .content(content)
+                .image(image)
+                .categoryId(categoryId)
+                .build();
     }
 }

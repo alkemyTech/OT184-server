@@ -60,19 +60,12 @@ public class ActivityControllerTest {
         return mockMvc.perform(httpAction.contentType(MediaType.APPLICATION_JSON).content(Json.mapper().writeValueAsString(activityDto)));
     }
 
-
     @Test
     @WithMockUser(authorities = {"USER", "2"}, username = "user@mail.com", password = "123")
     @DisplayName("non admin users shouldn't be able to create activities")
     public void createActivityFailure() throws Exception {
-
         ActivityDto activityDto = getActivityDto("Activity Content", "Activity Name", "https://bucket.com/image.jpg");
-
-        mockMvc.perform(post("/activities")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(Json.mapper().writeValueAsString(activityDto))
-                )
-                .andExpect(status().isForbidden());
+        performHttpAction(post("/activities"), activityDto).andExpect(status().isForbidden());
     }
 
     @Test

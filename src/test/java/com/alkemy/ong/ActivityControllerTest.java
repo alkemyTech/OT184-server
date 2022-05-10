@@ -16,6 +16,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import java.util.Optional;
@@ -52,8 +53,7 @@ public class ActivityControllerTest {
         when(mockActivityRepository.save(getActivityEntity(null, content, name, image))).thenReturn(getActivityEntity(1L, content, name, image));
 
         ResultActions resultAction  = performHttpAction(post("/activities"), activityDto);
-        resultAction.andExpect(status().isCreated());
-        checkActivityFields(resultAction, 1, content, name, image);
+        checkActivityFields(status().isCreated(), resultAction, 1, content, name, image);
     }
 
     @Test
@@ -93,8 +93,7 @@ public class ActivityControllerTest {
         when(mockActivityRepository.save(getActivityEntity(1L, contentAfter, nameAfter, imageAfter))).thenAnswer(invocationOnMock -> invocationOnMock.getArguments()[0]);
 
         ResultActions perform = performHttpAction(put("/activities/1"), activityDto);
-        perform.andExpect(status().isOk());
-        checkActivityFields(perform, 1, contentAfter, nameAfter, imageAfter);
+        checkActivityFields(status().isOk(), perform, 1, contentAfter, nameAfter, imageAfter);
     }
 
     @Test
@@ -117,8 +116,10 @@ public class ActivityControllerTest {
         return mockMvc.perform(httpAction.contentType(MediaType.APPLICATION_JSON).content(Json.mapper().writeValueAsString(activityDto)));
     }
 
-    public void checkActivityFields(ResultActions resultActions, Integer id, String content, String name, String image) throws Exception {
-        resultActions.andExpect(jsonPath("$.id", Is.is(id)))
+    public void checkActivityFields(ResultMatcher expectedStatus, ResultActions resultActions, Integer id, String content, String name, String image) throws Exception {
+        resultActions
+                .andExpect(expectedStatus)
+                .andExpect(jsonPath("$.id", Is.is(id)))
                 .andExpect(jsonPath("$.content", Is.is(content)))
                 .andExpect(jsonPath("$.name", Is.is(name)))
                 .andExpect(jsonPath("$.image", Is.is(image)));

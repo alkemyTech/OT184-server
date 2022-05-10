@@ -105,12 +105,12 @@ public class ActivityControllerTest {
 
         ActivityDto activityDto = getActivityDto(1L, contentAfter, imageAfter, nameAfter);
 
-        when(mockActivityRepository.findById(eq(1L))).thenReturn(Optional.of(ActivityEntity.builder()
-                .id(activityDto.getId())
-                .name("Before activity content")
-                .image("https://bucket.com/before.jpg")
-                .content("Before activity name")
-                .build()));
+        when(mockActivityRepository.findById(eq(1L))).thenReturn(Optional.of(
+                getActivityEntity(
+                        activityDto.getId(),
+                "Before activity content",
+                "https://bucket.com/before.jpg", "Before activity name"
+        )));
 
         when(mockActivityRepository.save(any(ActivityEntity.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArguments()[0]);
 
@@ -130,12 +130,7 @@ public class ActivityControllerTest {
     public void updateActivityNonAdminFail() throws Exception {
         mockMvc.perform(put("/activities/1")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(Json.mapper().writeValueAsString(ActivityDto.builder()
-                                .id(1L)
-                                .name("name")
-                                .content("content")
-                                .image("image")
-                        )))
+                        .content(Json.mapper().writeValueAsString(getActivityDto(1L, "name", "content", "image"))))
                 .andExpect(status().isForbidden());
     }
 

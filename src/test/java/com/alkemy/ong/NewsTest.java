@@ -130,12 +130,11 @@ public class NewsTest {
     public void updateByAdmin() throws Exception{
         when(newsRepo.findById(1L)).thenReturn(Optional.of(newsEntity));
         newsEntity.setContent("¡Updated content!");
-        var entity = createEntity();
 
-        when(newsRepo.save(entity)).thenReturn(newsEntity);
+        when(newsRepo.save(newsEntity)).thenReturn(newsEntity);
         mockMvc.perform(put("/news/1")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(Json.mapper().writeValueAsString(entity)))
+                        .content(Json.mapper().writeValueAsString(newsEntity)))
                 .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.name", is("news")))
                 .andExpect(jsonPath("$.content", is("¡Updated content!")))

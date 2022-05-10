@@ -45,15 +45,12 @@ public class NewsTest {
     @WithMockUser(authorities  = "ADMIN")
     @DisplayName("Save news by ADMIN, success case")
     public void saveSuccess() throws Exception{
-        when(newsRepo.save(createNews(null,
-                "news",
-                "content",
-                "image",
-                1L))).thenReturn(newsEntity);
+        var entity = createEntity();
+        when(newsRepo.save(entity)).thenReturn(newsEntity);
 
         mockMvc.perform(post("/news")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(Json.mapper().writeValueAsString(newsEntity)))
+                .content(Json.mapper().writeValueAsString(entity)))
                 .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.name", is("news")))
                 .andExpect(jsonPath("$.content", is("content")))
@@ -133,15 +130,12 @@ public class NewsTest {
     public void updateByAdmin() throws Exception{
         when(newsRepo.findById(1L)).thenReturn(Optional.of(newsEntity));
         newsEntity.setContent("¡Updated content!");
+        var entity = createEntity();
 
-        when(newsRepo.save(createNews(null,
-                "news",
-                "¡Updated content!",
-                "image",
-                1L))).thenReturn(newsEntity);
+        when(newsRepo.save(entity)).thenReturn(newsEntity);
         mockMvc.perform(put("/news/1")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(Json.mapper().writeValueAsString(newsEntity)))
+                        .content(Json.mapper().writeValueAsString(entity)))
                 .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.name", is("news")))
                 .andExpect(jsonPath("$.content", is("¡Updated content!")))
@@ -172,13 +166,13 @@ public class NewsTest {
                 .andExpect(status().isBadRequest());
     }
 
-    private NewsEntity createNews(Long id,String name,String content,String image,Long categoryId) {
+    private NewsEntity createEntity() {
         return NewsEntity.builder()
-                .id(id)
-                .name(name)
-                .content(content)
-                .image(image)
-                .categoryId(categoryId)
+                .id(null)
+                .name("news")
+                .content("content")
+                .image("/img.png")
+                .categoryId(1L)
                 .build();
     }
 }

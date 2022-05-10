@@ -47,11 +47,12 @@ public class ContactsTest {
     @WithMockUser(authorities  = "ADMIN")
     @DisplayName("Save contact by ADMIN, success case")
     public void saveByAdminSuccess() throws Exception{
-        when(contactRepo.save(createEntity())).thenReturn(contactEntity);
+        var entity = createEntity();
+        when(contactRepo.save(entity)).thenReturn(contactEntity);
 
         mockMvc.perform(post("/contacts")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(Json.mapper().writeValueAsString(contactEntity)))
+                        .content(Json.mapper().writeValueAsString(entity)))
                 .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.name", is("contact")))
                 .andExpect(jsonPath("$.email", is("contact@alkemy.com")))

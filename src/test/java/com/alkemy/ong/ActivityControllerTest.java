@@ -72,17 +72,11 @@ public class ActivityControllerTest {
     @WithMockUser(authorities = {"ADMIN", "2"}, username = "admin@mail.com", password = "123")
     @DisplayName("trying to create a invalid activity should return error")
     public void createInvalidActivityByAdmin() throws Exception {
-
         ActivityDto activityDto = ActivityDto.builder()
                 .content("Activity Content")
                 .image("https://bucket.com/image.jpg")
                 .build();
-
-        mockMvc.perform(post("/activities")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(Json.mapper().writeValueAsString(activityDto))
-                )
-                .andExpect(status().isBadRequest());
+        performHttpAction(post("/activities"), activityDto).andExpect(status().isBadRequest());
     }
 
     @Test

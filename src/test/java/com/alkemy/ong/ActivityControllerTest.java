@@ -2,7 +2,6 @@ package com.alkemy.ong;
 
 import com.alkemy.ong.data.entities.ActivityEntity;
 import com.alkemy.ong.data.repositories.ActivityRepository;
-import com.alkemy.ong.web.controllers.ActivityController;
 import io.swagger.v3.core.util.Json;
 import org.hamcrest.core.Is;
 import org.junit.jupiter.api.DisplayName;
@@ -47,7 +46,7 @@ public class ActivityControllerTest {
         String name = "Activity Name";
         String image = "https://bucket.com/image.jpg";
 
-        ActivityDto activityDto = getActivity(content, name, image);
+        ActivityDto activityDto = getActivityDto(content, name, image);
 
         when(mockActivityRepository
                 .save(any(ActivityEntity.class)))
@@ -74,7 +73,7 @@ public class ActivityControllerTest {
     @DisplayName("non admin users shouldn't be able to create activities")
     public void createActivityFailure() throws Exception {
 
-        ActivityDto activityDto = getActivity("Activity Content", "Activity Name", "https://bucket.com/image.jpg");
+        ActivityDto activityDto = getActivityDto("Activity Content", "Activity Name", "https://bucket.com/image.jpg");
 
         mockMvc.perform(post("/activities")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -164,7 +163,7 @@ public class ActivityControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
-    private ActivityDto getActivity(String content, String name, String image) {
+    private ActivityDto getActivityDto(String content, String name, String image) {
         return ActivityDto.builder()
                 .content(content)
                 .name(name)

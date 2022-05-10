@@ -109,7 +109,7 @@ public class ActivityControllerTest {
                         "https://bucket.com/before.jpg", "Before activity name"
                 )));
 
-        when(mockActivityRepository.save(any(ActivityEntity.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArguments()[0]);
+        when(mockActivityRepository.save(getActivityEntity(1L, contentAfter, nameAfter, imageAfter))).thenAnswer(invocationOnMock -> invocationOnMock.getArguments()[0]);
 
         ResultActions perform = mockMvc.perform(put("/activities/1")
                 .contentType(MediaType.APPLICATION_JSON)

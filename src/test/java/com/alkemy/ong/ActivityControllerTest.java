@@ -113,10 +113,7 @@ public class ActivityControllerTest {
     @WithMockUser(authorities = {"ADMIN", "2"}, username = "user@mail.com", password = "123")
     @DisplayName("should return bad request when trying to update an activity with missing fields in the request")
     public void nose() throws Exception {
-        ActivityDto activityDto = getActivityDto(1L, "", "image", "name");
-        mockMvc.perform(put("/activities/1")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(Json.mapper().writeValueAsString(activityDto)))
+        performHttpAction(put("/activities/1"), getActivityDto(1L, "", "image", "name"))
                 .andExpect(status().isBadRequest());
     }
 

@@ -2,6 +2,7 @@ package com.alkemy.ong;
 
 import com.alkemy.ong.data.entities.ActivityEntity;
 import com.alkemy.ong.data.repositories.ActivityRepository;
+import com.alkemy.ong.web.controllers.ActivityController;
 import io.swagger.v3.core.util.Json;
 import org.hamcrest.core.Is;
 import org.junit.jupiter.api.DisplayName;
@@ -46,11 +47,7 @@ public class ActivityControllerTest {
         String name = "Activity Name";
         String image = "https://bucket.com/image.jpg";
 
-        ActivityDto activityDto = ActivityDto.builder()
-                .content(content)
-                .name(name)
-                .image(image)
-                .build();
+        ActivityDto activityDto = getActivity(content, name, image);
 
         when(mockActivityRepository
                 .save(any(ActivityEntity.class)))
@@ -72,16 +69,20 @@ public class ActivityControllerTest {
                 .andExpect(jsonPath("$.image", Is.is(image)));
     }
 
+    private ActivityDto getActivity(String content, String name, String image) {
+        return ActivityDto.builder()
+                .content(content)
+                .name(name)
+                .image(image)
+                .build();
+    }
+
     @Test
     @WithMockUser(authorities = {"USER", "2"}, username = "user@mail.com", password = "123")
     @DisplayName("non admin users shouldn't be able to create activities")
     public void createActivityFailure() throws Exception {
 
-        ActivityDto activityDto = ActivityDto.builder()
-                .content("Activity Content")
-                .name("Activity Name")
-                .image("https://bucket.com/image.jpg")
-                .build();
+        ActivityDto activityDto = getActivity("Activity Content", "Activity Name", "https://bucket.com/image.jpg");
 
         mockMvc.perform(post("/activities")
                         .contentType(MediaType.APPLICATION_JSON)

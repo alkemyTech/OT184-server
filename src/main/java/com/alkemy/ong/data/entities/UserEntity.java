@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -16,10 +18,11 @@ import java.time.LocalDateTime;
 @Table(name = "users")
 @SQLDelete(sql = "UPDATE users SET is_deleted = true, updated_at = now() WHERE id=?")
 @Where(clause = "is_deleted=false")
+@Getter
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class UserEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,5 +56,4 @@ public class UserEntity {
   @Column(name = "updated_at", nullable = false)
   @UpdateTimestamp
   private LocalDateTime updatedAt;
-
 }

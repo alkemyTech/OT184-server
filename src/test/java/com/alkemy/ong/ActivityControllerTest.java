@@ -53,7 +53,7 @@ public class ActivityControllerTest {
         when(mockActivityRepository.save(getActivityEntity(null, content, name, image))).thenReturn(getActivityEntity(1L, content, name, image));
 
         ResultActions resultAction  = performHttpAction(post("/activities"), activityDto);
-        checkActivityFields(status().isCreated(), resultAction, 1, content, name, image);
+        checkResponseActivity(status().isCreated(), resultAction, 1, content, name, image);
     }
 
     @Test
@@ -93,7 +93,7 @@ public class ActivityControllerTest {
         when(mockActivityRepository.save(getActivityEntity(1L, contentAfter, nameAfter, imageAfter))).thenAnswer(invocationOnMock -> invocationOnMock.getArguments()[0]);
 
         ResultActions perform = performHttpAction(put("/activities/1"), activityDto);
-        checkActivityFields(status().isOk(), perform, 1, contentAfter, nameAfter, imageAfter);
+        checkResponseActivity(status().isOk(), perform, 1, contentAfter, nameAfter, imageAfter);
     }
 
     @Test
@@ -116,7 +116,7 @@ public class ActivityControllerTest {
         return mockMvc.perform(httpAction.contentType(MediaType.APPLICATION_JSON).content(Json.mapper().writeValueAsString(activityDto)));
     }
 
-    public void checkActivityFields(ResultMatcher expectedStatus, ResultActions resultActions, Integer id, String content, String name, String image) throws Exception {
+    public void checkResponseActivity(ResultMatcher expectedStatus, ResultActions resultActions, Integer id, String content, String name, String image) throws Exception {
         resultActions
                 .andExpect(expectedStatus)
                 .andExpect(jsonPath("$.id", Is.is(id)))

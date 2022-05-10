@@ -105,9 +105,7 @@ public class ActivityControllerTest {
     @WithMockUser(authorities = {"USER", "2"}, username = "user@mail.com", password = "123")
     @DisplayName("non admin users shouldn't be able to update activities")
     public void updateActivityNonAdminFail() throws Exception {
-        mockMvc.perform(put("/activities/1")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(Json.mapper().writeValueAsString(getActivityDto(1L, "name", "content", "image"))))
+        performHttpAction(put("/activities/1"), getActivityDto(1L, "name", "content", "image"))
                 .andExpect(status().isForbidden());
     }
 

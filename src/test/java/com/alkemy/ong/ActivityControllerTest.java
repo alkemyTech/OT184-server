@@ -49,9 +49,7 @@ public class ActivityControllerTest {
 
         ActivityDto activityDto = getActivityDto(content, name, image);
 
-        when(mockActivityRepository
-                .save(any(ActivityEntity.class)))
-                .thenReturn(getActivityEntity(1L, content, name, image));
+        when(mockActivityRepository.save(getActivityEntity(null, content, name, image))).thenReturn(getActivityEntity(1L, content, name, image));
 
         ResultActions perform = mockMvc.perform(post("/activities")
                 .contentType(MediaType.APPLICATION_JSON)

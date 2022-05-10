@@ -44,7 +44,7 @@ public class DefaultUserGateway implements UserGateway {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public CustomUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity userEntity = userRepository.findByEmail(username);
         if (userEntity == null) {
             throw new NullPointerException("Username or password invalid");

@@ -19,11 +19,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.is;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 @SpringBootTest
@@ -136,7 +134,11 @@ public class NewsTest {
         when(newsRepo.findById(1L)).thenReturn(Optional.of(newsEntity));
         newsEntity.setContent("¡Updated content!");
 
-        when(newsRepo.save(createNews(null,"news","¡Updated content!","image",1L))).thenReturn(newsEntity);
+        when(newsRepo.save(createNews(null,
+                "news",
+                "¡Updated content!",
+                "image",
+                1L))).thenReturn(newsEntity);
         mockMvc.perform(put("/news/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(Json.mapper().writeValueAsString(newsEntity)))

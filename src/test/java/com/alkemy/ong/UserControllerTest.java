@@ -39,11 +39,7 @@ public class UserControllerTest {
     @WithMockUser(authorities = {"ADMIN", "2"}, username = "admin", password = "123")
     @DisplayName("admins can request a user detail")
     public void getUserByIdSuccess() throws Exception {
-        UserEntity userEntity = UserEntity.builder()
-                .id(1L)
-                .email("user@mail.com")
-                .role(RoleEntity.builder().id(1L).name("user").description("user level access").build())
-                .build();
+        UserEntity userEntity = getUser();
 
         when(mockUserRepository.findById(eq(1L))).thenReturn(Optional.of(userEntity));
         when(mockUserRepository.findByEmail(eq("user"))).thenReturn(userEntity);
@@ -51,29 +47,27 @@ public class UserControllerTest {
         mockMvc.perform(get("/users/1")).andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", Is.is(1)))
                 .andExpect(jsonPath("$.email", Is.is("user@mail.com")))
-                .andExpect(jsonPath("$.role.name", Is.is("user")))
+                .andExpect(jsonPath("$.role.name", Is.is("USER")))
                 .andExpect(jsonPath("$.role.id", Is.is(1)));
     }
+
 
     @Test
     @WithMockUser(authorities = {"user", "2"}, username = "user@mail.com", password = "123")
     @DisplayName("non admin users can't request details of other users")
     public void getUserByIdSuccessUser() throws Exception {
-        String userEmail = "user@mail.com";
-        UserEntity userEntity = UserEntity.builder()
-                .id(2L)
-                .email(userEmail)
-                .role(RoleEntity.builder().id(1L).name("USER").description("User level access").build())
-                .build();
+        String email = "user@mail.com";
+        UserEntity userEntity = getUser(2L, email);
 
-        when(mockUserRepository.findByEmail(eq(userEmail))).thenReturn(userEntity);
+        when(mockUserRepository.findByEmail(eq(email))).thenReturn(userEntity);
 
         mockMvc.perform(get("/users/1")).andExpect(status().isOk())
-                .andExpect(jsonPath("$.email", Is.is(userEmail)))
+                .andExpect(jsonPath("$.email", Is.is(email)))
                 .andExpect(jsonPath("$.id", Is.is(2)))
                 .andExpect(jsonPath("$.role.name", Is.is("USER")))
                 .andExpect(jsonPath("$.role.id", Is.is(1)));
     }
+
 
     @Test
     @WithMockUser(authorities = {"ADMIN", "2"}, username = "admin@mail.com", password = "123")
@@ -95,9 +89,7 @@ public class UserControllerTest {
     @WithMockUser(authorities = {"ADMIN"}, username = "admin@mail.com", password = "123")
     @DisplayName("admins can delete users")
     public void deleteUserByAdminIsAllowed() throws Exception {
-        UserEntity user = UserEntity.builder().id(1L).build();
-        when(mockUserRepository.findById(eq(1L))).thenReturn(Optional.of(user));
-
+        when(mockUserRepository.findById(eq(1L))).thenReturn(Optional.of(getUser()));
         mockMvc.perform(delete("/users/1")).andExpect(status().isNoContent());
     }
 
@@ -123,5 +115,21 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$[0].id", Is.is(1)))
                 .andExpect(jsonPath("$[1].email", Is.is("usertwo@mail.com")))
                 .andExpect(jsonPath("$[1].id", Is.is(2)));
+    }
+
+    private UserEntity getUser(Long id, String email) {
+        return UserEntity.builder()
+                .id(id)
+                .email(email)
+                .role(RoleEntity.builder().id(1L).name("USER").description("User level access").build())
+                .build();
+    }
+
+    private UserEntity getUser() {
+        return UserEntity.builder()
+                .id(1L)
+                .email("user@mail.com")
+                .role(RoleEntity.builder().id(1L).name("USER").description("user level access").build())
+                .build();
     }
 }

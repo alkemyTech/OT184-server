@@ -10,5 +10,5 @@ public interface SlideGateway {
 
     List <Slide> findAll();
 
-    Slide save(Slide slide, Long id);
+    Slide save(Slide slide, Long organizationId);
 }

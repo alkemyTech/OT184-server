@@ -44,17 +44,23 @@ public class SlideService {
 
 
     @Transactional
-    public Slide save(Slide slide, Long id) throws IOException {
+    public Slide save(Slide slide,Long organizationId) throws IOException {
 
         BASE64DecodedMultipartFile multiPart =
                 new BASE64DecodedMultipartFile(Base64.decodeBase64(slide.getImageUrl()));
         CloudOutput output = cloudService.save(CloudInput.builder().file(multiPart).build());
         slide.setImageUrl(output.getUrl());
-      //  if(slide.getOrder()==null){
-       //     slide.setOrder(slidesRepository.findOrder()+1);
-      //  }
-        return slideGateway.save(slide, id); }
+        if(slide.getOrder()==null){
+            slide.setOrder(findOrder()+1);
+        }
+        return slideGateway.save(slide, organizationId); }
 
-
+    public Integer findOrder(){
+        Integer order= slidesRepository.findOrder();
+        if (order==null){
+            order=0;
+        }
+        return order;
+    }
 
 }

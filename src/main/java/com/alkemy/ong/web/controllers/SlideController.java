@@ -1,8 +1,9 @@
 package com.alkemy.ong.web.controllers;
 
 
-import com.alkemy.ong.data.entities.SlidesEntity;
-import com.alkemy.ong.data.repositories.SlidesRepository;
+
+import com.alkemy.ong.data.entities.OrganizationEntity;
+import com.alkemy.ong.domain.organizations.Organization;
 import com.alkemy.ong.domain.slide.Slide;
 import com.alkemy.ong.domain.slide.SlideService;
 import lombok.Builder;
@@ -22,11 +23,10 @@ import static java.util.stream.Collectors.toList;
 public class SlideController {
 
     private final SlideService slideService;
-    private final SlidesRepository slidesRepository;
 
-    public SlideController(SlideService slideService, SlidesRepository slidesRepository){
+
+    public SlideController(SlideService slideService){
         this.slideService = slideService;
-        this.slidesRepository = slidesRepository;
     }
 
     @GetMapping("/{id}")
@@ -48,13 +48,9 @@ public class SlideController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
     }
-    @PostMapping("/{id}")
-    public ResponseEntity<SlideBasicDTO> save( @RequestBody SlideBasicDTO slideBasicDTO, @PathVariable Long id) throws IOException {
-        if(slideBasicDTO.getOrder()==null){
-
-            slideBasicDTO.setOrder(slidesRepository.findOrder()+1);
-        }
-        Slide slide =  slideService.save(toBasicModel(slideBasicDTO),id);
+    @PostMapping()
+    public ResponseEntity<SlideBasicDTO> save( @RequestBody SlideBasicDTO slideBasicDTO) throws IOException {
+        Slide slide =  slideService.save(toBasicModel(slideBasicDTO), slideBasicDTO.getOrganizationId());
         return ResponseEntity.status(HttpStatus.CREATED).body(this.toBasicDTO(slide));
     }
 
@@ -73,6 +69,8 @@ public class SlideController {
     private static class SlideBasicDTO{
         private String imageUrl;
         private Integer order;
+        private Long organizationId;
+
     }
 
 
@@ -124,6 +122,8 @@ public class SlideController {
                 .order(slide.getOrder())
                 .build();
     }
+
+
 
 
 }

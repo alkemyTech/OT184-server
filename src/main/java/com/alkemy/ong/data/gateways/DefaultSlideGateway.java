@@ -47,8 +47,8 @@ public class DefaultSlideGateway implements SlideGateway {
                 .collect(toList());
     }
 
-    public Slide save(Slide slide, Long id) {
-        Optional<OrganizationEntity> organizationEntity = organizationRepository.findById(id);
+    public Slide save(Slide slide,Long organizationId) {
+        Optional<OrganizationEntity> organizationEntity = organizationRepository.findById(organizationId);
         organizationEntity.orElseThrow(() -> new ResourceNotFoundException("ID"));
         SlidesEntity slideEntity = toEntity(slide);
         slideEntity.setOrganization(organizationEntity.get());

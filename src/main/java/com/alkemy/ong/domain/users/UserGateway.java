@@ -1,5 +1,6 @@
 package com.alkemy.ong.domain.users;
 
+import com.alkemy.ong.web.security.CustomUserDetails;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
@@ -10,7 +11,7 @@ public interface UserGateway {
 
     void delete(Long id);
 
-    UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
+    CustomUserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
 
     Users findById(Long id);
 

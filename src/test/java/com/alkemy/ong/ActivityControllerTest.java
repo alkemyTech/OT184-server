@@ -50,12 +50,7 @@ public class ActivityControllerTest {
 
         when(mockActivityRepository
                 .save(any(ActivityEntity.class)))
-                .thenReturn(ActivityEntity.builder()
-                        .id(1L)
-                        .content(content)
-                        .name(name)
-                        .image(image)
-                        .build());
+                .thenReturn(getActivityEntity(1L, content, name, image));
 
         mockMvc.perform(post("/activities")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -161,6 +156,15 @@ public class ActivityControllerTest {
                                 .image("image")
                         )))
                 .andExpect(status().isBadRequest());
+    }
+
+    private ActivityEntity getActivityEntity(Long id, String content, String name, String image) {
+        return ActivityEntity.builder()
+                .id(id)
+                .content(content)
+                .name(name)
+                .image(image)
+                .build();
     }
 
     private ActivityDto getActivityDto(String content, String name, String image) {

@@ -15,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.Optional;
 
@@ -52,16 +53,14 @@ public class ActivityControllerTest {
                 .save(any(ActivityEntity.class)))
                 .thenReturn(getActivityEntity(1L, content, name, image));
 
-        mockMvc.perform(post("/activities")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(Json.mapper().writeValueAsString(activityDto))
-                )
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id", Is.is(1)))
-                .andExpect(jsonPath("$.content", Is.is(content)))
-                .andExpect(jsonPath("$.name", Is.is(name)))
-                .andExpect(jsonPath("$.image", Is.is(image)));
+        ResultActions perform = mockMvc.perform(post("/activities")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(Json.mapper().writeValueAsString(activityDto))
+        );
+        perform.andExpect(status().isCreated());
+        checkActivityFields(perform, 1, content, name, image);
     }
+
 
     @Test
     @WithMockUser(authorities = {"USER", "2"}, username = "user@mail.com", password = "123")
@@ -108,20 +107,17 @@ public class ActivityControllerTest {
         when(mockActivityRepository.findById(eq(1L))).thenReturn(Optional.of(
                 getActivityEntity(
                         activityDto.getId(),
-                "Before activity content",
-                "https://bucket.com/before.jpg", "Before activity name"
-        )));
+                        "Before activity content",
+                        "https://bucket.com/before.jpg", "Before activity name"
+                )));
 
         when(mockActivityRepository.save(any(ActivityEntity.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArguments()[0]);
 
-        mockMvc.perform(put("/activities/1")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(Json.mapper().writeValueAsString(activityDto)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id", Is.is(1)))
-                .andExpect(jsonPath("$.name", Is.is(nameAfter)))
-                .andExpect(jsonPath("$.content", Is.is(contentAfter)))
-                .andExpect(jsonPath("$.image", Is.is(imageAfter)));
+        ResultActions perform = mockMvc.perform(put("/activities/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(Json.mapper().writeValueAsString(activityDto)));
+        perform.andExpect(status().isOk());
+        checkActivityFields(perform, 1, contentAfter, nameAfter, imageAfter);
     }
 
     @Test
@@ -143,6 +139,13 @@ public class ActivityControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(Json.mapper().writeValueAsString(activityDto)))
                 .andExpect(status().isBadRequest());
+    }
+
+    public void checkActivityFields(ResultActions resultActions, Integer id, String content, String name, String image) throws Exception {
+        resultActions.andExpect(jsonPath("$.id", Is.is(id)))
+                .andExpect(jsonPath("$.content", Is.is(content)))
+                .andExpect(jsonPath("$.name", Is.is(name)))
+                .andExpect(jsonPath("$.image", Is.is(image)));
     }
 
     private ActivityDto getActivityDto(Long id, String contentAfter, String imageAfter, String nameAfter) {

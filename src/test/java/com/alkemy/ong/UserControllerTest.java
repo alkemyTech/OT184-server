@@ -45,13 +45,8 @@ public class UserControllerTest {
         when(mockUserRepository.findById(eq(1L))).thenReturn(Optional.of(userEntity));
         when(mockUserRepository.findByEmail(eq("admin@mail.com"))).thenReturn(userEntity);
 
-        mockMvc.perform(get("/users/1")).andExpect(status().isOk())
-                .andExpect(jsonPath("$.id", Is.is(1)))
-                .andExpect(jsonPath("$.email", Is.is(email)))
-                .andExpect(jsonPath("$.role.name", Is.is("USER")))
-                .andExpect(jsonPath("$.role.id", Is.is(1)));
+        checkExpectedUser(email, 1);
     }
-
 
     @Test
     @WithMockUser(authorities = {"user", "2"}, username = "user@mail.com", password = "123")
@@ -62,13 +57,8 @@ public class UserControllerTest {
 
         when(mockUserRepository.findByEmail(eq(email))).thenReturn(userEntity);
 
-        mockMvc.perform(get("/users/1")).andExpect(status().isOk())
-                .andExpect(jsonPath("$.email", Is.is(email)))
-                .andExpect(jsonPath("$.id", Is.is(2)))
-                .andExpect(jsonPath("$.role.name", Is.is("USER")))
-                .andExpect(jsonPath("$.role.id", Is.is(1)));
+        checkExpectedUser(email, 2);
     }
-
 
     @Test
     @WithMockUser(authorities = {"ADMIN", "2"}, username = "admin@mail.com", password = "123")
@@ -116,6 +106,14 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$[0].id", Is.is(1)))
                 .andExpect(jsonPath("$[1].email", Is.is("usertwo@mail.com")))
                 .andExpect(jsonPath("$[1].id", Is.is(2)));
+    }
+
+    private void checkExpectedUser(String email, int id) throws Exception {
+        mockMvc.perform(get("/users/1")).andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", Is.is(id)))
+                .andExpect(jsonPath("$.email", Is.is(email)))
+                .andExpect(jsonPath("$.role.name", Is.is("USER")))
+                .andExpect(jsonPath("$.role.id", Is.is(1)));
     }
 
     private UserEntity getUser(Long id, String email) {

@@ -96,9 +96,7 @@ public class ActivityControllerTest {
 
         when(mockActivityRepository.save(getActivityEntity(1L, contentAfter, nameAfter, imageAfter))).thenAnswer(invocationOnMock -> invocationOnMock.getArguments()[0]);
 
-        ResultActions perform = mockMvc.perform(put("/activities/1")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(Json.mapper().writeValueAsString(activityDto)));
+        ResultActions perform = performHttpAction(put("/activities/1"), activityDto);
         perform.andExpect(status().isOk());
         checkActivityFields(perform, 1, contentAfter, nameAfter, imageAfter);
     }

@@ -36,17 +36,18 @@ public class UserControllerTest {
     UserRepository mockUserRepository;
 
     @Test
-    @WithMockUser(authorities = {"ADMIN", "2"}, username = "admin", password = "123")
+    @WithMockUser(authorities = {"ADMIN", "2"}, username = "admin@mail.com", password = "123")
     @DisplayName("admins can request a user detail")
     public void getUserByIdSuccess() throws Exception {
-        UserEntity userEntity = getUser();
+        String email = "user@mail.com";
+        UserEntity userEntity = getUser(1L, email);
 
         when(mockUserRepository.findById(eq(1L))).thenReturn(Optional.of(userEntity));
-        when(mockUserRepository.findByEmail(eq("user"))).thenReturn(userEntity);
+        when(mockUserRepository.findByEmail(eq("admin@mail.com"))).thenReturn(userEntity);
 
         mockMvc.perform(get("/users/1")).andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", Is.is(1)))
-                .andExpect(jsonPath("$.email", Is.is("user@mail.com")))
+                .andExpect(jsonPath("$.email", Is.is(email)))
                 .andExpect(jsonPath("$.role.name", Is.is("USER")))
                 .andExpect(jsonPath("$.role.id", Is.is(1)));
     }

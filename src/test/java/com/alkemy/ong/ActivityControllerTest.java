@@ -16,6 +16,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import java.util.Optional;
 
@@ -50,12 +51,13 @@ public class ActivityControllerTest {
 
         when(mockActivityRepository.save(getActivityEntity(null, content, name, image))).thenReturn(getActivityEntity(1L, content, name, image));
 
-        ResultActions perform = mockMvc.perform(post("/activities")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(Json.mapper().writeValueAsString(activityDto))
-        );
-        perform.andExpect(status().isCreated());
-        checkActivityFields(perform, 1, content, name, image);
+        ResultActions resultAction  = performHttpAction(post("/activities"), activityDto);
+        resultAction.andExpect(status().isCreated());
+        checkActivityFields(resultAction, 1, content, name, image);
+    }
+
+    private ResultActions performHttpAction(MockHttpServletRequestBuilder httpAction, ActivityDto activityDto) throws Exception {
+        return mockMvc.perform(httpAction.contentType(MediaType.APPLICATION_JSON).content(Json.mapper().writeValueAsString(activityDto)));
     }
 
 

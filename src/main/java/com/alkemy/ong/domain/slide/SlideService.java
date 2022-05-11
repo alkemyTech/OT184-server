@@ -63,4 +63,14 @@ public class SlideService {
         return order;
     }
 
+    public Slide update(Long id, Slide slide,Long organizationId) throws IOException {
+        BASE64DecodedMultipartFile multiPart =
+                new BASE64DecodedMultipartFile(Base64.decodeBase64(slide.getImageUrl()));
+        CloudOutput output = cloudService.save(CloudInput.builder().file(multiPart).build());
+        slide.setImageUrl(output.getUrl());
+        if(slide.getOrder()==null){
+            slide.setOrder(findOrder()+1);
+        }
+        return slideGateway.toUpdate(id, slide,organizationId);
+    }
 }

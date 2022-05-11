@@ -123,6 +123,13 @@ public class SlideController {
                 .build();
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<SlideController.SlideBasicDTO> update(@PathVariable Long id, @RequestBody SlideController.SlideBasicDTO dto) throws IOException {
+       Slide slide=slideService.update(id,toBasicModel(dto),dto.getOrganizationId());
+
+        return new ResponseEntity<>(toBasicDTO(slide), HttpStatus.OK);
+    }
+
 
 
 

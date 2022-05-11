@@ -33,7 +33,6 @@ public class DefaultContactGateway implements ContactGateway {
 
     private ContactEntity toEntity(Contact contact) {
         return ContactEntity.builder()
-                .id(contact.getId())
                 .name(contact.getName())
                 .email(contact.getEmail())
                 .phone(contact.getPhone())
@@ -48,16 +47,6 @@ public class DefaultContactGateway implements ContactGateway {
                 .email(contactEntity.getEmail())
                 .phone(contactEntity.getPhone())
                 .message(contactEntity.getMessage())
-                .build();
-    }
-
-    private ContactEntity toModel(Contact contact){
-        return ContactEntity.builder()
-                .id(contact.getId())
-                .name(contact.getName())
-                .email(contact.getEmail())
-                .phone(contact.getEmail())
-                .message(contact.getMessage())
                 .build();
     }
 }

@@ -1,13 +1,12 @@
 package com.alkemy.ong.domain.users;
 
 import com.alkemy.ong.domain.roles.Role;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Builder
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Users {
     Long id;
 

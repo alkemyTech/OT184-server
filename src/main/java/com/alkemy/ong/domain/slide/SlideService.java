@@ -1,5 +1,6 @@
 package com.alkemy.ong.domain.slide;
 
+import com.alkemy.ong.data.repositories.SlidesRepository;
 import com.alkemy.ong.domain.cloud.CloudGateway;
 import com.alkemy.ong.domain.cloud.CloudInput;
 import com.alkemy.ong.domain.cloud.CloudOutput;
@@ -20,18 +21,19 @@ public class SlideService {
     private final CloudService cloudService;
     private final BASE64DecodedMultipartFile base64DecodedMultipartFile;
     private final CloudGateway cloudGateway;
+    private final SlidesRepository slidesRepository;
 
 
 
 
 
-    public SlideService(SlideGateway slideGateway, CloudService cloudService, BASE64DecodedMultipartFile base64DecodedMultipartFile, CloudGateway cloudGateway){
+    public SlideService(SlideGateway slideGateway, CloudService cloudService, BASE64DecodedMultipartFile base64DecodedMultipartFile, CloudGateway cloudGateway, SlidesRepository slidesRepository){
         this.slideGateway = slideGateway;
         this.cloudService = cloudService;
 
-
         this.base64DecodedMultipartFile = base64DecodedMultipartFile;
         this.cloudGateway = cloudGateway;
+        this.slidesRepository = slidesRepository;
     }
 
     public Slide findById(Long id){return slideGateway.findById(id);}
@@ -42,14 +44,23 @@ public class SlideService {
 
 
     @Transactional
-    public Slide save(Slide slide, Long id) throws IOException {
+    public Slide save(Slide slide,Long organizationId) throws IOException {
 
         BASE64DecodedMultipartFile multiPart =
                 new BASE64DecodedMultipartFile(Base64.decodeBase64(slide.getImageUrl()));
         CloudOutput output = cloudService.save(CloudInput.builder().file(multiPart).build());
         slide.setImageUrl(output.getUrl());
-        return slideGateway.save(slide, id); }
+        if(slide.getOrder()==null){
+            slide.setOrder(findOrder()+1);
+        }
+        return slideGateway.save(slide, organizationId); }
 
-
+    public Integer findOrder(){
+        Integer order= slidesRepository.findOrder();
+        if (order==null){
+            order=0;
+        }
+        return order;
+    }
 
 }

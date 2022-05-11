@@ -27,6 +27,7 @@ public class SlidesEntity {
     @Column(nullable = false)
     private String imageUrl;
     private String text;
+    
     private Integer slideOrder;
     @CreationTimestamp
     @Column(name = "created_at")

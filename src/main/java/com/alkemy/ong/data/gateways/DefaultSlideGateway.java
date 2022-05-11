@@ -85,7 +85,20 @@ public class DefaultSlideGateway implements SlideGateway {
                 .build();
     }
 
+    public Slide toUpdate(Long id, Slide slide,Long organizationId) {
+        OrganizationEntity findOrganization= organizationRepository.findById(organizationId).orElseThrow(() -> new ResourceNotFoundException("slide with id " + id));
+        SlidesEntity findSlide = slidesRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("slide with id " + id));
+        refreshValues(findSlide, slide,findOrganization);
+        SlidesEntity saved = slidesRepository.save(findSlide);
+        return toModel(saved);
+    }
 
+    private void refreshValues(SlidesEntity slidesEntity, Slide slide,OrganizationEntity organizationEntity) {
+        slidesEntity.setSlideOrder(slide.getOrder());
+        slidesEntity.setImageUrl(slide.getImageUrl());
+        slidesEntity.setOrganization(organizationEntity);
+
+    }
 
 
 }

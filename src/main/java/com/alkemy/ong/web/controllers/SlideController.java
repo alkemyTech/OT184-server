@@ -1,6 +1,9 @@
 package com.alkemy.ong.web.controllers;
 
 
+
+import com.alkemy.ong.data.entities.OrganizationEntity;
+import com.alkemy.ong.domain.organizations.Organization;
 import com.alkemy.ong.domain.slide.Slide;
 import com.alkemy.ong.domain.slide.SlideService;
 import lombok.Builder;
@@ -9,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
+import java.io.IOException;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -18,6 +23,7 @@ import static java.util.stream.Collectors.toList;
 public class SlideController {
 
     private final SlideService slideService;
+
 
     public SlideController(SlideService slideService){
         this.slideService = slideService;
@@ -42,6 +48,11 @@ public class SlideController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
     }
+    @PostMapping()
+    public ResponseEntity<SlideBasicDTO> save( @RequestBody SlideBasicDTO slideBasicDTO) throws IOException {
+        Slide slide =  slideService.save(toBasicModel(slideBasicDTO), slideBasicDTO.getOrganizationId());
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.toBasicDTO(slide));
+    }
 
     @Data
     @Builder
@@ -58,12 +69,22 @@ public class SlideController {
     private static class SlideBasicDTO{
         private String imageUrl;
         private Integer order;
-    }
-    private SlideBasicDTO toBasicDTO(Slide slide){
+        private Long organizationId;
 
+    }
+
+
+    private SlideBasicDTO toBasicDTO(Slide slide){
         return SlideBasicDTO.builder()
                 .imageUrl(slide.getImageUrl())
                 .order(slide.getOrder())
+                .build();
+    }
+
+    private Slide toBasicModel(SlideBasicDTO slideBasicDTO){
+        return Slide.builder()
+                .imageUrl(slideBasicDTO.getImageUrl())
+                .order(slideBasicDTO.getOrder())
                 .build();
     }
 
@@ -101,4 +122,8 @@ public class SlideController {
                 .order(slide.getOrder())
                 .build();
     }
+
+
+
+
 }

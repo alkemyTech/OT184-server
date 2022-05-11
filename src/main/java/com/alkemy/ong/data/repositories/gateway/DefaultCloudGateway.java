@@ -1,4 +1,4 @@
-package com.alkemy.ong.amazon.gateway;
+package com.alkemy.ong.data.repositories.gateway;
 
 import com.alkemy.ong.domain.cloud.CloudInput;
 import com.alkemy.ong.domain.cloud.CloudGateway;
@@ -50,6 +50,7 @@ public class DefaultCloudGateway implements CloudGateway {
     private AmazonS3 accessAmazon(PutObjectRequest putObjectRequest){
         return AmazonS3ClientBuilder
                 .standard()
+                .withRegion("us-east-1")
                 .withCredentials(new EnvironmentVariableCredentialsProvider())
                 .build();
     }

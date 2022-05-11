@@ -64,15 +64,22 @@ public class UserController {
         return ResponseEntity.ok(toDto(userService.findByEmail(user.getUsername())));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<UserDto> editUser(@RequestBody UserDto userDto, @PathVariable Long id) {
+        Users users = createUser(userDto);
+        users.setId(id);
+        UserDto userSaved = toDto(userService.update(users));
+        return new ResponseEntity<>(userSaved, HttpStatus.OK);
+    }
+
     @PostMapping("/auth/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody UserBasicDto userBasicDto) {
         Users users = createUser(userBasicDto);
         UserDto userSaved = toDto(userService.save(users));
-
-        try{
+        try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(users.getEmail(), userBasicDto.getPassword()));
-        }catch (BadCredentialsException e){
+        } catch (BadCredentialsException e) {
             throw new CommunicationException("Incorrect credentials");
         }
 
@@ -106,6 +113,7 @@ public class UserController {
                 .email(user.getEmail())
                 .photo(user.getPhoto())
                 .role(roleToDto(user))
+                .password(user.getPassword())
                 .build();
     }
 
@@ -137,6 +145,7 @@ public class UserController {
         private String firstName;
         private String lastName;
         private String email;
+        private String password;
         private String photo;
         private RoleDto role;
     }
@@ -158,7 +167,7 @@ public class UserController {
         private String jwt;
     }
 
-    private Users createUser(UserBasicDto userBasicDto){
+    private Users createUser(UserBasicDto userBasicDto) {
         Users users = new Users();
         users.setRole(roleService.searchRoleById(2L));
         users.setFirstName(userBasicDto.getFirstName());
@@ -166,6 +175,17 @@ public class UserController {
         users.setEmail(userBasicDto.getEmail());
         users.setPassword(encoder.encode(userBasicDto.getPassword()));
         users.setPhoto("No photo");
+        return users;
+    }
+
+    private Users createUser(UserDto userDto) {
+        Users users = new Users();
+        users.setRole(roleService.searchRoleById(userDto.getId()));
+        users.setFirstName(userDto.getFirstName());
+        users.setLastName(userDto.getLastName());
+        users.setEmail(userDto.getEmail());
+        users.setPassword(encoder.encode(userDto.getPassword()));
+        users.setPhoto(userDto.getPhoto());
         return users;
     }
 }

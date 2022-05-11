@@ -1,6 +1,5 @@
 package com.alkemy.ong.data.gateways;
 
-
 import com.alkemy.ong.data.entities.OrganizationEntity;
 import com.alkemy.ong.data.entities.SlidesEntity;
 import com.alkemy.ong.data.repositories.OrganizationRepository;
@@ -86,7 +85,6 @@ public class DefaultSlideGateway implements SlideGateway {
                 .build();
     }
 
-
     public Slide toUpdate(Long id, Slide slide,Long organizationId) {
         OrganizationEntity findOrganization= organizationRepository.findById(organizationId).orElseThrow(() -> new ResourceNotFoundException("slide with id " + id));
         SlidesEntity findSlide = slidesRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("slide with id " + id));
@@ -101,7 +99,6 @@ public class DefaultSlideGateway implements SlideGateway {
         slidesEntity.setOrganization(organizationEntity);
 
     }
-
 
 
 }

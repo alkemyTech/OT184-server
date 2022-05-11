@@ -58,4 +58,10 @@ public class NewsEntity {
 
     @Column(nullable = false)
     private String type;
+
+    @Override
+    public boolean equals(Object obj){
+        NewsEntity entity = (NewsEntity) obj;
+        return this.id==entity.getId();
+    }
 }

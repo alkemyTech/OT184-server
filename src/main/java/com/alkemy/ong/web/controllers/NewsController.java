@@ -93,10 +93,10 @@ public class NewsController {
     @Operation(summary = "Get news by page", description = "Get news by page, each one has 10 elements ")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "News page found",
-                    content = { @Content(mediaType = "JSON Value",
+                    content = { @Content(mediaType = "application/json",
                             schema = @Schema(implementation = PageResponse.class))}),
             @ApiResponse(responseCode = "400", description = "Bad Request",
-                    content = @Content(mediaType = "JSON Value",
+                    content = @Content(mediaType = "application/json",
                             examples = @ExampleObject(value="Incorrect parameter (ID)"))),
             }
     )

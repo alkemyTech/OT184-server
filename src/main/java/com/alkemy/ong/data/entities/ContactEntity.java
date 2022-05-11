@@ -42,4 +42,10 @@ public class ContactEntity {
     @Column(name="updated_at", columnDefinition = "TIMESTAMP", nullable = false)
     @DateTimeFormat(pattern = "yyyy/MM/dd hh:mm:ss")
     private LocalDateTime updatedAt;
+
+    @Override
+    public boolean equals(Object obj){
+        ContactEntity entity = (ContactEntity) obj;
+        return this.id==entity.getId();
+    }
 }

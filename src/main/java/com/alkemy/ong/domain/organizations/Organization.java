@@ -20,4 +20,5 @@ public class Organization {
     private String linkedin;
     private String instagram;
     private List<Slide> slides;
+
 }

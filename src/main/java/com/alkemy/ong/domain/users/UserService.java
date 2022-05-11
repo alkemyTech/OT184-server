@@ -37,6 +37,10 @@ public class UserService implements UserDetailsService {
         return userGateway.create(users);
     }
 
+    public Users update(Users users) {
+        return userGateway.update(users);
+    }
+
     @Override
     public CustomUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userGateway.loadUserByUsername(username);

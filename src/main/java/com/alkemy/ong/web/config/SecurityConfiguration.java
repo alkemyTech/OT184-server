@@ -31,29 +31,29 @@ import java.io.IOException;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private final UserService userService;
-    private final JwtFilter jwtFilter;
+  private final UserService userService;
+  private final JwtFilter jwtFilter;
 
-    public SecurityConfiguration(UserService userService, JwtFilter jwtFilter) {
-        this.userService = userService;
-        this.jwtFilter = jwtFilter;
-    }
+  public SecurityConfiguration(UserService userService, JwtFilter jwtFilter) {
+    this.userService = userService;
+    this.jwtFilter = jwtFilter;
+  }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
-    }
+  @Override
+  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
+  }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
 
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
+  @Bean
+  @Override
+  public AuthenticationManager authenticationManagerBean() throws Exception {
+    return super.authenticationManagerBean();
+  }
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
@@ -68,47 +68,47 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        httpSecurity.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-    }
+    httpSecurity.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+  }
 
 
-    @Component
-    public static class JwtFilter extends OncePerRequestFilter {
-        @Autowired
-        private UserService userService;
-        @Autowired
-        private JwtUtil jwtUtil;
+  @Component
+  public static class JwtFilter extends OncePerRequestFilter {
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private JwtUtil jwtUtil;
 
-        @Override
-        protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
 
-            final String authorizationHeader = request.getHeader("Authorization");
+      final String authorizationHeader = request.getHeader("Authorization");
 
-            String username = null;
-            String jwt = null;
+      String username = null;
+      String jwt = null;
 
-            if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-                jwt = authorizationHeader.substring(7);
-                username = jwtUtil.extractUsername(jwt);
-            }
+      if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+        jwt = authorizationHeader.substring(7);
+        username = jwtUtil.extractUsername(jwt);
+      }
 
-            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                UserDetails userDetails = this.userService.loadUserByUsername(username);
+      if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        UserDetails userDetails = this.userService.loadUserByUsername(username);
 
-                if (jwtUtil.validateToken(jwt, userDetails)) {
-                    UsernamePasswordAuthenticationToken authReq =
-                            new UsernamePasswordAuthenticationToken(
-                                    userDetails.getUsername(),
-                                    userDetails.getPassword(),
-                                    userDetails.getAuthorities()
-                            );
-                    SecurityContextHolder.getContext().setAuthentication(authReq);
-                }
-            }
-
-            chain.doFilter(request, response);
+        if (jwtUtil.validateToken(jwt, userDetails)) {
+          UsernamePasswordAuthenticationToken authReq =
+                  new UsernamePasswordAuthenticationToken(
+                          userDetails.getUsername(),
+                          userDetails.getPassword(),
+                          userDetails.getAuthorities()
+                  );
+          SecurityContextHolder.getContext().setAuthentication(authReq);
         }
+      }
+
+      chain.doFilter(request, response);
     }
+  }
 }
 
 

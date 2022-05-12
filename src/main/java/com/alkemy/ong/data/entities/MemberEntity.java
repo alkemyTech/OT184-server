@@ -55,4 +55,10 @@ public class MemberEntity {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+    @Override
+    public boolean equals(Object o) {
+        MemberEntity member = (MemberEntity) o;
+         return  this.id == member.getId() && this.name == member.getName();
+    }
+
 }

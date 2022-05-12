@@ -218,7 +218,7 @@ public class MemberController {
 
     @Data
     @Builder
-    private static class MemberDTO {
+    public static class MemberDTO {
         private Long id;
         @NotNull
         private String name;

@@ -11,4 +11,6 @@ public interface SlideGateway {
     List <Slide> findAll();
 
     Slide save(Slide slide, Long organizationId);
+
+    Slide toUpdate(Long id, Slide slide,Long organizationId);
 }

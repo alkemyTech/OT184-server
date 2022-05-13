@@ -4,7 +4,7 @@ import com.alkemy.ong.domain.members.MemberService;
 import com.alkemy.ong.domain.members.Members;
 import com.alkemy.ong.domain.utils.PageModel;
 import com.alkemy.ong.web.controllers.utils.PageResponse;
-import com.sun.istack.NotNull;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -18,11 +18,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import static java.util.stream.Collectors.toList;
 
 @RestController
-@RequestMapping("members")
+@RequestMapping("/members")
 public class MemberController {
 
     private final MemberService memberService;
@@ -212,13 +213,13 @@ public class MemberController {
             }
     )
     @PutMapping("/{id}")
-    public ResponseEntity<MemberDTO> update(@PathVariable Long id,@Valid @RequestBody MemberDTO memberDTO){
+    public ResponseEntity<MemberDTO> update(@PathVariable Long id,@RequestBody @Valid MemberDTO memberDTO){
         return ResponseEntity.ok().body(toMemberDTO(memberService.update(id, toMember(memberDTO))));
     }
 
     @Data
     @Builder
-    private static class MemberDTO {
+    public static class MemberDTO {
         private Long id;
         @NotNull
         private String name;

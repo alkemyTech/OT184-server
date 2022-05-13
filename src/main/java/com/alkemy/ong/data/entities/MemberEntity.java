@@ -1,6 +1,5 @@
 package com.alkemy.ong.data.entities;
 
-import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
@@ -8,6 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Table(name = "members")
 @SQLDelete(sql = "UPDATE members SET is_deleted=true, updated_at = now() WHERE id=?")
 @Where(clause = "is_deleted = false")
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
 public class MemberEntity {
 
     @Id
@@ -54,5 +54,11 @@ public class MemberEntity {
     @Column(name="updated_at")
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    @Override
+    public boolean equals(Object o) {
+        MemberEntity member = (MemberEntity) o;
+        return  this.id == member.getId();
+    }
 
 }

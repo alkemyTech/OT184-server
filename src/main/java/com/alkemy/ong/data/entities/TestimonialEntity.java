@@ -28,9 +28,9 @@ public class TestimonialEntity {
     private long id;
     @Column(name = "name", nullable = false)
     private String name;
-    @Column(name = "image")
+    @Column(name = "image", nullable = false)
     private String image;
-    @Column(name = "content")
+    @Column(name = "content", nullable = false)
     private String content;
     @CreationTimestamp
     @Column(name = "createdAt")

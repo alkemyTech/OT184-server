@@ -17,6 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
 import static java.util.stream.Collectors.toList;
@@ -99,7 +101,7 @@ public class TestimonialController {
             }
     )
     @PostMapping
-    public ResponseEntity<TestimonialDTO> save(@RequestBody TestimonialDTO dto) {
+    public ResponseEntity<TestimonialDTO> save(@Valid @RequestBody TestimonialDTO dto) {
         Testimonial testimonial = testimonialService.save(toDomain(dto));
         return new ResponseEntity<>(toDto(testimonial), HttpStatus.CREATED);
     }
@@ -188,9 +190,9 @@ public class TestimonialController {
         @Schema(example = "1", description = "ID of testimonial")
         private Long id;
         @Schema(example = "Personal growth", description = "Name of testimonial")
-        @NotEmpty(message = "The name field not empty")
+        @NotBlank(message = "The name field not empty")
         private String name;
-        @NotEmpty(message = "The content field not empty")
+        @NotBlank(message = "The content field not empty")
         private String content;
         @Schema(example = "https://cdn.pixabay.com/photo/2022/01/22/16/54/book-6957870_960_720.jpg", description = "URL of testimonial image")
         private String image;

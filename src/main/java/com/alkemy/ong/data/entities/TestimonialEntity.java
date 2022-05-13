@@ -5,10 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "testimonials")
@@ -16,6 +19,8 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@SQLDelete(sql = "UPDATE testimonial SET is_deleted = true, updated_at=now() WHERE id=?")
+@Where(clause = "is_deleted=false")
 public class TestimonialEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,4 +40,10 @@ public class TestimonialEntity {
     private LocalDateTime updatedAt;
     @Column(name = "isDeleted")
     private boolean isDeleted = false;
+
+    @Override
+    public boolean equals(Object obj) {
+        TestimonialEntity entity = (TestimonialEntity) obj;
+        return Objects.equals(this.id, entity.getId());
+    }
 }

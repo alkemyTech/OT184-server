@@ -10,10 +10,9 @@ import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +27,7 @@ public class TestimonialController {
 
     private final TestimonialService testimonialService;
 
+    @Autowired
     public TestimonialController(TestimonialService testimonialService) {
         this.testimonialService = testimonialService;
     }
@@ -190,10 +190,10 @@ public class TestimonialController {
         @Schema(example = "Personal growth", description = "Name of testimonial")
         @NotEmpty(message = "The name field not empty")
         private String name;
-        @Schema(example = "https://cdn.pixabay.com/photo/2022/01/22/16/54/book-6957870_960_720.jpg", description = "URL of testimonial image")
-        private String image;
         @NotEmpty(message = "The content field not empty")
         private String content;
+        @Schema(example = "https://cdn.pixabay.com/photo/2022/01/22/16/54/book-6957870_960_720.jpg", description = "URL of testimonial image")
+        private String image;
     }
 
 }

@@ -116,13 +116,13 @@ public class TestimonialController {
                             description = "Updated testimonial successfully"
                     ),
                     @ApiResponse(
-                            responseCode = "400",
+                            responseCode = "404",
                             description = "Bad request",
                             content = @Content(
                                     examples = @ExampleObject(
-                                            name = "400",
-                                            summary = "Bad request",
-                                            description = "Body request is incompleted",
+                                            name = "404",
+                                            summary = "Not Found",
+                                            description = "Testimonial's Id, not found",
                                             value = "Testimonial don't update"
                                     )
                             )

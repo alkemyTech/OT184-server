@@ -163,6 +163,7 @@ public class UserController {
 
     @Data
     @AllArgsConstructor
+    @NoArgsConstructor
     public static class AuthenticationResponse {
         private String jwt;
     }

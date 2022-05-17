@@ -155,7 +155,7 @@ public class TestimonialsTest {
         return mockMvc.perform(httpAction.contentType(MediaType.APPLICATION_JSON).content(Json.mapper().writeValueAsString(testimonialDTO)));
     }
 
-    public void checkResponseTestimonials(ResultMatcher expectedStatus, ResultActions resultActions, Integer id, String content, String name, String image) throws Exception {
+    private void checkResponseTestimonials(ResultMatcher expectedStatus, ResultActions resultActions, Integer id, String content, String name, String image) throws Exception {
         resultActions
                 .andExpect(expectedStatus)
                 .andExpect(jsonPath("$.id", Is.is(id)))
@@ -164,7 +164,7 @@ public class TestimonialsTest {
                 .andExpect(jsonPath("$.image", Is.is(image)));
     }
 
-    public TestimonialDTO getTestimonialDTO(String content, String name, String image) {
+    private TestimonialDTO getTestimonialDTO(String content, String name, String image) {
         return TestimonialDTO.builder()
                 .content(content)
                 .name(name)
@@ -172,7 +172,7 @@ public class TestimonialsTest {
                 .build();
     }
 
-    public TestimonialDTO getTestimonialDTO(Long id, String content, String name, String image) {
+    private TestimonialDTO getTestimonialDTO(Long id, String content, String name, String image) {
         return TestimonialDTO.builder()
                 .id(id)
                 .content(content)

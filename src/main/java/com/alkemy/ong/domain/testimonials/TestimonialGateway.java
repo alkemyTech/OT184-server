@@ -1,6 +1,5 @@
 package com.alkemy.ong.domain.testimonials;
 
-
 import com.alkemy.ong.domain.utils.PageModel;
 
 public interface TestimonialGateway {

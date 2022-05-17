@@ -52,7 +52,7 @@ public class ActivityControllerTest {
 
         when(mockActivityRepository.save(getActivityEntity(null, content, name, image))).thenReturn(getActivityEntity(1L, content, name, image));
 
-        ResultActions resultAction  = performHttpAction(post("/activities"), activityDto);
+        ResultActions resultAction = performHttpAction(post("/activities"), activityDto);
         checkResponseActivity(status().isCreated(), resultAction, 1, content, name, image);
     }
 

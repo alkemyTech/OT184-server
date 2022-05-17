@@ -10,15 +10,15 @@ import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 
 import static java.util.stream.Collectors.toList;
 
@@ -28,6 +28,7 @@ public class TestimonialController {
 
     private final TestimonialService testimonialService;
 
+    @Autowired
     public TestimonialController(TestimonialService testimonialService) {
         this.testimonialService = testimonialService;
     }
@@ -99,7 +100,7 @@ public class TestimonialController {
             }
     )
     @PostMapping
-    public ResponseEntity<TestimonialDTO> save(@RequestBody TestimonialDTO dto) {
+    public ResponseEntity<TestimonialDTO> save(@Valid @RequestBody TestimonialDTO dto) {
         Testimonial testimonial = testimonialService.save(toDomain(dto));
         return new ResponseEntity<>(toDto(testimonial), HttpStatus.CREATED);
     }
@@ -115,13 +116,13 @@ public class TestimonialController {
                             description = "Updated testimonial successfully"
                     ),
                     @ApiResponse(
-                            responseCode = "400",
+                            responseCode = "404",
                             description = "Bad request",
                             content = @Content(
                                     examples = @ExampleObject(
-                                            name = "400",
-                                            summary = "Bad request",
-                                            description = "Body request is incompleted",
+                                            name = "404",
+                                            summary = "Not Found",
+                                            description = "Testimonial's Id, not found",
                                             value = "Testimonial don't update"
                                     )
                             )
@@ -188,12 +189,12 @@ public class TestimonialController {
         @Schema(example = "1", description = "ID of testimonial")
         private Long id;
         @Schema(example = "Personal growth", description = "Name of testimonial")
-        @NotEmpty(message = "The name field not empty")
+        @NotBlank(message = "The name field not empty")
         private String name;
+        @NotBlank(message = "The content field not empty")
+        private String content;
         @Schema(example = "https://cdn.pixabay.com/photo/2022/01/22/16/54/book-6957870_960_720.jpg", description = "URL of testimonial image")
         private String image;
-        @NotEmpty(message = "The content field not empty")
-        private String content;
     }
 
 }

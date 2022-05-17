@@ -6,7 +6,6 @@ import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
 import com.alkemy.ong.domain.testimonials.Testimonial;
 import com.alkemy.ong.domain.testimonials.TestimonialGateway;
 import com.alkemy.ong.domain.utils.PageModel;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
@@ -16,8 +15,7 @@ import static java.util.stream.Collectors.toList;
 @Component
 public class DefaultTestimonialGateway implements TestimonialGateway {
 
-    @Autowired
-    private TestimonialRepository testimonialRepository;
+    private final TestimonialRepository testimonialRepository;
 
     public DefaultTestimonialGateway(TestimonialRepository testimonialRepository) {
         this.testimonialRepository = testimonialRepository;

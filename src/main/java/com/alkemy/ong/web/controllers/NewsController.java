@@ -167,7 +167,6 @@ public class NewsController {
         private String content;
         @NotEmpty(message = "The field Image must not be empty")
         private String image;
-        @NotEmpty(message = "The field Image must not be empty")
         private Long categoryId;
         private String type;
     }

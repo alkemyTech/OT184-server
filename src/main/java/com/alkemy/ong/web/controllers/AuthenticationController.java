@@ -86,15 +86,15 @@ public class AuthenticationController {
     }
     )
     @GetMapping("/me")
-    public ResponseEntity<UserController.UserDto> getAuthenticatedUser() {
+    public ResponseEntity<UserDto> getAuthenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = (String) authentication.getPrincipal();
         Users userEntity = userService.findByEmail(email);
         return ResponseEntity.ok(toDto(userEntity));
     }
 
-    private UserController.UserDto toDto(Users user) {
-        return UserController.UserDto.builder()
+    private UserDto toDto(Users user) {
+        return UserDto.builder()
                 .id(user.getId())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
@@ -117,5 +117,16 @@ public class AuthenticationController {
     @Builder
     private static class AuthenticationResponse {
         private String jwt;
+    }
+
+    @Data
+    @Builder
+    private static class UserDto {
+        private Long id;
+        private String firstName;
+        private String lastName;
+        private String email;
+        private String photo;
+        private UserController.RoleDto role;
     }
 }

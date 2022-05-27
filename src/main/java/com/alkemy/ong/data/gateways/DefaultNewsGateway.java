@@ -1,6 +1,7 @@
 package com.alkemy.ong.data.gateways;
 
 import com.alkemy.ong.data.entities.NewsEntity;
+import com.alkemy.ong.data.repositories.CategoryRepository;
 import com.alkemy.ong.data.repositories.NewsRepository;
 import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
 import com.alkemy.ong.domain.news.News;
@@ -16,8 +17,10 @@ import static java.util.stream.Collectors.toList;
 public class DefaultNewsGateway implements NewsGateway {
 
     private final NewsRepository newsRepository;
-    public DefaultNewsGateway(NewsRepository newsRepository){
+    private final CategoryRepository categoryRepository;
+    public DefaultNewsGateway(NewsRepository newsRepository, CategoryRepository categoryRepository){
         this.newsRepository = newsRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     public News findById(Long id) {
@@ -29,6 +32,7 @@ public class DefaultNewsGateway implements NewsGateway {
     @Override
     public News save(News news) {
         NewsEntity newsEntity = this.toEntity(news);
+        categoryRepository.findById(news.getCategoryId()).orElseThrow(() -> new ResourceNotFoundException("category's ID"));
         return this.toModel(newsRepository.save(newsEntity));
     }
 

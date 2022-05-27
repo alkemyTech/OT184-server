@@ -6,6 +6,7 @@ import com.alkemy.ong.domain.cloud.CloudService;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,7 +24,9 @@ public class ImageController {
         this.cloudService = cloudService;
     }
 
-    @PostMapping("${amazonProperties.endpointUrl}")
+    @PostMapping(
+            value = "${amazonProperties.endpointUrl}",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<CloudOutputDTO> uploader(@RequestParam("file") MultipartFile multipartFile) throws IOException{
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(toCloudDTO(

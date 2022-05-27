@@ -3,14 +3,15 @@ package com.alkemy.ong.data.gateways;
 import com.alkemy.ong.data.entities.RoleEntity;
 import com.alkemy.ong.data.entities.UserEntity;
 import com.alkemy.ong.data.repositories.UserRepository;
+import com.alkemy.ong.domain.exceptions.BadRequestException;
 import com.alkemy.ong.domain.exceptions.ResourceNotFoundException;
 import com.alkemy.ong.domain.roles.Role;
-import com.alkemy.ong.domain.users.Users;
 import com.alkemy.ong.domain.users.UserGateway;
+import com.alkemy.ong.domain.users.Users;
 import com.alkemy.ong.web.security.CustomUserDetails;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
@@ -69,7 +70,11 @@ public class DefaultUserGateway implements UserGateway {
     @Override
     public Users create(Users users) {
         UserEntity entidad = toEntity(users);
-        return toModel(userRepository.save(entidad));
+        try {
+            return toModel(userRepository.save(entidad));
+        }catch (Exception e){
+            throw new BadRequestException(HttpStatus.CONFLICT,"Email is already exists");
+        }
     }
 
     @Override

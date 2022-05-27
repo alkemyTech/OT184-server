@@ -39,13 +39,13 @@ public class NewsController {
     @Operation(summary = "Get news by ID", description = "Get details of the specific news ")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "News found",
-                    content = { @Content(mediaType = "JSON Value",
+                    content = { @Content(mediaType = "application/json",
                             schema = @Schema(implementation = NewsController.NewsDTO.class))}),
             @ApiResponse(responseCode = "400", description = "Bad Request",
-                    content = @Content(mediaType = "JSON Value",
+                    content = @Content(mediaType = "application/json",
                             examples = @ExampleObject(value="Incorrect parameter (ID)"))),
             @ApiResponse(responseCode = "404",description = "Not Found",
-                    content = @Content(mediaType = "JSON Value",
+                    content = @Content(mediaType = "application/json",
                             examples = @ExampleObject(value = ("Id is not found."))
                     ))
             }
@@ -59,10 +59,10 @@ public class NewsController {
     @Operation(summary = "Create news", description = "Create news ")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "News created",
-                    content = { @Content(mediaType = "JSON Value",
+                    content = { @Content(mediaType = "application/json",
                             schema = @Schema(implementation = NewsController.NewsDTO.class))}),
             @ApiResponse(responseCode = "400", description = "Bad Request",
-                    content = @Content(mediaType = "JSON Value",
+                    content = @Content(mediaType = "application/json",
                             examples = @ExampleObject(value="Incorrect parameters in JSON Object")))}
             )
     @PostMapping
@@ -74,12 +74,12 @@ public class NewsController {
     @Operation(summary = "Delete news", description = "Delete news by ID ")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "No content",
-                    content = { @Content(mediaType = "JSON Value")}),
+                    content = { @Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "400", description = "Bad Request",
-                    content = @Content(mediaType = "JSON Value",
+                    content = @Content(mediaType = "application/json",
                             examples = @ExampleObject(value="Incorrect parameter (ID)"))),
             @ApiResponse(responseCode = "404",description = "Not Found",
-                    content = @Content(mediaType = "JSON Value",
+                    content = @Content(mediaType = "application/json",
                             examples = @ExampleObject(value = ("Id is not found."))
                     ))
             }
@@ -117,13 +117,13 @@ public class NewsController {
     @Operation(summary = "Update news by ID", description = "Update all details of the specific news ")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "News updated",
-                    content = { @Content(mediaType = "JSON Value",
+                    content = { @Content(mediaType = "application/json",
                             schema = @Schema(implementation = NewsController.NewsDTO.class))}),
             @ApiResponse(responseCode = "400", description = "Bad Request",
-                    content = @Content(mediaType = "JSON Value",
+                    content = @Content(mediaType = "application/json",
                             examples = @ExampleObject(value="Incorrect parameters in JSON Object"))),
             @ApiResponse(responseCode = "404",description = "Not Found",
-                    content = @Content(mediaType = "JSON Value",
+                    content = @Content(mediaType = "application/json",
                             examples = @ExampleObject(value = ("News's ID is not found."))
                     ))
             }
@@ -136,10 +136,10 @@ public class NewsController {
     @Operation(summary = "Get news's comments", description = "Get news's comments by ID ")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Comments found",
-                    content = { @Content(mediaType = "JSON Value",
+                    content = { @Content(mediaType = "application/json",
                             schema = @Schema(implementation = CommentController.CommentBasicDTO.class))}),
             @ApiResponse(responseCode = "400", description = "Bad Request",
-                    content = @Content(mediaType = "JSON Value",
+                    content = @Content(mediaType = "application/json",
                             examples = @ExampleObject(value="Incorrect parameter (ID)"))),
             }
     )

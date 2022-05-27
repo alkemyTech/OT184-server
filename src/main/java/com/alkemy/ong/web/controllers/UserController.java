@@ -113,7 +113,6 @@ public class UserController {
                 .email(user.getEmail())
                 .photo(user.getPhoto())
                 .role(roleToDto(user))
-                .password(user.getPassword())
                 .build();
     }
 
